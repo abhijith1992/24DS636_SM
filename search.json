@@ -2,31 +2,41 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Statistical Modeling",
+    "title": "Statistical Modeling - 24DS636",
     "section": "",
-    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.",
+    "text": "1 24DS636 Statistical Modeling: 2024-25 (Even Semester)\nThe web page contains course contents of the course titled “Statistical Modeling” offered by Abhijith M S, PhD to Masters students pursuing M.Tech in Data Science, during the even semester of the Academic year 2024-25.\nContact: ms_abhijith@cb.amrita.edu",
     "crumbs": [
-      "Preface"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>24DS636 Statistical Modeling: 2024-25 (Even Semester)</span>"
     ]
   },
   {
     "objectID": "ParameterEstimation.html",
     "href": "ParameterEstimation.html",
-    "title": "1  Parameter Estimation",
+    "title": "2  Parameter Estimation",
     "section": "",
-    "text": "1.0.1 Point Wise Estimation: Maximum Likelihood Estimators\n\n\n1.0.2 Interval Estimates\n\nConsider a sample \\(X_1, X_2, \\ldots, X_n\\) drawn from a known distribution with an unknown mean \\(\\mu\\).\nIt is established that the sample mean \\(\\bar{X} = \\frac{1}{n} \\sum_{i=1}^{n} X_i\\) serves as the maximum likelihood estimator for \\(\\mu\\).\nHowever, the sample mean \\(\\bar{X}\\) is not expected to be exactly equal to \\(\\mu\\), but rather close to it.\nTherefore, instead of providing a single point estimate, it is often more useful to specify an interval within which we are confident that \\(\\mu\\) lies.\nTo determine such an interval estimator, we utilize the probability distribution of the point estimator.\n\n\n1.0.2.1 Normal Population with unknown Mean and known Variance\n\nConsider a sample \\(X_1, X_2, \\ldots, X_n\\) drawn from a normal distribution with an unknown mean \\(\\mu\\) and a known variance \\(\\sigma^2\\).\nThe point estimator \\(\\bar{X}\\) is normal with mean \\(\\mu\\) and variance \\(\\sigma^2\\)/n.\nTherefore, \\(\\frac{\\bar{X} - \\mu}{\\sigma/\\sqrt{n}}\\) follows a standard normal distribution.\n\n\n\n\n\n\n\nNote\n\n\n\nConsider that I want to find an interval around \\(\\bar{X}\\) such that the actual population mean \\(\\mu\\) falls within the interval, say 95 % of the times.\n\n\n\n\n\n\n\n\nTip\n\n\n\n\nFor finding such an interval, I can use the Z-table. From the Z-table I can find:\n\n\\[\nP\\left( -1.96 &lt; \\frac{\\bar{X} -\\mu}{\\sigma/\\sqrt{n}} &lt; 1.96 \\right) = 0.9750 - 0.0250 = 0.95\n\\]\n\nRewriting the above equation:\n\n\\[\nP\\left( -1.96\\frac{\\sigma}{\\sqrt{n}} &lt; \\bar{X} -\\mu &lt; 1.96\\frac{\\sigma}{\\sqrt{n}}\\right) = 0.95\n\\]\n\\[\nP\\left( 1.96\\frac{\\sigma}{\\sqrt{n}} &gt; \\mu - \\bar{X} &gt; -1.96\\frac{\\sigma}{\\sqrt{n}}\\right) = 0.95\n\\]\n\\[\nP\\left( -1.96\\frac{\\sigma}{\\sqrt{n}} &lt; \\mu - \\bar{X} &lt; 1.96\\frac{\\sigma}{\\sqrt{n}} \\right) = 0.95\n\\]\n\\[\nP\\left( \\bar{X} - 1.96\\frac{\\sigma}{\\sqrt{n}} &lt; \\mu &lt; \\bar{X} + 1.96\\frac{\\sigma}{\\sqrt{n}}\\right) = 0.95\n\\]\n\nWe have P(Z &lt; -1.96) = 0.025, similarly P(Z &gt; 1.96) = 0.025. Usually 1.96 is represented generally as \\(z_{0.025}\\). Thus, P(Z &lt; -z\\(_{0.025}\\)) = 0.025 and P(Z &gt; z\\(_{0.025}\\)) = 0.025.\nSo, I can re write the equation as: \\[\nP\\left( \\bar{X} - z_{0.025}\\frac{\\sigma}{\\sqrt{n}} &lt; \\mu &lt; \\bar{X} + z_{0.025}\\frac{\\sigma}{\\sqrt{n}}\\right) = 0.95\n\\]\n\n\\[\nP\\left( \\bar{X} - z_{0.025}\\frac{\\sigma}{\\sqrt{n}} &lt; \\mu &lt; \\bar{X} + z_{0.025}\\frac{\\sigma}{\\sqrt{n}}\\right) = 1 - 2*(0.025)\n\\]\n\n\n\nFor a confidence level of \\((1-\\alpha)\\), the corresponding critical value from the standard normal distribution is \\(z_{\\alpha/2}\\).\nThe \\((1-\\alpha)\\) confidence interval for \\(\\mu\\) is given by:\n\n\\[\n\\left( \\bar{X} - z_{\\alpha/2} \\frac{\\sigma}{\\sqrt{n}}, \\bar{X} + z_{\\alpha/2} \\frac{\\sigma}{\\sqrt{n}} \\right)\n\\]",
+    "text": "2.1 Point Wise Estimation: Maximum Likelihood Estimators",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Parameter Estimation</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Parameter Estimation</span>"
+    ]
+  },
+  {
+    "objectID": "ParameterEstimation.html#interval-estimates",
+    "href": "ParameterEstimation.html#interval-estimates",
+    "title": "2  Parameter Estimation",
+    "section": "2.2 Interval Estimates",
+    "text": "2.2 Interval Estimates\n\nConsider a sample \\(X_1, X_2, \\ldots, X_n\\) drawn from a known distribution with an unknown mean \\(\\mu\\).\nIt is established that the sample mean \\(\\bar{X} = \\frac{1}{n} \\sum_{i=1}^{n} X_i\\) serves as the maximum likelihood estimator for \\(\\mu\\).\nHowever, the sample mean \\(\\bar{X}\\) is not expected to be exactly equal to \\(\\mu\\), but rather close to it.\nTherefore, instead of providing a single point estimate, it is often more useful to specify an interval within which we are confident that \\(\\mu\\) lies.\nTo determine such an interval estimator, we utilize the probability distribution of the point estimator.\n\n\n2.2.1 Normal Population with unknown Mean and known Variance\n\nConsider a sample \\(X_1, X_2, \\ldots, X_n\\) drawn from a normal distribution with an unknown mean \\(\\mu\\) and a known variance \\(\\sigma^2\\).\nThe point estimator \\(\\bar{X}\\) is normal with mean \\(\\mu\\) and variance \\(\\sigma^2\\)/n.\nTherefore, \\(\\frac{\\bar{X} - \\mu}{\\sigma/\\sqrt{n}}\\) follows a standard normal distribution.\n\n\n\n\n\n\n\nNote\n\n\n\nConsider that I want to find an interval around \\(\\bar{X}\\) such that the actual population mean \\(\\mu\\) falls within the interval, say 95 % of the times.\n\n\n\n\n\n\n\n\nTip\n\n\n\n\nFor finding such an interval, I can use the Z-table. From the Z-table I can find:\n\n\\[\nP\\left( -1.96 &lt; \\frac{\\bar{X} -\\mu}{\\sigma/\\sqrt{n}} &lt; 1.96 \\right) = 0.9750 - 0.0250 = 0.95\n\\]\n\nRewriting the above equation:\n\n\\[\nP\\left( -1.96\\frac{\\sigma}{\\sqrt{n}} &lt; \\bar{X} -\\mu &lt; 1.96\\frac{\\sigma}{\\sqrt{n}}\\right) = 0.95\n\\]\n\\[\nP\\left( 1.96\\frac{\\sigma}{\\sqrt{n}} &gt; \\mu - \\bar{X} &gt; -1.96\\frac{\\sigma}{\\sqrt{n}}\\right) = 0.95\n\\]\n\\[\nP\\left( -1.96\\frac{\\sigma}{\\sqrt{n}} &lt; \\mu - \\bar{X} &lt; 1.96\\frac{\\sigma}{\\sqrt{n}} \\right) = 0.95\n\\]\n\\[\nP\\left( \\bar{X} - 1.96\\frac{\\sigma}{\\sqrt{n}} &lt; \\mu &lt; \\bar{X} + 1.96\\frac{\\sigma}{\\sqrt{n}}\\right) = 0.95\n\\]\n\nWe have P(Z &lt; -1.96) = 0.025, similarly P(Z &gt; 1.96) = 0.025. Usually 1.96 is represented generally as \\(z_{0.025}\\). Thus, P(Z &lt; -z\\(_{0.025}\\)) = 0.025 and P(Z &gt; z\\(_{0.025}\\)) = 0.025.\nSo, I can re write the equation as:\n\n\\[\nP\\left( \\bar{X} - z_{0.025}\\frac{\\sigma}{\\sqrt{n}} &lt; \\mu &lt; \\bar{X} + z_{0.025}\\frac{\\sigma}{\\sqrt{n}}\\right) = 0.95\n\\]\n\\[\nP\\left( \\bar{X} - z_{0.025}\\frac{\\sigma}{\\sqrt{n}} &lt; \\mu &lt; \\bar{X} + z_{0.025}\\frac{\\sigma}{\\sqrt{n}}\\right) = 1 - 2*(0.025)\n\\]\n\n\n\nFor a confidence level of \\(100(1-\\alpha)\\), the corresponding critical value from the standard normal distribution is \\(z_{\\alpha/2}\\).\nThe \\((1-\\alpha)\\) confidence interval for \\(\\mu\\) is given by:\n\n\\[\n\\left( \\bar{X} - z_{\\alpha/2} \\frac{\\sigma}{\\sqrt{n}}, \\bar{X} + z_{\\alpha/2} \\frac{\\sigma}{\\sqrt{n}} \\right)\n\\]",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Parameter Estimation</span>"
     ]
   },
   {
     "objectID": "summary.html",
     "href": "summary.html",
-    "title": "2  Summary",
+    "title": "3  Summary",
     "section": "",
     "text": "In summary, this book has no content whatsoever.",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Summary</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Summary</span>"
     ]
   }
 ]

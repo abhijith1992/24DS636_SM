@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1&nbsp; Parameter Estimation – Statistical Modeling</title>
+<title>2&nbsp; Parameter Estimation – Statistical Modeling - 24DS636</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -110,7 +110,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ParameterEstimation.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ParameterEstimation.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -125,7 +125,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Statistical Modeling</a> 
+      <a href="./">Statistical Modeling - 24DS636</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -138,19 +138,19 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Preface</span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">24DS636 Statistical Modeling: 2024-25 (Even Semester)</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ParameterEstimation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -169,8 +169,11 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#point-wise-estimation-maximum-likelihood-estimators" id="toc-point-wise-estimation-maximum-likelihood-estimators" class="nav-link active" data-scroll-target="#point-wise-estimation-maximum-likelihood-estimators"><span class="header-section-number">1.0.1</span> Point Wise Estimation: Maximum Likelihood Estimators</a></li>
-  <li><a href="#interval-estimates" id="toc-interval-estimates" class="nav-link" data-scroll-target="#interval-estimates"><span class="header-section-number">1.0.2</span> Interval Estimates</a></li>
+  <li><a href="#point-wise-estimation-maximum-likelihood-estimators" id="toc-point-wise-estimation-maximum-likelihood-estimators" class="nav-link active" data-scroll-target="#point-wise-estimation-maximum-likelihood-estimators"><span class="header-section-number">2.1</span> Point Wise Estimation: Maximum Likelihood Estimators</a></li>
+  <li><a href="#interval-estimates" id="toc-interval-estimates" class="nav-link" data-scroll-target="#interval-estimates"><span class="header-section-number">2.2</span> Interval Estimates</a>
+  <ul class="collapse">
+  <li><a href="#normal-population-with-unknown-mean-and-known-variance" id="toc-normal-population-with-unknown-mean-and-known-variance" class="nav-link" data-scroll-target="#normal-population-with-unknown-mean-and-known-variance"><span class="header-section-number">2.2.1</span> Normal Population with unknown Mean and known Variance</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -179,7 +182,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></h1>
 </div>
 
 
@@ -196,11 +199,11 @@ window.Quarto = {
 </header>
 
 
-<section id="point-wise-estimation-maximum-likelihood-estimators" class="level3" data-number="1.0.1">
-<h3 data-number="1.0.1" class="anchored" data-anchor-id="point-wise-estimation-maximum-likelihood-estimators"><span class="header-section-number">1.0.1</span> Point Wise Estimation: Maximum Likelihood Estimators</h3>
+<section id="point-wise-estimation-maximum-likelihood-estimators" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="point-wise-estimation-maximum-likelihood-estimators"><span class="header-section-number">2.1</span> Point Wise Estimation: Maximum Likelihood Estimators</h2>
 </section>
-<section id="interval-estimates" class="level3" data-number="1.0.2">
-<h3 data-number="1.0.2" class="anchored" data-anchor-id="interval-estimates"><span class="header-section-number">1.0.2</span> Interval Estimates</h3>
+<section id="interval-estimates" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="interval-estimates"><span class="header-section-number">2.2</span> Interval Estimates</h2>
 <ul>
 <li><p>Consider a sample <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> drawn from a known distribution with an <em>unknown</em> mean <span class="math inline">\(\mu\)</span>.</p></li>
 <li><p>It is established that the sample mean <span class="math inline">\(\bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i\)</span> serves as the maximum likelihood estimator for <span class="math inline">\(\mu\)</span>.</p></li>
@@ -208,8 +211,8 @@ window.Quarto = {
 <li><p>Therefore, instead of providing a single point estimate, it is often more useful to specify <strong>an interval</strong> within which we are confident that <span class="math inline">\(\mu\)</span> lies.</p></li>
 <li><p>To determine such an interval estimator, we utilize the probability distribution of the point estimator.</p></li>
 </ul>
-<section id="normal-population-with-unknown-mean-and-known-variance" class="level4" data-number="1.0.2.1">
-<h4 data-number="1.0.2.1" class="anchored" data-anchor-id="normal-population-with-unknown-mean-and-known-variance"><span class="header-section-number">1.0.2.1</span> Normal Population with unknown Mean and known Variance</h4>
+<section id="normal-population-with-unknown-mean-and-known-variance" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="normal-population-with-unknown-mean-and-known-variance"><span class="header-section-number">2.2.1</span> Normal Population with unknown Mean and known Variance</h3>
 <ul>
 <li><p>Consider a sample <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> drawn from a normal distribution with an <strong>unknown</strong> mean <span class="math inline">\(\mu\)</span> and a <strong>known</strong> variance <span class="math inline">\(\sigma^2\)</span>.</p></li>
 <li><p>The point estimator <span class="math inline">\(\bar{X}\)</span> is normal with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>/n.</p></li>
@@ -261,17 +264,18 @@ P\left( \bar{X} - 1.96\frac{\sigma}{\sqrt{n}} &lt; \mu &lt; \bar{X} + 1.96\frac{
 \]</span></p>
 <ul>
 <li><p>We have P(Z &lt; -1.96) = 0.025, similarly P(Z &gt; 1.96) = 0.025. Usually 1.96 is represented generally as <span class="math inline">\(z_{0.025}\)</span>. Thus, P(Z &lt; -z<span class="math inline">\(_{0.025}\)</span>) = 0.025 and P(Z &gt; z<span class="math inline">\(_{0.025}\)</span>) = 0.025.</p></li>
-<li><p>So, I can re write the equation as: <span class="math display">\[
-P\left( \bar{X} - z_{0.025}\frac{\sigma}{\sqrt{n}} &lt; \mu &lt; \bar{X} + z_{0.025}\frac{\sigma}{\sqrt{n}}\right) = 0.95
-\]</span></p></li>
+<li><p>So, I can re write the equation as:</p></li>
 </ul>
+<p><span class="math display">\[
+P\left( \bar{X} - z_{0.025}\frac{\sigma}{\sqrt{n}} &lt; \mu &lt; \bar{X} + z_{0.025}\frac{\sigma}{\sqrt{n}}\right) = 0.95
+\]</span></p>
 <p><span class="math display">\[
 P\left( \bar{X} - z_{0.025}\frac{\sigma}{\sqrt{n}} &lt; \mu &lt; \bar{X} + z_{0.025}\frac{\sigma}{\sqrt{n}}\right) = 1 - 2*(0.025)
 \]</span></p>
 </div>
 </div>
 <ul>
-<li><p>For a confidence level of <span class="math inline">\((1-\alpha)\)</span>, the corresponding critical value from the standard normal distribution is <span class="math inline">\(z_{\alpha/2}\)</span>.</p></li>
+<li><p>For a confidence level of <span class="math inline">\(100(1-\alpha)\)</span>, the corresponding critical value from the standard normal distribution is <span class="math inline">\(z_{\alpha/2}\)</span>.</p></li>
 <li><p>The <span class="math inline">\((1-\alpha)\)</span> confidence interval for <span class="math inline">\(\mu\)</span> is given by:</p></li>
 </ul>
 <p><span class="math display">\[
@@ -702,13 +706,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Preface">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      <a href="./index.html" class="pagination-link" aria-label="24DS636 Statistical Modeling: 2024-25 (Even Semester)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">24DS636 Statistical Modeling: 2024-25 (Even Semester)</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./summary.html" class="pagination-link" aria-label="Summary">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
