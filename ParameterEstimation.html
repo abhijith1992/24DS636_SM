@@ -275,12 +275,109 @@ P\left( \bar{X} - z_{0.025}\frac{\sigma}{\sqrt{n}} &lt; \mu &lt; \bar{X} + z_{0.
 </div>
 </div>
 <ul>
-<li><p>For a confidence level of <span class="math inline">\(100(1-\alpha)\)</span>, the corresponding critical value from the standard normal distribution is <span class="math inline">\(z_{\alpha/2}\)</span>.</p></li>
-<li><p>The <span class="math inline">\((1-\alpha)\)</span> confidence interval for <span class="math inline">\(\mu\)</span> is given by:</p></li>
+<li><p>For a confidence level of <span class="math inline">\(100(1-\alpha)\)</span> percent, the corresponding critical value from the standard normal distribution is <span class="math inline">\(z_{\alpha/2}\)</span>.</p></li>
+<li><p>The <span class="math inline">\(100(1-\alpha)\)</span> percent confidence interval for <span class="math inline">\(\mu\)</span> is given by:</p></li>
+</ul>
+<p><span id="eq-1"><span class="math display">\[
+\left( \bar{X} - z_{\alpha/2} \frac{\sigma}{\sqrt{n}}, \bar{X} + z_{\alpha/2} \frac{\sigma}{\sqrt{n}} \right)
+\tag{2.1}\]</span></span></p>
+<ul>
+<li>The interval as given in <a href="#eq-1" class="quarto-xref">Equation&nbsp;<span>2.1</span></a> is called a <strong>two-sided confidence interval</strong>.</li>
+</ul>
+<div class="callout callout-style-simple callout-none no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>What if we are interested in one sided confidence intervals !!</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>To determine such an interval, for a standard normal random variable Z, we have;</li>
 </ul>
 <p><span class="math display">\[
-\left( \bar{X} - z_{\alpha/2} \frac{\sigma}{\sqrt{n}}, \bar{X} + z_{\alpha/2} \frac{\sigma}{\sqrt{n}} \right)
+P\left( Z &lt; 1.645 \right) = 0.95
 \]</span></p>
+<ul>
+<li>Thus, <span class="math display">\[
+P\left( \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} &lt; 1.645 \right) = 0.95
+\]</span></li>
+</ul>
+<p><span class="math display">\[
+P\left( \mu -\bar{X} &gt; - 1.645\frac{\sigma}{\sqrt{n}} \right) = 0.95
+\]</span></p>
+<p><span class="math display">\[
+P\left( \mu &gt; \bar{X} - 1.645\frac{\sigma}{\sqrt{n}}  \right) = 0.95
+\]</span></p>
+<ul>
+<li>Thus a <strong>95 percent one-sided upper confidence interval for <span class="math inline">\(\mu\)</span></strong> is</li>
+</ul>
+<p><span class="math display">\[
+\left( \bar{X} - 1.645\frac{\sigma}{\sqrt{n}}, \infty   \right)
+\]</span></p>
+<p>or in other words; <strong>100(1-0.05) percent one-sided upper confidence interval for <span class="math inline">\(\mu\)</span></strong> is</p>
+<p><span class="math display">\[
+\left( \bar{X} - z_{0.05}\frac{\sigma}{\sqrt{n}}, \infty   \right)
+\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Can you think of another one sided confidence interval?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>We have <span class="math display">\[
+P\left( Z &gt; - 1.645 \right) = 0.95
+\]</span></p></li>
+<li><p>Proceed just like in the previous case and you will find a <strong>100(1-0.05) percent one-sided lower confidence interval</strong> for <span class="math inline">\(\mu\)</span> as;</p></li>
+</ul>
+<p><span class="math display">\[
+\left( -\infty, \bar{X} + z_{0.05}\frac{\sigma}{\sqrt{n}} \right)
+\]</span></p>
+</div>
+</div>
+<ul>
+<li>In general, <strong>100(1-<span class="math inline">\(\alpha\)</span>) percent one-sided upper confidence interval for <span class="math inline">\(\mu\)</span></strong> is given in <a href="#eq-one-sided-upper" class="quarto-xref">Equation&nbsp;<span>2.2</span></a>.</li>
+</ul>
+<p><span id="eq-one-sided-upper"><span class="math display">\[
+\left( \bar{X} - z_{\alpha}\frac{\sigma}{\sqrt{n}}, \infty \right)
+\tag{2.2}\]</span></span></p>
+<ul>
+<li>Also, <strong>100(1-<span class="math inline">\(\alpha\)</span>)percent one-sided lower confidence interval for <span class="math inline">\(\mu\)</span></strong> is given in <a href="#eq-one-sided-lower" class="quarto-xref">Equation&nbsp;<span>2.3</span></a>. <span id="eq-one-sided-lower"><span class="math display">\[
+\left( -\infty, \bar{X} + z_{\alpha}\frac{\sigma}{\sqrt{n}} \right)
+\tag{2.3}\]</span></span></li>
+</ul>
 
 
 </section>
