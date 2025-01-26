@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -140,7 +169,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">2.0.1</span> Introduction</a></li>
+  <li><a href="#introduction-and-important-terminology" id="toc-introduction-and-important-terminology" class="nav-link active" data-scroll-target="#introduction-and-important-terminology"><span class="header-section-number">2.0.1</span> Introduction and Important Terminology</a></li>
+  <li><a href="#testing-a-null-hypothesis" id="toc-testing-a-null-hypothesis" class="nav-link" data-scroll-target="#testing-a-null-hypothesis"><span class="header-section-number">2.0.2</span> Testing a Null Hypothesis</a></li>
+  <li><a href="#significance-level-and-classical-approach" id="toc-significance-level-and-classical-approach" class="nav-link" data-scroll-target="#significance-level-and-classical-approach"><span class="header-section-number">2.0.3</span> Significance Level and Classical Approach</a></li>
+  <li><a href="#testing-hypotheses-with-point-estimators" id="toc-testing-hypotheses-with-point-estimators" class="nav-link" data-scroll-target="#testing-hypotheses-with-point-estimators"><span class="header-section-number">2.0.4</span> Testing Hypotheses with Point Estimators</a></li>
+  <li><a href="#hypothesis-tests-concerning-the-mean-of-a-normal-population" id="toc-hypothesis-tests-concerning-the-mean-of-a-normal-population" class="nav-link" data-scroll-target="#hypothesis-tests-concerning-the-mean-of-a-normal-population"><span class="header-section-number">2.0.5</span> Hypothesis Tests Concerning the mean of a normal population</a></li>
+  <li><a href="#choosing-the-significance-level" id="toc-choosing-the-significance-level" class="nav-link" data-scroll-target="#choosing-the-significance-level"><span class="header-section-number">2.0.6</span> Choosing the Significance Level</a></li>
   </ul>
 </nav>
     </div>
@@ -166,13 +200,303 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="introduction" class="level3" data-number="2.0.1">
-<h3 data-number="2.0.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">2.0.1</span> Introduction</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Examples Highlighting the Need for Hypothesis Testing
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Medical Research</strong>:
+<ul>
+<li><strong>Scenario</strong>: A pharmaceutical company develops a new drug intended to lower blood pressure.</li>
+<li><strong>Hypothesis Testing</strong>: The null hypothesis (<span class="math inline">\(H_0\)</span>) might state that the new drug has no effect on blood pressure, while the alternative hypothesis (<span class="math inline">\(H_1\)</span>) states that the drug does lower blood pressure. Hypothesis testing helps determine if the observed effects in clinical trials are statistically significant or if they could have occurred by random chance.</li>
+</ul></li>
+<li><strong>Quality Control</strong>:
+<ul>
+<li><strong>Scenario</strong>: A factory produces light bulbs, and the quality control team wants to ensure that the average lifespan of the bulbs is 1000 hours.</li>
+<li><strong>Hypothesis Testing</strong>: The null hypothesis (<span class="math inline">\(H_0\)</span>) could be that the mean lifespan of the bulbs is 1000 hours. The alternative hypothesis (<span class="math inline">\(H_1\)</span>) might be that the mean lifespan is not 1000 hours. Hypothesis testing helps the team decide whether to accept the production process or take corrective actions.</li>
+</ul></li>
+<li><strong>Marketing</strong>:
+<ul>
+<li><strong>Scenario</strong>: A company launches a new advertising campaign and wants to know if it has increased sales.</li>
+<li><strong>Hypothesis Testing</strong>: The null hypothesis (<span class="math inline">\(H_0\)</span>) might state that the advertising campaign has no effect on sales, while the alternative hypothesis (<span class="math inline">\(H_1\)</span>) states that the campaign has increased sales. Hypothesis testing helps the company determine if the increase in sales is statistically significant.</li>
+</ul></li>
+<li><strong>Education</strong>:
+<ul>
+<li><strong>Scenario</strong>: An educator wants to test if a new teaching method is more effective than the traditional method.</li>
+<li><strong>Hypothesis Testing</strong>: The null hypothesis (<span class="math inline">\(H_0\)</span>) could be that there is no difference in effectiveness between the new and traditional methods. The alternative hypothesis (<span class="math inline">\(H_1\)</span>) might be that the new method is more effective. Hypothesis testing helps in making data-driven decisions about adopting new teaching strategies.</li>
+</ul></li>
+<li><strong>Environmental Science</strong>:
+<ul>
+<li><strong>Scenario</strong>: Researchers want to determine if a new policy has reduced pollution levels in a city.</li>
+<li><strong>Hypothesis Testing</strong>: The null hypothesis (<span class="math inline">\(H_0\)</span>) might state that the policy has no effect on pollution levels, while the alternative hypothesis (<span class="math inline">\(H_1\)</span>) states that the policy has reduced pollution levels. Hypothesis testing helps in evaluating the effectiveness of environmental policies.</li>
+</ul></li>
+</ol>
+<p>These examples illustrate how hypothesis testing is a crucial tool in various fields for making informed decisions based on data.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important Terminology
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>Null Hypothesis (<span class="math inline">\(H_0\)</span>)</strong>: The hypothesis that there is no effect or no difference. It is the default assumption that any observed effect is due to random chance. It is the hypothesis that researchers aim to test against.</p></li>
+<li><p><strong>Alternative Hypothesis (<span class="math inline">\(H_1\)</span> or <span class="math inline">\(H_a\)</span>)</strong>: The hypothesis that there is an effect or a difference. It is what researchers want to prove.</p></li>
+<li><p><strong>Test Statistic</strong>: A standardized value that is calculated from sample data during a hypothesis test. It is used to decide whether to reject the null hypothesis.</p></li>
+<li><p><strong>P-value</strong>: The probability of obtaining test results at least as extreme as the observed results, assuming that the null hypothesis is true. A smaller p-value indicates stronger evidence against the null hypothesis.</p></li>
+<li><p><strong>Significance Level (<span class="math inline">\(\alpha\)</span>)</strong>: A threshold set by the researcher which the p-value must be below in order to reject the null hypothesis. Common significance levels are 0.05, 0.01, and 0.10.</p></li>
+<li><p><strong>Critical Value</strong>: The value that the test statistic must exceed in order to reject the null hypothesis. It is determined based on the significance level and the distribution of the test statistic.</p></li>
+<li><p><strong>Power of a Test</strong>: The probability that the test correctly rejects a false null hypothesis (i.e., it does not make a type II error). Higher power indicates a greater ability to detect an effect when there is one.</p></li>
+<li><p><strong>Type I Error</strong>: The error made when the null hypothesis is true, but is incorrectly rejected. The probability of making a type I error is denoted by <span class="math inline">\(\alpha\)</span>.</p></li>
+<li><p><strong>Type II Error</strong>: The error made when the null hypothesis is false, but is incorrectly accepted. The probability of making a type II error is denoted by <span class="math inline">\(\beta\)</span>.</p></li>
+<li><p><strong>Confidence Interval</strong>: A range of values derived from the sample data that is likely to contain the population parameter. It provides an estimate of the parameter with a certain level of confidence (e.g., 95%).</p></li>
+<li><p><strong>One-tailed Test</strong>: A hypothesis test in which the region of rejection is on only one side of the sampling distribution. It tests for the possibility of the relationship in one direction.</p></li>
+<li><p><strong>Two-tailed Test</strong>: A hypothesis test in which the region of rejection is on both sides of the sampling distribution. It tests for the possibility of the relationship in both directions.</p></li>
+</ul>
+</div>
+</div>
+<section id="introduction-and-important-terminology" class="level3" data-number="2.0.1">
+<h3 data-number="2.0.1" class="anchored" data-anchor-id="introduction-and-important-terminology"><span class="header-section-number">2.0.1</span> Introduction and Important Terminology</h3>
 <ul>
 <li><p>A statistical hypothesis is typically a statement regarding a set of parameters of a population distribution.</p></li>
-<li><p>It is termed a hypothesis because its truth value is unknown.</p></li>
+<li><p>It is termed a hypothesis because its truth value is <strong>unknown</strong>.</p></li>
 <li><p>The main challenge is to devise a method to determine whether the values of a random sample from this population align with the hypothesis.</p></li>
-<li><p>For example, consider a normally distributed population with an unknown mean value θ and a known variance of 1. The statement “θ is less than 0.5” is a statistical hypothesis that we can test by observing a random sample from this population. If the random sample is consistent with the hypothesis, we say the hypothesis is “accepted”; otherwise, it is “rejected.”</p></li>
+<li><p>Consider a population with distribution <span class="math inline">\(F_\theta\)</span>, where <span class="math inline">\(\theta\)</span> is unknown.</p></li>
+<li><p>We aim to test a specific hypothesis about $ $.</p></li>
+<li><p>This hypothesis is denoted by $ H_0 $ and is referred to as the <strong>null hypothesis</strong>.</p></li>
+<li><p>For instance, if $ F_$ is a normal distribution function with mean $ $ and variance equal to 1, two possible null hypotheses about $ $ are:</p></li>
+</ul>
+<p><span class="math display">\[
+H_{0}: \theta = 1
+\]</span></p>
+<p><span class="math display">\[
+H_{0}: \theta &gt; 1
+\]</span></p>
+<p><span class="math display">\[
+H_{0}: \theta \leq 1
+\]</span></p>
+<ul>
+<li><p>It is important to note that the null hypothesis in the first case fully specifies the population distribution.</p></li>
+<li><p>Whereas the null hypothesis in the second and third cases do not.</p></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Simple and Composite Hypotheses
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>A hypothesis that fully specifies the population distribution when true is known as a <strong>simple hypothesis</strong>. (Eg; <span class="math inline">\(H_{0}: \theta = 1\)</span>)</p></li>
+<li><p>A hypothesis that does not fully specifies the population distribution is referred to as a <strong>composite hypothesis</strong>. (Eg; <span class="math inline">\(H_{0}: \theta &gt; 1\)</span>, H_{0}: )</p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="testing-a-null-hypothesis" class="level3" data-number="2.0.2">
+<h3 data-number="2.0.2" class="anchored" data-anchor-id="testing-a-null-hypothesis"><span class="header-section-number">2.0.2</span> Testing a Null Hypothesis</h3>
+<ul>
+<li><p>To test a specific null hypothesis <span class="math inline">\(H_0\)</span>, we take a sample of size <span class="math inline">\(n\)</span> from the population, say <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span>.</p></li>
+<li><p>Based on these <span class="math inline">\(n\)</span> values, we decide whether to accept or reject <span class="math inline">\(H_0\)</span>.</p></li>
+<li><p>We define a region <span class="math inline">\(C\)</span> in the <span class="math inline">\(n\)</span>-dimensional space. This region is called the <strong>critical region</strong>.</p></li>
+<li><p>If the sample <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> falls within the critical region <span class="math inline">\(C\)</span>, we reject <span class="math inline">\(H_0\)</span>. Otherwise, we accept <span class="math inline">\(H_0\)</span>.</p></li>
+<li><p>In simple terms, the critical region <span class="math inline">\(C\)</span> helps us determine the outcome of the statistical test.</p></li>
+</ul>
+<p><span class="math display">\[
+accepts \,\,\, H_0 \,\,\, if \,\,\, \left( X_1, X_2, . . . , X_n \right) \,\,\, \notin \,\,\, C
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+rejects \,\,\, H_0 \,\,\, if \,\,\, \left( X_1, X_2, . . . , X_n \right) \,\,\, \in \,\,\, C
+\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Types of Errors in Hypothesis Testing
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>When developing a procedure for testing a given null hypothesis <span class="math inline">\(H_0\)</span>, it is crucial to recognize that two different types of errors can occur.</p></li>
+<li><p>A <strong>type I error</strong> occurs if the test incorrectly rejects <span class="math inline">\(H_0\)</span> when it is actually true.</p></li>
+<li><p>A <strong>type II error</strong> occurs if the test incorrectly accepts <span class="math inline">\(H_0\)</span> when it is actually false.</p></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The goal of a statistical test for <span class="math inline">\(H_0\)</span> is not to definitively determine its truth but to assess if the data is consistent with <span class="math inline">\(H_0\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="significance-level-and-classical-approach" class="level3" data-number="2.0.3">
+<h3 data-number="2.0.3" class="anchored" data-anchor-id="significance-level-and-classical-approach"><span class="header-section-number">2.0.3</span> Significance Level and Classical Approach</h3>
+<ul>
+<li><p><span class="math inline">\(H_0\)</span> should be rejected only if the observed data is highly unlikely under <span class="math inline">\(H_0\)</span>.</p></li>
+<li><p>The classical method involves specifying a value <span class="math inline">\(\alpha\)</span>, known as the <strong>level of significance</strong>.</p></li>
+<li><p>The test is designed so that the probability of rejecting <span class="math inline">\(H_0\)</span> when it is true does not exceed <span class="math inline">\(\alpha\)</span>.</p></li>
+<li><p>Common choices for <span class="math inline">\(\alpha\)</span> are 0.1, 0.05, and 0.005.</p></li>
+<li><p>This approach ensures that the probability of a type I error (incorrectly rejecting <span class="math inline">\(H_0\)</span>) is controlled and does not exceed the chosen <span class="math inline">\(\alpha\)</span>.</p></li>
+</ul>
+</section>
+<section id="testing-hypotheses-with-point-estimators" class="level3" data-number="2.0.4">
+<h3 data-number="2.0.4" class="anchored" data-anchor-id="testing-hypotheses-with-point-estimators"><span class="header-section-number">2.0.4</span> Testing Hypotheses with Point Estimators</h3>
+<ul>
+<li><p>Suppose we are interested in testing a hypothesis concerning <span class="math inline">\(\theta\)</span>, an unknown parameter of the population.</p></li>
+<li><p>Specifically, for a given set of parameter values <span class="math inline">\(w\)</span>, we aim to test:</p></li>
+</ul>
+<p><span class="math display">\[
+H_0 : \theta \in w
+\]</span></p>
+<ul>
+<li><p>A common approach to developing a test of <span class="math inline">\(H_0\)</span> at a significance level <span class="math inline">\(\alpha\)</span> is to start by determining a point estimator of <span class="math inline">\(\theta\)</span>, say <span class="math inline">\(d(X)\)</span>.</p></li>
+<li><p>The hypothesis <span class="math inline">\(H_0\)</span> is then rejected if <span class="math inline">\(d(X)\)</span> is “far away” from the region <span class="math inline">\(w\)</span>.</p></li>
+<li><p>To determine how “far away” it needs to be to justify rejection of <span class="math inline">\(H_0\)</span>, we need to determine the probability distribution of <span class="math inline">\(d(X)\)</span> when <span class="math inline">\(H_0\)</span> is true.</p></li>
+<li><p>This distribution helps us determine the appropriate critical region to ensure the test has the required significance level <span class="math inline">\(\alpha\)</span>.</p></li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>For instance, consider testing the hypothesis that the mean of a normal distribution with parameters <span class="math inline">\((\theta, 1)\)</span> is equal to 1.</p></li>
+<li><p>The test rejects the null hypothesis if the point estimate of <span class="math inline">\(\theta\)</span> (i.e., the sample mean) deviates more than <span class="math inline">\(\frac{1.96}{\sqrt{n}}\)</span> from 1.</p></li>
+<li><p>As we will discuss in the next section, the value <span class="math inline">\(\frac{1.96}{\sqrt{n}}\)</span> is selected to achieve a significance level of <span class="math inline">\(\alpha = 0.05\)</span>.</p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="hypothesis-tests-concerning-the-mean-of-a-normal-population" class="level3" data-number="2.0.5">
+<h3 data-number="2.0.5" class="anchored" data-anchor-id="hypothesis-tests-concerning-the-mean-of-a-normal-population"><span class="header-section-number">2.0.5</span> Hypothesis Tests Concerning the mean of a normal population</h3>
+<section id="with-known-variance" class="level4" data-number="2.0.5.1">
+<h4 data-number="2.0.5.1" class="anchored" data-anchor-id="with-known-variance"><span class="header-section-number">2.0.5.1</span> With known Variance</h4>
+<ul>
+<li><p>Let <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> be a sample of size <span class="math inline">\(n\)</span> from a normal distribution with an unknown mean <span class="math inline">\(\mu\)</span> and a known variance <span class="math inline">\(\sigma^2\)</span>.</p></li>
+<li><p>We are interested in testing the null hypothesis:</p></li>
+</ul>
+<p><span class="math display">\[
+H_0 : \mu = \mu_0
+\]</span></p>
+<ul>
+<li>Against the alternative hypothesis:</li>
+</ul>
+<p><span class="math display">\[
+H_1 : \mu \neq \mu_0
+\]</span></p>
+<ul>
+<li><p>Where <span class="math inline">\(\mu_0\)</span> is a specified constant.</p></li>
+<li><p>Since <span class="math inline">\(\bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i\)</span> is a natural point estimator of <span class="math inline">\(\mu\)</span>, it is reasonable to accept <span class="math inline">\(H_0\)</span> if <span class="math inline">\(\bar{X}\)</span> is not too far from <span class="math inline">\(\mu_0\)</span>.</p></li>
+<li><p>Thus, the critical region of the test would be of the form:</p></li>
+</ul>
+<p><span class="math display">\[
+C = \{X_1, \ldots, X_n : |\bar{X} - \mu_0| &gt; c\}
+\]</span></p>
+<p>for some suitably chosen value <span class="math inline">\(c\)</span>.</p>
+<ul>
+<li>To ensure that the test has a significance level <span class="math inline">\(\alpha\)</span>, we must determine the critical value <span class="math inline">\(c\)</span> in the above equation such that the type I error is equal to <span class="math inline">\(\alpha\)</span>. This means <span class="math inline">\(c\)</span> must satisfy:</li>
+</ul>
+<p><span class="math display">\[
+P_{\mu_0} \{|\bar{X} - \mu_0| &gt; c\} = \alpha
+\]</span></p>
+<p>where <span class="math inline">\(P_{\mu_0}\)</span> denotes that the probability is computed under the assumption that population mean, <span class="math inline">\(\mu = \mu_0\)</span>.</p>
+<ul>
+<li>When <span class="math inline">\(\mu = \mu_0\)</span>, <span class="math inline">\(\bar{X}\)</span> follows a normal distribution with mean <span class="math inline">\(\mu_0\)</span> and variance <span class="math inline">\(\frac{\sigma^2}{n}\)</span>. Therefore, the standardized variable <span class="math inline">\(Z\)</span> defined by:</li>
+</ul>
+<p><span class="math display">\[
+Z = \frac{\bar{X} - \mu_0}{\sigma / \sqrt{n}}
+\]</span></p>
+<p>will have a standard normal distribution.</p>
+<ul>
+<li>The probability of a type I error is given by:</li>
+</ul>
+<p><span class="math display">\[
+P \left( |\bar{X} - \mu_0| &gt; c \right) = \alpha
+\]</span></p>
+<ul>
+<li>Equivalently, this can be written as:</li>
+</ul>
+<p><span class="math display">\[
+2P \left( Z &gt; \frac{c \sqrt{n}}{\sigma} \right) = \alpha
+\]</span></p>
+<ul>
+<li>Where <span class="math inline">\(Z\)</span> is a standard normal random variable. We know that:</li>
+</ul>
+<p><span class="math display">\[
+P \left( Z &gt; z_{\alpha/2} \right) = \frac{\alpha}{2}
+\]</span></p>
+<ul>
+<li>Therefore, we have:</li>
+</ul>
+<p><span class="math display">\[
+\frac{c \sqrt{n}}{\sigma} = z_{\alpha/2}
+\]</span></p>
+<ul>
+<li>Solving for <span class="math inline">\(c\)</span>, we get:</li>
+</ul>
+<p><span class="math display">\[
+c = \frac{z_{\alpha/2} \sigma}{\sqrt{n}}
+\]</span></p>
+<ul>
+<li>Thus, the test at significance level <span class="math inline">\(\alpha\)</span> is to <strong>reject</strong> <span class="math inline">\(H_0\)</span> if:</li>
+</ul>
+<p><span class="math display">\[
+|\bar{X} - \mu_0| &gt; \frac{z_{\alpha/2} \sigma}{\sqrt{n}}
+\]</span></p>
+<ul>
+<li>And <strong>accept</strong> <span class="math inline">\(H_0\)</span> otherwise. Equivalently, we can reject <span class="math inline">\(H_0\)</span> if:</li>
+</ul>
+<p><span class="math display">\[
+\sqrt{n} \frac{|\bar{X} - \mu_0|}{\sigma} &gt; z_{\alpha/2}
+\]</span></p>
+<ul>
+<li>And accept <span class="math inline">\(H_0\)</span> if:</li>
+</ul>
+<p><span class="math display">\[
+\sqrt{n} \frac{|\bar{X} - \mu_0|}{\sigma} \leq z_{\alpha/2}
+\]</span></p>
+</section>
+</section>
+<section id="choosing-the-significance-level" class="level3" data-number="2.0.6">
+<h3 data-number="2.0.6" class="anchored" data-anchor-id="choosing-the-significance-level"><span class="header-section-number">2.0.6</span> Choosing the Significance Level</h3>
+<ul>
+<li><p>The appropriate significance level <span class="math inline">\(\alpha\)</span> depends on the specific context and consequences of the hypothesis test.</p></li>
+<li><p>If rejecting the null hypothesis <span class="math inline">\(H_0\)</span> would lead to significant costs or consequences, a more conservative significance level (e.g., 0.05 or 0.01) should be chosen.</p></li>
+<li><p>If there is a strong initial belief that <span class="math inline">\(H_0\)</span> is true, strict evidence is required to reject <span class="math inline">\(H_0\)</span>, implying a lower significance level.</p></li>
+<li><p>The test can be described as follows: For an observed value of the test statistic <span class="math inline">\(\sqrt{n} \frac{|\bar{X} - \mu_0|}{\sigma}\)</span>, denoted as <span class="math inline">\(v\)</span>, reject <span class="math inline">\(H_0\)</span> if the probability of the test statistic being as large as <span class="math inline">\(v\)</span> under <span class="math inline">\(H_0\)</span> is less than or equal to <span class="math inline">\(\alpha\)</span>.</p></li>
+<li><p>This probability is known as the <strong>p-value</strong> of the test. <span class="math inline">\(H_0\)</span> is accepted if <span class="math inline">\(\alpha\)</span> is less than the p-value and rejected if <span class="math inline">\(\alpha\)</span> is greater than or equal to the p-value.</p></li>
+<li><p>In practice, the significance level is sometimes not set in advance. Instead, the p-value is calculated from the data, and decisions are made based on the p-value.</p></li>
+<li><p>If the p-value is much larger than any reasonable significance level, <span class="math inline">\(H_0\)</span> is accepted. Conversely, if the p-value is very small, <span class="math inline">\(H_0\)</span> is rejected.</p></li>
 </ul>
 
 
