@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1&nbsp; Parameter Estimation – Statistical Modeling - 24DS636 (2024-25)</title>
+<title>2&nbsp; Parameter Estimation – Statistical Modeling - 24DS636 (2024-25)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,7 +85,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./HypothesisTesting.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./DescriptiveStatistics.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -164,7 +164,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ParameterEstimation.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ParameterEstimation.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -197,14 +197,20 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./DescriptiveStatistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Descriptive statistics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./ParameterEstimation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./HypothesisTesting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -223,12 +229,12 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#point-estimation-maximum-likelihood-estimators" id="toc-point-estimation-maximum-likelihood-estimators" class="nav-link active" data-scroll-target="#point-estimation-maximum-likelihood-estimators"><span class="header-section-number">1.1</span> Point Estimation: Maximum Likelihood Estimators</a></li>
-  <li><a href="#interval-estimates" id="toc-interval-estimates" class="nav-link" data-scroll-target="#interval-estimates"><span class="header-section-number">1.2</span> Interval Estimates</a>
+  <li><a href="#point-estimation-maximum-likelihood-estimators" id="toc-point-estimation-maximum-likelihood-estimators" class="nav-link active" data-scroll-target="#point-estimation-maximum-likelihood-estimators"><span class="header-section-number">2.1</span> Point Estimation: Maximum Likelihood Estimators</a></li>
+  <li><a href="#interval-estimates" id="toc-interval-estimates" class="nav-link" data-scroll-target="#interval-estimates"><span class="header-section-number">2.2</span> Interval Estimates</a>
   <ul class="collapse">
-  <li><a href="#confidence-intervals-for-the-mean-of-a-normal-population-with-known-variance" id="toc-confidence-intervals-for-the-mean-of-a-normal-population-with-known-variance" class="nav-link" data-scroll-target="#confidence-intervals-for-the-mean-of-a-normal-population-with-known-variance"><span class="header-section-number">1.2.1</span> Confidence Intervals for the Mean of a normal population with known Variance</a></li>
-  <li><a href="#confidence-intervals-for-the-mean-of-a-normal-population-with-unknown-variance" id="toc-confidence-intervals-for-the-mean-of-a-normal-population-with-unknown-variance" class="nav-link" data-scroll-target="#confidence-intervals-for-the-mean-of-a-normal-population-with-unknown-variance"><span class="header-section-number">1.2.2</span> Confidence Intervals for the Mean of a normal population with unknown Variance</a></li>
-  <li><a href="#confidence-intervals-for-the-variance-of-a-normal-distribution" id="toc-confidence-intervals-for-the-variance-of-a-normal-distribution" class="nav-link" data-scroll-target="#confidence-intervals-for-the-variance-of-a-normal-distribution"><span class="header-section-number">1.2.3</span> Confidence Intervals for the Variance of a Normal Distribution</a></li>
+  <li><a href="#confidence-intervals-for-the-mean-of-a-normal-population-with-known-variance" id="toc-confidence-intervals-for-the-mean-of-a-normal-population-with-known-variance" class="nav-link" data-scroll-target="#confidence-intervals-for-the-mean-of-a-normal-population-with-known-variance"><span class="header-section-number">2.2.1</span> Confidence Intervals for the Mean of a normal population with known Variance</a></li>
+  <li><a href="#confidence-intervals-for-the-mean-of-a-normal-population-with-unknown-variance" id="toc-confidence-intervals-for-the-mean-of-a-normal-population-with-unknown-variance" class="nav-link" data-scroll-target="#confidence-intervals-for-the-mean-of-a-normal-population-with-unknown-variance"><span class="header-section-number">2.2.2</span> Confidence Intervals for the Mean of a normal population with unknown Variance</a></li>
+  <li><a href="#confidence-intervals-for-the-variance-of-a-normal-distribution" id="toc-confidence-intervals-for-the-variance-of-a-normal-distribution" class="nav-link" data-scroll-target="#confidence-intervals-for-the-variance-of-a-normal-distribution"><span class="header-section-number">2.2.3</span> Confidence Intervals for the Variance of a Normal Distribution</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -238,7 +244,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></h1>
 </div>
 
 
@@ -255,11 +261,12 @@ window.Quarto = {
 </header>
 
 
-<section id="point-estimation-maximum-likelihood-estimators" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="point-estimation-maximum-likelihood-estimators"><span class="header-section-number">1.1</span> Point Estimation: Maximum Likelihood Estimators</h2>
+<section id="point-estimation-maximum-likelihood-estimators" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="point-estimation-maximum-likelihood-estimators"><span class="header-section-number">2.1</span> Point Estimation: Maximum Likelihood Estimators</h2>
+<p><em>(Please refer the book titled “Introduction to Probability and Statistics for Engineers and Scientists” by Sheldon M Ross for more details)</em></p>
 </section>
-<section id="interval-estimates" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="interval-estimates"><span class="header-section-number">1.2</span> Interval Estimates</h2>
+<section id="interval-estimates" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="interval-estimates"><span class="header-section-number">2.2</span> Interval Estimates</h2>
 <ul>
 <li><p>Consider a sample <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> drawn from a known distribution with an <em>unknown</em> mean <span class="math inline">\(\mu\)</span>.</p></li>
 <li><p>It is established that the sample mean <span class="math inline">\(\bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i\)</span> serves as the maximum likelihood estimator for <span class="math inline">\(\mu\)</span>.</p></li>
@@ -267,8 +274,8 @@ window.Quarto = {
 <li><p>Therefore, instead of providing a single point estimate, it is often more useful to specify <strong>an interval</strong> within which we are confident that <span class="math inline">\(\mu\)</span> lies.</p></li>
 <li><p>To determine such an interval estimator, we utilize the probability distribution of the point estimator.</p></li>
 </ul>
-<section id="confidence-intervals-for-the-mean-of-a-normal-population-with-known-variance" class="level3" data-number="1.2.1">
-<h3 data-number="1.2.1" class="anchored" data-anchor-id="confidence-intervals-for-the-mean-of-a-normal-population-with-known-variance"><span class="header-section-number">1.2.1</span> Confidence Intervals for the Mean of a normal population with known Variance</h3>
+<section id="confidence-intervals-for-the-mean-of-a-normal-population-with-known-variance" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="confidence-intervals-for-the-mean-of-a-normal-population-with-known-variance"><span class="header-section-number">2.2.1</span> Confidence Intervals for the Mean of a normal population with known Variance</h3>
 <ul>
 <li><p>Consider a sample <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> drawn from a normal distribution with an <strong>unknown</strong> mean <span class="math inline">\(\mu\)</span> and a <strong>known</strong> variance <span class="math inline">\(\sigma^2\)</span>.</p></li>
 <li><p>The point estimator <span class="math inline">\(\bar{X}\)</span> is normal with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>/n.</p></li>
@@ -336,9 +343,9 @@ P\left( \bar{X} - z_{0.05/2}\frac{\sigma}{\sqrt{n}} &lt; \mu &lt; \bar{X} + z_{0
 </ul>
 <p><span id="eq-1"><span class="math display">\[
 \mu \in \left( \bar{X} - z_{\alpha/2} \frac{\sigma}{\sqrt{n}}, \bar{X} + z_{\alpha/2} \frac{\sigma}{\sqrt{n}} \right)
-\tag{1.1}\]</span></span></p>
+\tag{2.1}\]</span></span></p>
 <ul>
-<li><p>The interval as given in <a href="#eq-1" class="quarto-xref">Equation&nbsp;<span>1.1</span></a> is called a <strong>two-sided confidence interval</strong>.</p></li>
+<li><p>The interval as given in <a href="#eq-1" class="quarto-xref">Equation&nbsp;<span>2.1</span></a> is called a <strong>two-sided confidence interval</strong>.</p></li>
 <li><p>Also the term <span class="math inline">\(z_{\alpha/2} \frac{\sigma}{\sqrt{n}}\)</span> is called the <strong>margin of error</strong>.</p></li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -364,7 +371,7 @@ P\left( -z_{\alpha/2} &lt; \frac{\bar{X} -\mu}{\sigma/\sqrt{n}} &lt; z{_\alpha/2
 P\left( \bar{X} - z_{\alpha/2} \frac{\sigma}{\sqrt{n}} &lt; \mu &lt; \bar{X} - z_{\alpha/2} \frac{\sigma}{\sqrt{n}}  \right) = 1 - \alpha
 \]</span></p>
 <ul>
-<li>The above equation give us the required confidence interval, as given in <a href="#eq-1" class="quarto-xref">Equation&nbsp;<span>1.1</span></a>.</li>
+<li>The above equation give us the required confidence interval, as given in <a href="#eq-1" class="quarto-xref">Equation&nbsp;<span>2.1</span></a>.</li>
 </ul>
 </div>
 </div>
@@ -455,18 +462,18 @@ P\left( Z &gt; - 1.645 \right) = 0.95
 </div>
 </div>
 <ul>
-<li>In general, <strong>100(1-<span class="math inline">\(\alpha\)</span>) percent one-sided upper confidence interval for <span class="math inline">\(\mu\)</span></strong> is given in <a href="#eq-one-sided-upper" class="quarto-xref">Equation&nbsp;<span>1.2</span></a>.</li>
+<li>In general, <strong>100(1-<span class="math inline">\(\alpha\)</span>) percent one-sided upper confidence interval for <span class="math inline">\(\mu\)</span></strong> is given in <a href="#eq-one-sided-upper" class="quarto-xref">Equation&nbsp;<span>2.2</span></a>.</li>
 </ul>
 <p><span id="eq-one-sided-upper"><span class="math display">\[
 \mu \in \left( \bar{X} - z_{\alpha}\frac{\sigma}{\sqrt{n}}, \infty \right)
-\tag{1.2}\]</span></span></p>
+\tag{2.2}\]</span></span></p>
 <ul>
-<li><p>Also, <strong>100(1-<span class="math inline">\(\alpha\)</span>)percent one-sided lower confidence interval for <span class="math inline">\(\mu\)</span></strong> is given in <a href="#eq-one-sided-lower" class="quarto-xref">Equation&nbsp;<span>1.3</span></a>. <span id="eq-one-sided-lower"><span class="math display">\[
+<li><p>Also, <strong>100(1-<span class="math inline">\(\alpha\)</span>)percent one-sided lower confidence interval for <span class="math inline">\(\mu\)</span></strong> is given in <a href="#eq-one-sided-lower" class="quarto-xref">Equation&nbsp;<span>2.3</span></a>. <span id="eq-one-sided-lower"><span class="math display">\[
 \mu \in \left( -\infty, \bar{X} + z_{\alpha}\frac{\sigma}{\sqrt{n}} \right)
-\tag{1.3}\]</span></span></p></li>
+\tag{2.3}\]</span></span></p></li>
 <li><p>The python code below creates a sample and find 95% confidence interval for the mean if the population standard deviation is assumed to be 10. Other values are specified in the code.</p></li>
 </ul>
-<div id="9ef86fda" class="cell" data-execution_count="1">
+<div id="9edf7810" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -541,8 +548,8 @@ Problem
 </div>
 </div>
 </section>
-<section id="confidence-intervals-for-the-mean-of-a-normal-population-with-unknown-variance" class="level3" data-number="1.2.2">
-<h3 data-number="1.2.2" class="anchored" data-anchor-id="confidence-intervals-for-the-mean-of-a-normal-population-with-unknown-variance"><span class="header-section-number">1.2.2</span> Confidence Intervals for the Mean of a normal population with unknown Variance</h3>
+<section id="confidence-intervals-for-the-mean-of-a-normal-population-with-unknown-variance" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="confidence-intervals-for-the-mean-of-a-normal-population-with-unknown-variance"><span class="header-section-number">2.2.2</span> Confidence Intervals for the Mean of a normal population with unknown Variance</h3>
 <ul>
 <li>If you recollect the discussion we had about the sample mean from a normal population with unknown variance we saw that variable t<span class="math inline">\(_{n-1}\)</span> given by:</li>
 </ul>
@@ -606,8 +613,8 @@ Problem
 </div>
 </div>
 </section>
-<section id="confidence-intervals-for-the-variance-of-a-normal-distribution" class="level3" data-number="1.2.3">
-<h3 data-number="1.2.3" class="anchored" data-anchor-id="confidence-intervals-for-the-variance-of-a-normal-distribution"><span class="header-section-number">1.2.3</span> Confidence Intervals for the Variance of a Normal Distribution</h3>
+<section id="confidence-intervals-for-the-variance-of-a-normal-distribution" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="confidence-intervals-for-the-variance-of-a-normal-distribution"><span class="header-section-number">2.2.3</span> Confidence Intervals for the Variance of a Normal Distribution</h3>
 <ul>
 <li>If we are sampling from a normal distribution with unknown mean and unknown variance then;</li>
 </ul>
@@ -1087,13 +1094,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Course Introduction">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Course Introduction</span>
+      <a href="./DescriptiveStatistics.html" class="pagination-link" aria-label="Descriptive statistics">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Descriptive statistics</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./HypothesisTesting.html" class="pagination-link" aria-label="Hypothesis Testing">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

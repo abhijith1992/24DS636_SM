@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Hypothesis Testing – Statistical Modeling - 24DS636 (2024-25)</title>
+<title>3&nbsp; Hypothesis Testing – Statistical Modeling - 24DS636 (2024-25)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -110,7 +110,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./HypothesisTesting.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./HypothesisTesting.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -143,14 +143,20 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./DescriptiveStatistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Descriptive statistics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./ParameterEstimation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./HypothesisTesting.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -172,12 +178,12 @@ window.Quarto = {
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#testing-a-null-hypothesis" id="toc-testing-a-null-hypothesis" class="nav-link" data-scroll-target="#testing-a-null-hypothesis">Testing a Null Hypothesis</a></li>
   <li><a href="#significance-level-and-classical-approach" id="toc-significance-level-and-classical-approach" class="nav-link" data-scroll-target="#significance-level-and-classical-approach">Significance Level and Classical Approach</a></li>
-  <li><a href="#hypothesis-tests-concerning-the-mean-of-a-normal-population" id="toc-hypothesis-tests-concerning-the-mean-of-a-normal-population" class="nav-link" data-scroll-target="#hypothesis-tests-concerning-the-mean-of-a-normal-population"><span class="header-section-number">3</span> Hypothesis Tests Concerning the mean of a normal population</a>
+  <li><a href="#hypothesis-tests-concerning-the-mean-of-a-normal-population" id="toc-hypothesis-tests-concerning-the-mean-of-a-normal-population" class="nav-link" data-scroll-target="#hypothesis-tests-concerning-the-mean-of-a-normal-population"><span class="header-section-number">4</span> Hypothesis Tests Concerning the mean of a normal population</a>
   <ul class="collapse">
-  <li><a href="#with-known-variance" id="toc-with-known-variance" class="nav-link" data-scroll-target="#with-known-variance"><span class="header-section-number">3.1</span> With known Variance</a>
+  <li><a href="#with-known-variance" id="toc-with-known-variance" class="nav-link" data-scroll-target="#with-known-variance"><span class="header-section-number">4.1</span> With known Variance</a>
   <ul class="collapse">
-  <li><a href="#choosing-the-significance-level" id="toc-choosing-the-significance-level" class="nav-link" data-scroll-target="#choosing-the-significance-level"><span class="header-section-number">3.1.1</span> Choosing the Significance Level</a></li>
-  <li><a href="#hypothesis-testing-summary-for-nmu-sigma2-population" id="toc-hypothesis-testing-summary-for-nmu-sigma2-population" class="nav-link" data-scroll-target="#hypothesis-testing-summary-for-nmu-sigma2-population"><span class="header-section-number">3.1.2</span> Hypothesis Testing Summary for <span class="math inline">\(N(\mu, \sigma^2)\)</span> Population</a></li>
+  <li><a href="#choosing-the-significance-level" id="toc-choosing-the-significance-level" class="nav-link" data-scroll-target="#choosing-the-significance-level"><span class="header-section-number">4.1.1</span> Choosing the Significance Level</a></li>
+  <li><a href="#hypothesis-testing-summary-for-nmu-sigma2-population" id="toc-hypothesis-testing-summary-for-nmu-sigma2-population" class="nav-link" data-scroll-target="#hypothesis-testing-summary-for-nmu-sigma2-population"><span class="header-section-number">4.1.2</span> Hypothesis Testing Summary for <span class="math inline">\(N(\mu, \sigma^2)\)</span> Population</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -188,7 +194,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></h1>
 </div>
 
 
@@ -403,10 +409,10 @@ Example
 </div>
 </div>
 </section>
-<section id="hypothesis-tests-concerning-the-mean-of-a-normal-population" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Hypothesis Tests Concerning the mean of a normal population</h1>
-<section id="with-known-variance" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="with-known-variance"><span class="header-section-number">3.1</span> With known Variance</h2>
+<section id="hypothesis-tests-concerning-the-mean-of-a-normal-population" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Hypothesis Tests Concerning the mean of a normal population</h1>
+<section id="with-known-variance" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="with-known-variance"><span class="header-section-number">4.1</span> With known Variance</h2>
 <ul>
 <li><p>Let <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> be a sample of size <span class="math inline">\(n\)</span> from a normal distribution with an unknown mean <span class="math inline">\(\mu\)</span> and a known variance <span class="math inline">\(\sigma^2\)</span>.</p></li>
 <li><p>We are interested in testing the null hypothesis:</p></li>
@@ -504,8 +510,8 @@ Problem
 <p>If a signal of value <span class="math inline">\(\mu\)</span> is sent from location A, then the value received at location B is normally distributed with mean <span class="math inline">\(\mu\)</span> and standard deviation 2. That is, the random noise added to the signal is an N(0, 4) random variable. There is reason for the people at location B to suspect that the signal value <span class="math inline">\(\mu\)</span> = 8 will be sent today. Test this hypothesis if the same signal value is independently sent five times and the average value received at location B is X = 9. 5.</p>
 </div>
 </div>
-<section id="choosing-the-significance-level" class="level3" data-number="3.1.1">
-<h3 data-number="3.1.1" class="anchored" data-anchor-id="choosing-the-significance-level"><span class="header-section-number">3.1.1</span> Choosing the Significance Level</h3>
+<section id="choosing-the-significance-level" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="choosing-the-significance-level"><span class="header-section-number">4.1.1</span> Choosing the Significance Level</h3>
 <ul>
 <li><p>The appropriate significance level <span class="math inline">\(\alpha\)</span> depends on the specific context and consequences of the hypothesis test.</p></li>
 <li><p>If rejecting the null hypothesis <span class="math inline">\(H_0\)</span> would lead to significant costs or consequences, a more conservative significance level (e.g., 0.05 or 0.01) should be chosen.</p></li>
@@ -516,8 +522,8 @@ Problem
 <li><p>If the p-value is much larger than any reasonable significance level, <span class="math inline">\(H_0\)</span> is accepted. Conversely, if the p-value is very small, <span class="math inline">\(H_0\)</span> is rejected.</p></li>
 </ul>
 </section>
-<section id="hypothesis-testing-summary-for-nmu-sigma2-population" class="level3" data-number="3.1.2">
-<h3 data-number="3.1.2" class="anchored" data-anchor-id="hypothesis-testing-summary-for-nmu-sigma2-population"><span class="header-section-number">3.1.2</span> Hypothesis Testing Summary for <span class="math inline">\(N(\mu, \sigma^2)\)</span> Population</h3>
+<section id="hypothesis-testing-summary-for-nmu-sigma2-population" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="hypothesis-testing-summary-for-nmu-sigma2-population"><span class="header-section-number">4.1.2</span> Hypothesis Testing Summary for <span class="math inline">\(N(\mu, \sigma^2)\)</span> Population</h3>
 <table class="caption-top table">
 <caption>Caption: Summary of hypothesis testing for a sample from a <span class="math inline">\(N(\mu, \sigma^2)\)</span> population with known <span class="math inline">\(\sigma^2\)</span>.</caption>
 <colgroup>
@@ -1029,7 +1035,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./ParameterEstimation.html" class="pagination-link" aria-label="Parameter Estimation">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
