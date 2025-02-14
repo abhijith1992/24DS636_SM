@@ -180,11 +180,19 @@ window.Quarto = {
   <li><a href="#significance-level-and-classical-approach" id="toc-significance-level-and-classical-approach" class="nav-link" data-scroll-target="#significance-level-and-classical-approach">Significance Level and Classical Approach</a></li>
   <li><a href="#hypothesis-tests-concerning-the-mean-of-a-normal-population" id="toc-hypothesis-tests-concerning-the-mean-of-a-normal-population" class="nav-link" data-scroll-target="#hypothesis-tests-concerning-the-mean-of-a-normal-population"><span class="header-section-number">4</span> Hypothesis Tests Concerning the mean of a normal population</a>
   <ul class="collapse">
-  <li><a href="#with-known-variance" id="toc-with-known-variance" class="nav-link" data-scroll-target="#with-known-variance"><span class="header-section-number">4.1</span> With known Variance</a>
+  <li><a href="#with-known-variance-z-test" id="toc-with-known-variance-z-test" class="nav-link" data-scroll-target="#with-known-variance-z-test"><span class="header-section-number">4.1</span> With known Variance (Z-test)</a>
   <ul class="collapse">
   <li><a href="#choosing-the-significance-level" id="toc-choosing-the-significance-level" class="nav-link" data-scroll-target="#choosing-the-significance-level"><span class="header-section-number">4.1.1</span> Choosing the Significance Level</a></li>
-  <li><a href="#hypothesis-testing-summary-for-nmu-sigma2-population" id="toc-hypothesis-testing-summary-for-nmu-sigma2-population" class="nav-link" data-scroll-target="#hypothesis-testing-summary-for-nmu-sigma2-population"><span class="header-section-number">4.1.2</span> Hypothesis Testing Summary for <span class="math inline">\(N(\mu, \sigma^2)\)</span> Population</a></li>
+  <li><a href="#hypothesis-testing-summary-z--test" id="toc-hypothesis-testing-summary-z--test" class="nav-link" data-scroll-target="#hypothesis-testing-summary-z--test"><span class="header-section-number">4.1.2</span> Hypothesis Testing Summary: Z- Test</a></li>
   </ul></li>
+  <li><a href="#with-unknown-variance-t-test" id="toc-with-unknown-variance-t-test" class="nav-link" data-scroll-target="#with-unknown-variance-t-test"><span class="header-section-number">4.2</span> With unknown Variance (T-test)</a>
+  <ul class="collapse">
+  <li><a href="#hypothesis-testing-summary-t--test" id="toc-hypothesis-testing-summary-t--test" class="nav-link" data-scroll-target="#hypothesis-testing-summary-t--test"><span class="header-section-number">4.2.1</span> Hypothesis Testing Summary: T- Test</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#hypothesis-tests-concerning-the-variance-of-a-normal-population" id="toc-hypothesis-tests-concerning-the-variance-of-a-normal-population" class="nav-link" data-scroll-target="#hypothesis-tests-concerning-the-variance-of-a-normal-population"><span class="header-section-number">5</span> Hypothesis Tests Concerning the variance of a normal population</a>
+  <ul class="collapse">
+  <li><a href="#hypothesis-testing-summary-chi-square-test" id="toc-hypothesis-testing-summary-chi-square-test" class="nav-link" data-scroll-target="#hypothesis-testing-summary-chi-square-test"><span class="header-section-number">5.0.1</span> Hypothesis Testing Summary: chi-square Test</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -411,8 +419,8 @@ Example
 </section>
 <section id="hypothesis-tests-concerning-the-mean-of-a-normal-population" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Hypothesis Tests Concerning the mean of a normal population</h1>
-<section id="with-known-variance" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="with-known-variance"><span class="header-section-number">4.1</span> With known Variance</h2>
+<section id="with-known-variance-z-test" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="with-known-variance-z-test"><span class="header-section-number">4.1</span> With known Variance (Z-test)</h2>
 <ul>
 <li><p>Let <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> be a sample of size <span class="math inline">\(n\)</span> from a normal distribution with an unknown mean <span class="math inline">\(\mu\)</span> and a known variance <span class="math inline">\(\sigma^2\)</span>.</p></li>
 <li><p>We are interested in testing the null hypothesis:</p></li>
@@ -522,8 +530,8 @@ Problem
 <li><p>If the p-value is much larger than any reasonable significance level, <span class="math inline">\(H_0\)</span> is accepted. Conversely, if the p-value is very small, <span class="math inline">\(H_0\)</span> is rejected.</p></li>
 </ul>
 </section>
-<section id="hypothesis-testing-summary-for-nmu-sigma2-population" class="level3" data-number="4.1.2">
-<h3 data-number="4.1.2" class="anchored" data-anchor-id="hypothesis-testing-summary-for-nmu-sigma2-population"><span class="header-section-number">4.1.2</span> Hypothesis Testing Summary for <span class="math inline">\(N(\mu, \sigma^2)\)</span> Population</h3>
+<section id="hypothesis-testing-summary-z--test" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="hypothesis-testing-summary-z--test"><span class="header-section-number">4.1.2</span> Hypothesis Testing Summary: Z- Test</h3>
 <table class="caption-top table">
 <caption>Caption: Summary of hypothesis testing for a sample from a <span class="math inline">\(N(\mu, \sigma^2)\)</span> population with known <span class="math inline">\(\sigma^2\)</span>.</caption>
 <colgroup>
@@ -608,9 +616,285 @@ Problem
 <p>Imagine you’re the quality control manager at a company that prides itself on the precision of its product weights. The company claims that the average weight of their product is exactly 100 grams. But, as a diligent manager, you decide to put this claim to the test. You randomly select a sample of 30 products and measure their weights. To your surprise, the average weight of your sample is 110 grams! Now, you need to determine if this difference is statistically significant or just a fluke. Assume the population standard deviation as 15 grams.</p>
 </div>
 </div>
-
-
 </section>
+</section>
+<section id="with-unknown-variance-t-test" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="with-unknown-variance-t-test"><span class="header-section-number">4.2</span> With unknown Variance (T-test)</h2>
+<ul>
+<li><p>Let <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> be a sample of size <span class="math inline">\(n\)</span> from a normal distribution with an unknown mean <span class="math inline">\(\mu\)</span> and a unknown variance.</p></li>
+<li><p>Say, we are interested in testing the null hypothesis:</p></li>
+</ul>
+<p><span class="math display">\[
+H_0 : \mu = \mu_0
+\]</span></p>
+<ul>
+<li>Against the alternative hypothesis:</li>
+</ul>
+<p><span class="math display">\[
+H_1 : \mu \neq \mu_0
+\]</span></p>
+<ul>
+<li><p>Where <span class="math inline">\(\mu_0\)</span> is a specified constant.</p></li>
+<li><p>In the previous case (with known variance), for a significance level (<span class="math inline">\(\alpha\)</span>) we accepted the null hypothesis if:</p></li>
+</ul>
+<p><span class="math display">\[
+\left| \frac{\bar{X} - \mu_0 }{\sigma/\sqrt{n}} \right| \leq z_{\alpha/2}
+\]</span></p>
+<ul>
+<li><p>But in this case, <span class="math inline">\(\sigma\)</span> is unknown.</p></li>
+<li><p>We know that the statistic, T, as given below has a t-distribution with n-1 degrees of freedom when <span class="math inline">\(\mu\)</span> = <span class="math inline">\(\mu_0\)</span>.</p></li>
+</ul>
+<p><span class="math display">\[
+T = \frac{\bar{X} - \mu_0 }{S\sqrt{n}}
+\]</span></p>
+<p>where S is the sample standard deviation.</p>
+<ul>
+<li>Hence here with <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu\)</span> = <span class="math inline">\(\mu_0\)</span> and <span class="math inline">\(H_1\)</span>; <span class="math inline">\(\mu\)</span> <span class="math inline">\(\neq\)</span> <span class="math inline">\(\mu_0\)</span>; analogous to the Z-test here in T-test we can:</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+two-sided t-test
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>reject the null hypothesis (<span class="math inline">\(H_0\)</span>) if:</li>
+</ul>
+<p><span class="math display">\[
+\left| \frac{\bar{X} - \mu_0}{S/\sqrt{n}} \right| &gt; t_{\alpha/2}
+\]</span></p>
+<ul>
+<li>accept <span class="math inline">\(H_0\)</span> if:</li>
+</ul>
+<p><span class="math display">\[
+\left| \frac{\bar{X} - \mu_0}{S/\sqrt{n}} \right|  \leq t_{\alpha/2}
+\]</span></p>
+</div>
+</div>
+<section id="hypothesis-testing-summary-t--test" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="hypothesis-testing-summary-t--test"><span class="header-section-number">4.2.1</span> Hypothesis Testing Summary: T- Test</h3>
+<table class="caption-top table">
+<caption>Caption: Summary of hypothesis testing for a sample from a <span class="math inline">\(N(\mu, \sigma^2)\)</span> population with unknown <span class="math inline">\(\sigma^2\)</span>.</caption>
+<colgroup>
+<col style="width: 28%">
+<col style="width: 71%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Sample and Population</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sample</td>
+<td><span class="math inline">\(\{X_1, X_2, . . . , X_n\}\)</span></td>
+</tr>
+<tr class="even">
+<td>Population</td>
+<td><span class="math inline">\(N(\mu, \sigma^2)\)</span></td>
+</tr>
+<tr class="odd">
+<td>Sample Mean</td>
+<td><span class="math inline">\(\bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i\)</span></td>
+</tr>
+<tr class="even">
+<td>Sample Variance</td>
+<td><span class="math inline">\(S^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i-\bar{X})^2\)</span></td>
+</tr>
+<tr class="odd">
+<td>Significance Level</td>
+<td><span class="math inline">\(\alpha\)</span></td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 34%">
+<col style="width: 17%">
+<col style="width: 29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Hypothesis</th>
+<th>Test Statistic (TS)</th>
+<th>Reject if</th>
+<th>p-Value if TS = t</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(H_0: \mu = \mu_0\)</span> vs <span class="math inline">\(H_1: \mu \neq \mu_0\)</span></td>
+<td><span class="math inline">\(\sqrt{n}(\bar{X} - \mu_0)/S\)</span></td>
+<td><span class="math inline">\(|TS| &gt; t_{\alpha/2, n-1}\)</span></td>
+<td><span class="math inline">\(2P\{T_{n-1} \geq |t|\}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(H_0: \mu \leq \mu_0\)</span> vs <span class="math inline">\(H_1: \mu &gt; \mu_0\)</span></td>
+<td><span class="math inline">\(\sqrt{n}(\bar{X} - \mu_0)/S\)</span></td>
+<td><span class="math inline">\(TS &gt; t_{\alpha, n-1}\)</span></td>
+<td><span class="math inline">\(P\{T_{n-1} \geq t\}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(H_0: \mu \geq \mu_0\)</span> vs <span class="math inline">\(H_1: \mu &lt; \mu_0\)</span></td>
+<td><span class="math inline">\(\sqrt{n}(\bar{X} - \mu_0)/S\)</span></td>
+<td><span class="math inline">\(TS &lt; -t_{\alpha, n-1}\)</span></td>
+<td><span class="math inline">\(P\{T_{n-1} \leq t\}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(\text{\textcolor{gray}{$T_{n−1}$ is a t-random variable with (n - 1) degrees of freedom: P($T_{n−1}$ &gt; $t_{\alpha,n−1}$) = $\alpha$.}}\)</span></p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Problem
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A public health official claims that the mean home water use is at most 350 gallons a day. To verify this claim, a study of 20 randomly selected homes was instigated with the result that the average daily water uses of these 20 homes were as follows:</p>
+<p>340 344 362 375 356 386 354 364 332 402 340 355 362 322 372 324 318 360 338 370</p>
+<p>Do the data contradict the official’s claim?</p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="hypothesis-tests-concerning-the-variance-of-a-normal-population" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Hypothesis Tests Concerning the variance of a normal population</h1>
+<ul>
+<li><p>Let <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> be a sample of size <span class="math inline">\(n\)</span> from a normal distribution with an unknown mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>.</p></li>
+<li><p>We are interested in testing the null hypothesis:</p></li>
+</ul>
+<p><span class="math display">\[
+H_0 : \sigma^2 = \sigma^2_0
+\]</span></p>
+<ul>
+<li>Against the alternative hypothesis:</li>
+</ul>
+<p><span class="math display">\[
+H_1 : \sigma^2 \neq \sigma^2_0
+\]</span></p>
+<ul>
+<li><p>Where <span class="math inline">\(\sigma^2_0\)</span> is a specified constant.</p></li>
+<li><p>We know from the discussion on sampling distribution, <span class="math inline">\(\frac{(n-1)S^2}{\sigma^2_0}\)</span> has a chi-squared distribution with (n-1) degrees of freedom.</p></li>
+</ul>
+<p><span class="math display">\[
+\frac{(n-1)S^2}{\sigma^2_0} \sim \chi^2_{n-1}
+\]</span></p>
+<ul>
+<li>Also,</li>
+</ul>
+<p><span class="math display">\[
+P_{H_0} \left( \chi^2_{1-\alpha/2,\,\, n-1} \leq \frac{(n-1)S^2}{\sigma^2_0} \leq \chi^2_{\alpha/2,\,\, n-1}  \right)  =  1 - \alpha
+\]</span></p>
+<ul>
+<li>In this case the test statistic (TS) is:</li>
+</ul>
+<p><span class="math display">\[
+TS = \frac{(n-1)S^2}{\sigma^2_0}
+\]</span></p>
+<ul>
+<li>The p-value for this case is:</li>
+</ul>
+<p><span class="math display">\[
+p-value = 2  min\left( P(\chi^2_{n-1} &lt; TS), 1 - P(\chi^2_{n-1} &lt; TS)  \right)
+\]</span></p>
+<section id="hypothesis-testing-summary-chi-square-test" class="level3" data-number="5.0.1">
+<h3 data-number="5.0.1" class="anchored" data-anchor-id="hypothesis-testing-summary-chi-square-test"><span class="header-section-number">5.0.1</span> Hypothesis Testing Summary: chi-square Test</h3>
+<table class="caption-top table">
+<caption>Caption: Summary of hypothesis testing for a sample from a <span class="math inline">\(N(\mu, \sigma^2)\)</span> population.</caption>
+<colgroup>
+<col style="width: 28%">
+<col style="width: 71%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Sample and Population</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sample</td>
+<td><span class="math inline">\(\{X_1, X_2, . . . , X_n\}\)</span></td>
+</tr>
+<tr class="even">
+<td>Population</td>
+<td><span class="math inline">\(N(\mu, \sigma^2)\)</span></td>
+</tr>
+<tr class="odd">
+<td>Sample Mean</td>
+<td><span class="math inline">\(\bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i\)</span></td>
+</tr>
+<tr class="even">
+<td>Sample Variance</td>
+<td><span class="math inline">\(S^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i-\bar{X})^2\)</span></td>
+</tr>
+<tr class="odd">
+<td>Significance Level</td>
+<td><span class="math inline">\(\alpha\)</span></td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 34%">
+<col style="width: 17%">
+<col style="width: 29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Hypothesis</th>
+<th>Test Statistic (TS)</th>
+<th>Reject if</th>
+<th>p-Value if TS = t</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(H_0: \sigma^2 = \sigma^2_0\)</span> vs <span class="math inline">\(H_1: \sigma^2 \neq \sigma^2_0\)</span></td>
+<td><span class="math inline">\(\frac{(n-1)S^2}{\sigma^2_0}\)</span></td>
+<td><span class="math inline">\(TS \notin \left[\chi^2_{1-\alpha/2, \,\, n-1},\,\,\,  \chi^2_{\alpha/2, \,\, n-1} \right]\)</span></td>
+<td><span class="math inline">\(2  min\left( P(\chi^2_{n-1} &lt; t), 1 - P(\chi^2_{n-1} &lt; t)  \right)\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(H_0: \sigma^2 \leq \sigma^2_0\)</span> vs <span class="math inline">\(H_1: \sigma^2 &gt; \sigma^2_0\)</span></td>
+<td><span class="math inline">\(\frac{(n-1)S^2}{\sigma^2_0}\)</span></td>
+<td><span class="math inline">\(TS &gt; \chi^2_{\alpha, \,\, n-1}\)</span></td>
+<td><span class="math inline">\(P\left(\chi^2_{n-1} \geq t\right)\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(H_0: \sigma^2 \geq \sigma^2_0\)</span> vs <span class="math inline">\(H_1: \sigma^2 &lt; \sigma^2_0\)</span></td>
+<td><span class="math inline">\(\frac{(n-1)S^2}{\sigma^2_0}\)</span></td>
+<td><span class="math inline">\(TS &lt; \chi^2_{1-\alpha, \,\, n-1}\)</span></td>
+<td><span class="math inline">\(P\left(\chi^2_{n-1} \leq t\right)\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Problem
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A machine that automatically controls the amount of ribbon on a tape has recently been installed. This machine will be judged to be effective if the standard deviation <span class="math inline">\(sigma\)</span> of the amount of ribbon on a tape is less than .15 cm. If a sample of 20 tapes yields a sample variance of S<span class="math inline">\(^2\)</span> = .025 cm<span class="math inline">\(^2\)</span>, are we justified in concluding that the machine is ineffective? Assume the level of significance as 0.05.</p>
+</div>
+</div>
+
+
 </section>
 </section>
 
