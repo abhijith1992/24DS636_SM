@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Abhijith M S">
-<meta name="dcterms.date" content="2025-02-21">
+<meta name="dcterms.date" content="2025-02-24">
 
 <title>4&nbsp; Analysis of Variance (ANOVA) – Statistical Modeling - 24DS636 (2024-25)</title>
 <style>
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -186,7 +220,14 @@ window.Quarto = {
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">4.1</span> Introduction</a></li>
   <li><a href="#one-way-analysis-of-variance" id="toc-one-way-analysis-of-variance" class="nav-link" data-scroll-target="#one-way-analysis-of-variance"><span class="header-section-number">4.2</span> One-way Analysis of Variance</a>
   <ul class="collapse">
-  <li><a href="#how-to-do-the-hypothesis-testing" id="toc-how-to-do-the-hypothesis-testing" class="nav-link" data-scroll-target="#how-to-do-the-hypothesis-testing"><span class="header-section-number">4.2.1</span> How to do the hypothesis testing</a></li>
+  <li><a href="#how-to-do-the-hypothesis-testing" id="toc-how-to-do-the-hypothesis-testing" class="nav-link" data-scroll-target="#how-to-do-the-hypothesis-testing">How to do the hypothesis testing</a></li>
+  <li><a href="#summary-of-one-way-analysis-of-variance" id="toc-summary-of-one-way-analysis-of-variance" class="nav-link" data-scroll-target="#summary-of-one-way-analysis-of-variance">Summary of one-way analysis of variance</a></li>
+  <li><a href="#multiple-comparisons-of-sample-means" id="toc-multiple-comparisons-of-sample-means" class="nav-link" data-scroll-target="#multiple-comparisons-of-sample-means">Multiple Comparisons of Sample Means</a></li>
+  </ul></li>
+  <li><a href="#two-way-analysis-of-variance" id="toc-two-way-analysis-of-variance" class="nav-link" data-scroll-target="#two-way-analysis-of-variance"><span class="header-section-number">4.3</span> Two-way Analysis of Variance</a>
+  <ul class="collapse">
+  <li><a href="#introduction-1" id="toc-introduction-1" class="nav-link" data-scroll-target="#introduction-1">Introduction</a></li>
+  <li><a href="#summary-of-two-way-analysis-of-variance" id="toc-summary-of-two-way-analysis-of-variance" class="nav-link" data-scroll-target="#summary-of-two-way-analysis-of-variance">Summary of Two-way analysis of variance</a></li>
   <li><a href="#supplementary-topics" id="toc-supplementary-topics" class="nav-link" data-scroll-target="#supplementary-topics">Supplementary Topics</a></li>
   </ul></li>
   </ul>
@@ -214,7 +255,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 21, 2025</p>
+      <p class="date">February 24, 2025</p>
     </div>
   </div>
   
@@ -247,31 +288,121 @@ Comparison of means of three samples
 <li><strong>Z</strong>: 8, 11, 31, 39</li>
 </ul></li>
 <li><p>We want to test if the means of these three samples are <strong>significantly different</strong> from each other.</p></li>
-<li><p><strong>Step 1: Calculate the mean of each sample</strong>:</p>
+<li><p><strong>Calculate the mean of each sample</strong>:</p>
 <ul>
 <li>Mean of <strong>X</strong>: <span class="math inline">\((10 + 20 + 30 + 40) / 4 = 25\)</span></li>
 <li>Mean of <strong>Y</strong>: <span class="math inline">\((12 + 21 + 34 + 39) / 4 = 26.5\)</span></li>
 <li>Mean of <strong>Z</strong>: <span class="math inline">\((8 + 11 + 31 + 39) / 4 = 22.25\)</span></li>
 </ul></li>
-<li><p><strong>Step 2: Calculate the overall mean (grand mean)</strong> of all the samples combined:</p>
+<li><p><strong>Calculate the overall mean (grand mean)</strong> of all the samples combined:</p>
 <ul>
 <li>Grand Mean: <span class="math inline">\((10 + 20 + 30 + 40 + 12 + 21 + 34 + 39 + 8 + 11 + 31 + 39) / 12 = 24.58\)</span></li>
 </ul></li>
-<li><p><strong>Step 3: Analyze the variation between the sample means and the grand mean</strong>:</p>
-<ul>
-<li>We can measure how much each sample mean deviates from the grand mean. To ensure all values are positive, we use the <strong>square of these differences</strong>.</li>
-</ul></li>
-<li><p><strong>Step 4: Analyze the variation within each sample</strong>:</p>
-<ul>
-<li>We can also measure how much each individual value in a sample deviates from its corresponding sample mean. Again, we use the <strong>square of these differences</strong> to ensure positivity.</li>
-</ul></li>
-<li><p><strong>Step 5: Combine these variations</strong> to assess whether the differences between the sample means are significant relative to the variation within the samples.</p></li>
-<li><p><strong>Step 6: Compare the results</strong> to a statistical distribution to determine if the observed differences are likely due to random chance or if they indicate a significant difference in the population means.</p></li>
-<li><p><strong>Conclusion</strong>:</p>
-<ul>
-<li>Based on the calculations, we compare the observed variation to a critical value. If the observed variation is less than the critical value, there is no significant difference between the sample means.</li>
-</ul></li>
 </ul>
+</div>
+</div>
+<div id="91df3138" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Data</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.array([<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>])</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> np.array([<span class="dv">12</span>, <span class="dv">21</span>, <span class="dv">34</span>, <span class="dv">39</span>])</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>Z <span class="op">=</span> np.array([<span class="dv">8</span>, <span class="dv">11</span>, <span class="dv">31</span>, <span class="dv">39</span>])</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Grand mean</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>grand_mean <span class="op">=</span> np.mean(np.concatenate([X, Y, Z]))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatter plot</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>plt.scatter(np.ones_like(X), X, label<span class="op">=</span><span class="st">'X'</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>plt.scatter(np.ones_like(Y) <span class="op">*</span> <span class="dv">2</span>, Y, label<span class="op">=</span><span class="st">'Y'</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>plt.scatter(np.ones_like(Z) <span class="op">*</span> <span class="dv">3</span>, Z, label<span class="op">=</span><span class="st">'Z'</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>plt.xticks([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>], [<span class="st">'X'</span>, <span class="st">'Y'</span>, <span class="st">'Z'</span>])</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Samples'</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Values'</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Scatter Plot of Samples'</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>plt.axhline(grand_mean, color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'Grand Mean'</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Box plot</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>plt.boxplot([X, Y, Z], labels<span class="op">=</span>[<span class="st">'X'</span>, <span class="st">'Y'</span>, <span class="st">'Z'</span>])</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Samples'</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Values'</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Box Plot of Samples'</span>)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>plt.axhline(grand_mean, color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'Grand Mean'</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Anova_files/figure-html/cell-2-output-1.png" width="1141" height="468" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="6915e39b" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Data</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.array([<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>])</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> np.array([<span class="dv">12</span>, <span class="dv">21</span>, <span class="dv">34</span>, <span class="dv">39</span>])</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>Z <span class="op">=</span> np.array([<span class="dv">8</span>, <span class="dv">11</span>, <span class="dv">31</span>, <span class="dv">39</span>])</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Means</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>mean_X <span class="op">=</span> np.mean(X)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>mean_Y <span class="op">=</span> np.mean(Y)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>mean_Z <span class="op">=</span> np.mean(Z)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Grand mean</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>grand_mean <span class="op">=</span> np.mean(np.concatenate([X, Y, Z]))</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatter plot</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>plt.scatter(np.ones_like(X), X, label<span class="op">=</span><span class="st">'X'</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>plt.scatter(np.ones_like(Y) <span class="op">*</span> <span class="dv">2</span>, Y, label<span class="op">=</span><span class="st">'Y'</span>)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>plt.scatter(np.ones_like(Z) <span class="op">*</span> <span class="dv">3</span>, Z, label<span class="op">=</span><span class="st">'Z'</span>)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>plt.scatter([<span class="dv">1</span>], [mean_X], label<span class="op">=</span><span class="st">'Mean of X'</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>plt.scatter([<span class="dv">2</span>], [mean_Y], label<span class="op">=</span><span class="st">'Mean of Y'</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>plt.scatter([<span class="dv">3</span>], [mean_Z], label<span class="op">=</span><span class="st">'Mean of Z'</span>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>plt.xticks([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>], [<span class="st">'X'</span>, <span class="st">'Y'</span>, <span class="st">'Z'</span>])</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Samples'</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Means'</span>)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Scatter Plot of Sample Means'</span>)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co">#plt.axhline(grand_mean, color='red', linestyle='--', label='Grand Mean')</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co">#plt.legend(outside)</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">'center right'</span>, bbox_to_anchor<span class="op">=</span>(<span class="fl">1.25</span>, <span class="fl">0.5</span>))</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Box plot</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>plt.boxplot([X, Y, Z], labels<span class="op">=</span>[<span class="st">'X'</span>, <span class="st">'Y'</span>, <span class="st">'Z'</span>])</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>plt.boxplot([[mean_X], [mean_Y], [mean_Z]], labels<span class="op">=</span>[<span class="st">'X'</span>, <span class="st">'Y'</span>, <span class="st">'Z'</span>])</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Samples'</span>)</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Means'</span>)</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Box Plot of Sample Means'</span>)</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="co">#plt.axhline(grand_mean, color='red', linestyle='--', label='Grand Mean')</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Anova_files/figure-html/cell-3-output-2.png" width="1133" height="468" class="figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -383,24 +514,24 @@ E\left[\frac{SSW}{nm - m}\right] = \sigma^2
 </ul></li>
 </ul></li>
 <li><p>We have; <span class="math display">\[
-\frac{\bar{X}_i - \mu}{\sqrt{\sigma^2/n}} = \frac{\sqrt{n}(\bar{X}_i - \mu)}{\sigma}
+\frac{\bar{X}_{i.} - \mu}{\sqrt{\sigma^2/n}} = \frac{\sqrt{n}(\bar{X}_{i.} - \mu)}{\sigma}
 \]</span> follows a standard normal distribution; hence, <span id="eq-anova3"><span class="math display">\[
-  n \sum_{i=1}^{m} \frac{(\bar{X}_i - \mu)^2}{\sigma^2} \sim \chi^2_m
+  n \sum_{i=1}^{m} \frac{(\bar{X}_{i.} - \mu)^2}{\sigma^2} \sim \chi^2_m
    \tag{4.3}\]</span></span> follows a <strong>chi-square distribution</strong> with <strong>m degrees of freedom</strong> when <span class="math inline">\(H_0\)</span> is true.</p></li>
 <li><p>When all population means are equal to <span class="math inline">\(\mu\)</span>, the <strong>estimator of <span class="math inline">\(\mu\)</span></strong> is the <strong>average of all nm data values</strong>, denoted as <span class="math inline">\(\bar{X}_{..}\)</span>: <span class="math display">\[
-\bar{X}_{..} = \frac{\sum_{i=1}^{m} \sum_{j=1}^{n} X_{ij}}{nm} = \frac{\sum_{i=1}^{m} \bar{X}_i}{m}
+\bar{X}_{..} = \frac{\sum_{i=1}^{m} \sum_{j=1}^{n} X_{ij}}{nm} = \frac{\sum_{i=1}^{m} \bar{X}_{i.}}{m}
 \]</span></p></li>
 <li><p>Substituting <span class="math inline">\(\bar{X}_{..}\)</span> for the unknown parameter <span class="math inline">\(\mu\)</span> in <a href="#eq-anova3" class="quarto-xref">Equation&nbsp;<span>4.3</span></a>:</p>
 <ul>
 <li>When <span class="math inline">\(H_0\)</span> is true, the resulting quantity: <span class="math display">\[
-n \sum_{i=1}^{m} \frac{(\bar{X}_i - \bar{X}_{..})^2}{\sigma^2}
+n \sum_{i=1}^{m} \frac{(\bar{X}_{i.} - \bar{X}_{..})^2}{\sigma^2}
 \]</span></li>
 </ul></li>
 <li><p>The resulting quantity: <span class="math display">\[
-n \sum_{i=1}^{m} \frac{(\bar{X}_i - \bar{X}_{..})^2}{\sigma^2}
+n \sum_{i=1}^{m} \frac{(\bar{X}_{i.} - \bar{X}_{..})^2}{\sigma^2}
 \]</span> will be a <strong>chi-square random variable</strong> with <strong>m - 1 degrees of freedom</strong>.</p></li>
 <li><p>Define <strong>SSb</strong> as: <span id="eq-ssb"><span class="math display">\[
-SSb = n \sum_{i=1}^{m} (\bar{X}_i - \bar{X}_{..})^2
+SSb = n \sum_{i=1}^{m} (\bar{X}_{i.} - \bar{X}_{..})^2
 \tag{4.4}\]</span></span></p>
 <ul>
 <li>It follows that, <strong>when <span class="math inline">\(H_0\)</span> is true</strong>: <span class="math display">\[
@@ -423,14 +554,14 @@ E[SSb / (m - 1)] = \sigma^2
 <li><span class="math inline">\(\frac{SSW}{nm-m}\)</span> always estimates <span class="math inline">\(\sigma^2\)</span>.</li>
 <li><span class="math inline">\(\frac{SSb}{m-1}\)</span> estimates <span class="math inline">\(\sigma^2\)</span> when <span class="math inline">\(H_0\)</span> is true.</li>
 </ul></li>
-<li><p>Because it can be shown that <span class="math inline">\(\frac{SSb}{m-1}\)</span> will tend to exceed <span class="math inline">\(\sigma^2\)</span> when <span class="math inline">\(H_0\)</span> is not true, it is reasonable to let the test statistic be given by</p></li>
+<li><p>Because it can be shown that <span class="math inline">\(\frac{SSb}{m-1}\)</span> will tend to exceed <span class="math inline">\(\sigma^2\)</span> when <span class="math inline">\(H_0\)</span> is not true, now it is reasonable to let the test statistic be given by</p></li>
 </ul>
 <p><span class="math display">\[
 TS= \frac{\frac{SSb}{m-1} } {\frac{SSW}{nm-m}}
 \]</span></p>
 <p>and to reject <span class="math inline">\(H_0\)</span> when <span class="math inline">\(TS\)</span> is <strong>sufficiently large</strong>.</p>
-<section id="how-to-do-the-hypothesis-testing" class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1" class="anchored" data-anchor-id="how-to-do-the-hypothesis-testing"><span class="header-section-number">4.2.1</span> How to do the hypothesis testing</h3>
+<section id="how-to-do-the-hypothesis-testing" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="how-to-do-the-hypothesis-testing">How to do the hypothesis testing</h3>
 <ul>
 <li><p>To determine how large <span class="math inline">\(TS\)</span> needs to be to justify rejecting <span class="math inline">\(H_0\)</span>, we use the fact that:</p>
 <ul>
@@ -442,9 +573,207 @@ TS= \frac{\frac{SSb}{m-1} } {\frac{SSW}{nm-m}}
 <li><p>The significance level <span class="math inline">\(\alpha\)</span> test of <span class="math inline">\(H_0\)</span> is as follows:</p>
 <ul>
 <li><p>Reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(\frac{\frac{SSb}{m-1} }{ \frac{SSW}{nm-m}} &gt; F_{m-1,nm-m,\alpha}\)</span>.</p></li>
-<li><p>Do not reject <span class="math inline">\(H_0\)</span> otherwise.</p></li>
+<li><p>Do not reject <span class="math inline">\(H_0\)</span>, otherwise.</p></li>
 </ul></li>
 </ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>The following <strong>algebraic identity</strong>, known as the <strong>sum of squares identity</strong>, is useful for simplifying computations, especially when done by hand:</p>
+<p><strong>The Sum of Squares Identity</strong>: <span class="math display">\[
+\sum_{i=1}^{m} \sum_{j=1}^{n} X_{ij}^2 = nm \bar{X}_{..}^2 + SSb + SSW
+\]</span></p>
+<ul>
+<li>Here:
+<ul>
+<li><span class="math inline">\(\sum_{i=1}^{m} \sum_{j=1}^{n} X_{ij}^2\)</span> represents the <strong>total sum of squares</strong> of all observations.</li>
+<li><span class="math inline">\(nm \bar{X}_{..}^2\)</span> is the contribution from the <strong>grand mean</strong> (<span class="math inline">\(\bar{X}_{..}\)</span>).</li>
+<li><span class="math inline">\(SSb\)</span> (Sum of Squares Between) measures the variation <strong>between sample means</strong>.</li>
+<li><span class="math inline">\(SSW\)</span> (Sum of Squares Within) measures the variation <strong>within each sample</strong>.</li>
+</ul></li>
+</ul></li>
+<li><p>This identity helps decompose the total variability in the data into components that can be analyzed separately.</p></li>
+<li><p>When performing calculations <strong>by hand</strong>, the quantity <strong>SSb</strong> (Sum of Squares Between) should be computed first. It is defined as: <span class="math display">\[
+SSb = n \sum_{i=1}^{m} (\bar{X}_{i.} - \bar{X}_{..})^2
+\]</span></p></li>
+<li><p>Once <strong>SSb</strong> has been calculated, <strong>SSW</strong> (Sum of Squares Within) can be determined using the <strong>sum of squares identity</strong>. To do this:</p>
+<ol type="1">
+<li>Compute the total sum of squares: <span class="math display">\[
+\sum_{i=1}^{m} \sum_{j=1}^{n} X_{ij}^2
+\]</span></li>
+<li>Compute the term involving the grand mean: <span class="math display">\[
+nm \bar{X}_{..}^2
+\]</span></li>
+<li>Use the sum of squares identity to find <strong>SSW</strong>: <span class="math display">\[
+SSW = \sum_{i=1}^{m} \sum_{j=1}^{n} X_{ij}^2 - nm \bar{X}_{..}^2 - SSb
+\]</span></li>
+</ol></li>
+<li><p>This approach simplifies the computation process by breaking it into manageable steps and leveraging the sum of squares identity.</p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="summary-of-one-way-analysis-of-variance" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="summary-of-one-way-analysis-of-variance">Summary of one-way analysis of variance</h3>
+<div class="line-block">Source of Variation | Sum of Squares | Degrees of Freedom |</div>
+<p>|||| | Between samples | <span class="math inline">\(SS_b = n \sum_{i=1}^m (\bar{X}_{i.} - \bar{X}_{..})^2\)</span> | <span class="math inline">\(m - 1\)</span> |<br>
+| Within samples | <span class="math inline">\(SS_W = \sum_{i=1}^m \sum_{j=1}^n (X_{ij} - \bar{X}_{i.})^2\)</span> | <span class="math inline">\(nm - m\)</span> |</p>
+<p>Value of Test Statistic, <span class="math inline">\(TS = \frac{SS_b/(m-1)}{SS_W/(nm-m)}\)</span></p>
+<p>Significance level <span class="math inline">\(\alpha\)</span> test:<br>
+reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(TS \geq F_{m-1,nm-m,\alpha}\)</span><br>
+do not reject otherwise</p>
+<p>If <span class="math inline">\(TS = v\)</span>, then <span class="math inline">\(p\)</span>-value = <span class="math inline">\(P\{F_{m-1,nm-m} \geq v\}\)</span></p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An auto rental firm is using 15 identical motors that are adjusted to run at a fixed speed to test 3 different brands of gasoline. Each brand of gasoline is assigned to exactly 5 of the motors. Each motor runs on 10 gallons of gasoline until it is out of fuel. The following data represents the <strong>total mileages</strong> achieved by different motors using three types of gas:</p>
+<ul>
+<li><strong>Gas 1</strong>: <span class="math inline">\(220, 251, 226, 246, 260\)</span></li>
+<li><strong>Gas 2</strong>: <span class="math inline">\(244, 235, 232, 242, 225\)</span></li>
+<li><strong>Gas 3</strong>: <span class="math inline">\(252, 272, 250, 238, 256\)</span></li>
+</ul>
+<p>Test the hypothesis that the <strong>average mileage</strong> is not affected by the type of gas used. <em>(In other words, determine if there is a significant difference in the mean mileages for the three types of gas.)</em></p>
+</div>
+</div>
+</section>
+<section id="multiple-comparisons-of-sample-means" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="multiple-comparisons-of-sample-means">Multiple Comparisons of Sample Means</h3>
+<ul>
+<li><p>When the null hypothesis of equal means is rejected, we are often interested in comparing the different sample means <span class="math inline">\(\mu_1, \dots, \mu_m\)</span>.</p></li>
+<li><p>One commonly used procedure for this purpose is known as the <strong>T-method</strong>.</p></li>
+<li><p>For a specified significance level <span class="math inline">\(\alpha\)</span>, this method provides <strong>joint confidence intervals</strong> for all <span class="math inline">\(\binom{m}{2}\)</span> differences <span class="math inline">\(\mu_i - \mu_j\)</span> (where <span class="math inline">\(i \neq j\)</span>, and <span class="math inline">\(i, j = 1, \dots, m\)</span>), ensuring that with probability <span class="math inline">\(1 - \alpha\)</span>, all confidence intervals will contain their respective differences <span class="math inline">\(\mu_i - \mu_j\)</span>.</p></li>
+<li><p>The <strong>T-method</strong> is based on the following result:</p></li>
+<li><p>With probability <span class="math inline">\(1 - \alpha\)</span>, for every <span class="math inline">\(i \neq j\)</span>: <span class="math display">\[
+X_{i.} - X_{j.} - W &lt; \mu_i - \mu_j &lt; X_{i.} - X_{j.} + W
+\]</span></p></li>
+</ul>
+<p>Where: - <span class="math inline">\(X_{i.}\)</span> and <span class="math inline">\(X_{j.}\)</span> are the sample means for groups <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, respectively. - <span class="math inline">\(W\)</span> is the critical value derived from the Studentized range distribution, adjusted for multiple comparisons.</p>
+<p>where <span class="math display">\[
+W = \sqrt{\frac{1}{n}} \cdot C(m, nm - m, \alpha) \cdot \sqrt{\frac{SSW}{(nm - m)}}
+\]</span> and the values of <span class="math inline">\(C(m, nm - m, \alpha)\)</span> are provided for <span class="math inline">\(\alpha = 0.05\)</span> and <span class="math inline">\(\alpha = 0.01\)</span>.</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A college administrator claims that there is no difference in first-year grade point averages for students entering the college from any of three different city high schools. The following data provide the first-year grade point averages of 12 randomly chosen students, 4 from each of the three high schools. At the 5 percent level of significance, do these data disprove the administrator’s claim? If so, determine confidence intervals for the difference in means of students from the different high schools, such that we can be 95 percent confident that all of the interval statements are valid.</p>
+<p><strong>School 1</strong>: 3.2, 3.4, 3.3, 3.5<br>
+<strong>School 2</strong>: 3.4, 3.0, 3.7, 3.3<br>
+<strong>School 3</strong>: 2.8, 2.6, 3.0, 2.7</p>
+</div>
+</div>
+</section>
+</section>
+<section id="two-way-analysis-of-variance" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="two-way-analysis-of-variance"><span class="header-section-number">4.3</span> Two-way Analysis of Variance</h2>
+<section id="introduction-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="introduction-1">Introduction</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider that four different examinations were administered to each of 5 students, with the scores shown in the table below. Each of the 20 data points is influenced by two factors: the <strong>exam</strong> and the <strong>student</strong> whose score on that exam is being recorded.</p>
+<ul>
+<li><p>The <strong>exam factor</strong> has 4 possible levels.</p></li>
+<li><p>The <strong>student factor</strong> has 5 possible levels.</p></li>
+<li><p><strong>Data Table</strong>: <span class="math display">\[
+\begin{array}{c|ccccc}
+\text{Exam} &amp; \text{Student 1} &amp; \text{Student 2} &amp; \text{Student 3} &amp; \text{Student 4} &amp; \text{Student 5} \\
+\hline
+1 &amp; 75 &amp; 73 &amp; 60 &amp; 70 &amp; 86 \\
+2 &amp; 78 &amp; 71 &amp; 64 &amp; 72 &amp; 90 \\
+3 &amp; 80 &amp; 69 &amp; 62 &amp; 70 &amp; 85 \\
+4 &amp; 73 &amp; 67 &amp; 63 &amp; 80 &amp; 92 \\
+\end{array}
+\]</span></p></li>
+</ul>
+</div>
+</div>
+<ul>
+<li><p>In general, suppose there are <strong>m possible levels</strong> of the first factor (row factor) and <strong>n possible levels</strong> of the second factor (column factor). Let <span class="math inline">\(X_{ij}\)</span> denote the value obtained when:</p>
+<ul>
+<li>The first factor is at level <span class="math inline">\(i\)</span>.</li>
+<li>The second factor is at level <span class="math inline">\(j\)</span>.</li>
+</ul></li>
+<li><p>The data can be represented in an array format: <span class="math display">\[
+\begin{array}{cccccc}
+X_{11} &amp; X_{12} &amp; \dots &amp; X_{1j} &amp; \dots &amp; X_{1n} \\
+X_{21} &amp; X_{22} &amp; \dots &amp; X_{2j} &amp; \dots &amp; X_{2n} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \ddots &amp; \vdots \\
+X_{i1} &amp; X_{i2} &amp; \dots &amp; X_{ij} &amp; \dots &amp; X_{in} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \ddots &amp; \vdots \\
+X_{m1} &amp; X_{m2} &amp; \dots &amp; X_{mj} &amp; \dots &amp; X_{mn} \\
+\end{array}
+\]</span></p></li>
+<li><p>Here, the <strong>first factor</strong> is referred to as the <strong>row factor</strong>, and the <strong>second factor</strong> is referred to as the <strong>column factor</strong>.</p></li>
+<li><p>As in the case of one-way analysis assume that the data <span class="math inline">\(X_{ij}\)</span> (<span class="math inline">\(i = 1, \dots, m\)</span>, <span class="math inline">\(j = 1, \dots, n\)</span>) are <strong>independent normal random variables</strong> with a common variance <span class="math inline">\(\sigma^2\)</span>. However, unlike the one-way analysis, where only a single factor affected the mean value of a data point, we now assume that the mean value of the data depends <strong>additively</strong> on both its row and column factors.</p></li>
+</ul>
+</section>
+<section id="summary-of-two-way-analysis-of-variance" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="summary-of-two-way-analysis-of-variance">Summary of Two-way analysis of variance</h3>
+<div class="line-block">Sum of Squares | Degrees of Freedom |</div>
+<p>||| | Row | <span class="math inline">\(SS_r = n \sum_{i=1}^m (\bar{X}_{i.} - \bar{X}_{..})^2\)</span> | <span class="math inline">\(m - 1\)</span> | | Column | <span class="math inline">\(SS_c = m \sum_{j=1}^n (\bar{X}_{.j} - \bar{X}_{..})^2\)</span> | <span class="math inline">\(n - 1\)</span> | | Error | <span class="math inline">\(SS_e = \sum_{i=1}^m \sum_{j=1}^n (X_{ij} - \bar{X}_{i.} - \bar{X}_{.j} + \bar{X}_{..})^2\)</span> | <span class="math inline">\((m - 1)(n - 1)\)</span> |</p>
+<p><strong>Let <span class="math inline">\(N = (m - 1)(n - 1)\)</span></strong></p>
+<div class="line-block">Null Hypothesis | Test Statistic | Significance Level <span class="math inline">\(\alpha\)</span> Test | p-value if TS = v |</div>
+<p>||||| | All <span class="math inline">\(\alpha_i = 0\)</span> | <span class="math inline">\(\frac{SS_r/(m - 1)}{SS_e/N}\)</span> | Reject if <span class="math inline">\(TS \geq F_{m-1,N,\alpha}\)</span> | <span class="math inline">\(P\{F_{m-1,N} \geq v\}\)</span> | | All <span class="math inline">\(\beta_j = 0\)</span> | <span class="math inline">\(\frac{SS_c/(n - 1)}{SS_e/N}\)</span> | Reject if <span class="math inline">\(TS \geq F_{n-1,N,\alpha}\)</span> | <span class="math inline">\(P\{F_{n-1,N} \geq v\}\)</span> |</p>
+<p>where:</p>
+<ul>
+<li><p><strong>Row Mean (<span class="math inline">\(\bar{X}_i.\)</span>)</strong>: <span class="math display">\[
+\bar{X}_{i.} = \frac{\sum_{j=1}^n X_{ij}}{n} = \text{Average of the values in row } i
+\]</span></p></li>
+<li><p><strong>Column Mean (<span class="math inline">\(\bar{X}_{.j}\)</span>)</strong>: <span class="math display">\[
+\bar{X}_{.j} = \frac{\sum_{i=1}^m X_{ij}}{m} = \text{Average of the values in column } j
+\]</span></p></li>
+<li><p><strong>Grand Mean (<span class="math inline">\(\bar{X}_{..}\)</span>)</strong>: <span class="math display">\[
+\bar{X}_{..} = \frac{\sum_{i=1}^m \sum_{j=1}^n X_{ij}}{nm} = \text{Average of all data values}
+\]</span></p></li>
+</ul>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Problem 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A researcher aims to investigate the impact of <strong>two factors</strong> on <strong>crop yield</strong>:</p>
+<ol type="1">
+<li><strong>Factor A (Fertilizer Type)</strong>: Two levels - Type 1 (<span class="math inline">\(T1\)</span>) and Type 2 (<span class="math inline">\(T2\)</span>).</li>
+<li><strong>Factor B (Irrigation Level)</strong>: Three levels - Low (<span class="math inline">\(L\)</span>), Medium (<span class="math inline">\(M\)</span>), and High (<span class="math inline">\(H\)</span>).</li>
+</ol>
+<p>The researcher measures the <strong>yield (in kg)</strong> for each combination of factors. Due to the high cost of the experiment, only <strong>one observation</strong> is recorded for each combination. The data is as follows:</p>
+<div class="line-block">Fertilizer | Irrigation | Yield (kg) |</div>
+<p>|–|–|| | Type 1 (<span class="math inline">\(T1\)</span>) | Low (<span class="math inline">\(L\)</span>) | 50 | | Type 1 (<span class="math inline">\(T1\)</span>) | Medium (<span class="math inline">\(M\)</span>) | 60 | | Type 1 (<span class="math inline">\(T1\)</span>) | High (<span class="math inline">\(H\)</span>) | 70 | | Type 2 (<span class="math inline">\(T2\)</span>) | Low (<span class="math inline">\(L\)</span>) | 55 | | Type 2 (<span class="math inline">\(T2\)</span>) | Medium (<span class="math inline">\(M\)</span>) | 65 | | Type 2 (<span class="math inline">\(T2\)</span>) | High (<span class="math inline">\(H\)</span>) | 75 |</p>
+</div>
+</div>
 </section>
 <section id="supplementary-topics" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="supplementary-topics">Supplementary Topics</h3>
@@ -454,67 +783,61 @@ TS= \frac{\frac{SSb}{m-1} } {\frac{SSW}{nm-m}}
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Degrees of Freedom (dof)
+<strong>Degrees of Freedom (dof)</strong>
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <ul>
 <li>The statement <strong>“One degree of freedom is lost for each estimated parameter”</strong> is a key concept in statistics, especially in hypothesis testing and parameter estimation. Here’s a detailed explanation:</li>
 </ul>
-<hr>
-<section id="what-are-degrees-of-freedom" class="level3" data-number="4.2.2">
-<h3 data-number="4.2.2" class="anchored" data-anchor-id="what-are-degrees-of-freedom"><span class="header-section-number">4.2.2</span> <strong>What Are Degrees of Freedom?</strong></h3>
+<section id="what-are-degrees-of-freedom" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="what-are-degrees-of-freedom"><strong>What Are Degrees of Freedom?</strong></h4>
 <ul>
 <li>Degrees of freedom (df) represent the number of independent pieces of information available to estimate a parameter or test a hypothesis.</li>
 <li>In simpler terms, it’s the number of values in a calculation that are free to vary after certain constraints (like estimating parameters) are applied.</li>
 </ul>
-<hr>
 </section>
-<section id="why-are-degrees-of-freedom-lost" class="level3" data-number="4.2.3">
-<h3 data-number="4.2.3" class="anchored" data-anchor-id="why-are-degrees-of-freedom-lost"><span class="header-section-number">4.2.3</span> <strong>Why Are Degrees of Freedom Lost?</strong></h3>
+<section id="why-are-degrees-of-freedom-lost" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="why-are-degrees-of-freedom-lost"><strong>Why Are Degrees of Freedom Lost?</strong></h4>
 <ul>
 <li>When you estimate parameters (e.g., population means, variances) from sample data, you use the data itself to calculate these estimates.</li>
 <li>Each time you estimate a parameter, you impose a constraint on the data, reducing the number of independent pieces of information available.</li>
 <li><strong>Example</strong>: If you estimate the sample mean (<span class="math inline">\(\bar{X}\)</span>) from a dataset, you use the data to calculate <span class="math inline">\(\bar{X}\)</span>. This means one piece of information (one degree of freedom) is “used up” in estimating <span class="math inline">\(\bar{X}\)</span>, and the remaining data points are no longer fully independent.</li>
 </ul>
-<hr>
 </section>
-<section id="application-in-the-context-of-the-problem" class="level3" data-number="4.2.4">
-<h3 data-number="4.2.4" class="anchored" data-anchor-id="application-in-the-context-of-the-problem"><span class="header-section-number">4.2.4</span> <strong>Application in the Context of the Problem</strong></h3>
+<section id="application-in-the-context-of-the-problem" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="application-in-the-context-of-the-problem"><strong>Application in the Context of the Problem</strong></h4>
 <ul>
 <li>In the given problem:
 <ol type="1">
-<li>You have <strong>m samples</strong>, each of size <strong>n</strong>, and you estimate the mean of each sample (<span class="math inline">\(\mu_i\)</span>) using the sample mean (<span class="math inline">\(\bar{X}_i\)</span>).</li>
+<li>You have <strong>m samples</strong>, each of size <strong>n</strong>, and you estimate the mean of each sample (<span class="math inline">\(\mu_i\)</span>) using the sample mean (<span class="math inline">\(\bar{X}_{i.}\)</span>).</li>
 <li>Each time you estimate a mean (<span class="math inline">\(\mu_i\)</span>), you lose <strong>one degree of freedom</strong> because the data is used to calculate that estimate.</li>
 <li>Since you estimate <strong>m means</strong> (<span class="math inline">\(\mu_1, \mu_2, \dots, \mu_m\)</span>), you lose <strong>m degrees of freedom</strong> in total.</li>
 </ol></li>
 </ul>
-<hr>
 </section>
-<section id="mathematical-explanation" class="level3" data-number="4.2.5">
-<h3 data-number="4.2.5" class="anchored" data-anchor-id="mathematical-explanation"><span class="header-section-number">4.2.5</span> <strong>Mathematical Explanation</strong></h3>
+<section id="mathematical-explanation" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="mathematical-explanation"><strong>Mathematical Explanation</strong></h4>
 <ul>
 <li><p>Initially, the sum of squares: <span class="math display">\[
 \sum_{i=1}^{m} \sum_{j=1}^{n} \frac{(X_{ij} - \mu_i)^2}{\sigma^2}
 \]</span> follows a chi-square distribution with <strong>nm degrees of freedom</strong> (since there are <strong>nm independent observations</strong>).</p></li>
-<li><p>However, when you replace the true means (<span class="math inline">\(\mu_i\)</span>) with their estimates (<span class="math inline">\(\bar{X}_i\)</span>), you lose <strong>m degrees of freedom</strong> (one for each estimated mean). This is because the estimates are derived from the data, reducing the independence of the observations.</p></li>
+<li><p>However, when you replace the true means (<span class="math inline">\(\mu_i\)</span>) with their estimates (<span class="math inline">\(\bar{X}_{i.}\)</span>), you lose <strong>m degrees of freedom</strong> (one for each estimated mean). This is because the estimates are derived from the data, reducing the independence of the observations.</p></li>
 <li><p>As a result, the modified sum of squares: <span class="math display">\[
-\sum_{i=1}^{m} \sum_{j=1}^{n} \frac{(X_{ij} - \bar{X}_i)^2}{\sigma^2}
+\sum_{i=1}^{m} \sum_{j=1}^{n} \frac{(X_{ij} - \bar{X}_{i.})^2}{\sigma^2}
 \]</span> follows a chi-square distribution with <strong>nm - m degrees of freedom</strong>.</p></li>
 </ul>
-<hr>
 </section>
-<section id="why-does-this-matter" class="level3" data-number="4.2.6">
-<h3 data-number="4.2.6" class="anchored" data-anchor-id="why-does-this-matter"><span class="header-section-number">4.2.6</span> <strong>Why Does This Matter?</strong></h3>
+<section id="why-does-this-matter" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="why-does-this-matter"><strong>Why Does This Matter?</strong></h4>
 <ul>
 <li>Degrees of freedom affect the shape and critical values of the chi-square distribution, which is used for hypothesis testing.</li>
 <li>Losing degrees of freedom accounts for the fact that estimating parameters introduces uncertainty into the analysis.</li>
 <li>This adjustment ensures that statistical tests (e.g., ANOVA) are accurate and reliable.</li>
 </ul>
-<hr>
 </section>
-<section id="summary" class="level3" data-number="4.2.7">
-<h3 data-number="4.2.7" class="anchored" data-anchor-id="summary"><span class="header-section-number">4.2.7</span> <strong>Summary</strong></h3>
+<section id="summary" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="summary"><strong>Summary</strong></h4>
 <ul>
 <li><strong>Degrees of freedom</strong> represent independent information in the data.</li>
 <li><strong>Each estimated parameter</strong> (e.g., a mean) reduces the degrees of freedom by 1 because the data is used to calculate the estimate.</li>
