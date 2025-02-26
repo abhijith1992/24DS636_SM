@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Abhijith M S">
-<meta name="dcterms.date" content="2025-02-24">
+<meta name="dcterms.date" content="2025-02-26">
 
 <title>4&nbsp; Analysis of Variance (ANOVA) – Statistical Modeling - 24DS636 (2024-25)</title>
 <style>
@@ -223,6 +223,7 @@ window.Quarto = {
   <li><a href="#how-to-do-the-hypothesis-testing" id="toc-how-to-do-the-hypothesis-testing" class="nav-link" data-scroll-target="#how-to-do-the-hypothesis-testing">How to do the hypothesis testing</a></li>
   <li><a href="#summary-of-one-way-analysis-of-variance" id="toc-summary-of-one-way-analysis-of-variance" class="nav-link" data-scroll-target="#summary-of-one-way-analysis-of-variance">Summary of one-way analysis of variance</a></li>
   <li><a href="#multiple-comparisons-of-sample-means" id="toc-multiple-comparisons-of-sample-means" class="nav-link" data-scroll-target="#multiple-comparisons-of-sample-means">Multiple Comparisons of Sample Means</a></li>
+  <li><a href="#one-way-analysis-of-variance-with-unequal-sample-sizes" id="toc-one-way-analysis-of-variance-with-unequal-sample-sizes" class="nav-link" data-scroll-target="#one-way-analysis-of-variance-with-unequal-sample-sizes"><span class="header-section-number">4.2.1</span> One-Way Analysis of Variance with Unequal Sample Sizes</a></li>
   </ul></li>
   <li><a href="#two-way-analysis-of-variance" id="toc-two-way-analysis-of-variance" class="nav-link" data-scroll-target="#two-way-analysis-of-variance"><span class="header-section-number">4.3</span> Two-way Analysis of Variance</a>
   <ul class="collapse">
@@ -255,7 +256,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 24, 2025</p>
+      <p class="date">February 26, 2025</p>
     </div>
   </div>
   
@@ -301,7 +302,7 @@ Comparison of means of three samples
 </ul>
 </div>
 </div>
-<div id="91df3138" class="cell" data-execution_count="1">
+<div id="2b03a255" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -346,7 +347,7 @@ Comparison of means of three samples
 </div>
 </div>
 </div>
-<div id="6915e39b" class="cell" data-execution_count="2">
+<div id="05d086da" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -620,12 +621,39 @@ SSW = \sum_{i=1}^{m} \sum_{j=1}^{n} X_{ij}^2 - nm \bar{X}_{..}^2 - SSb
 </ul>
 </div>
 </div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Alternative Method
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Another useful identity involving the sum of squares is:</p>
+<p><strong>Error Sum of Squares (<span class="math inline">\(SS_{total}\)</span>)</strong>: <span class="math inline">\(SS_{total}=SSb + SSW\)</span></p>
+<p>where <strong>Total Sum of Squares (<span class="math inline">\(SS_{total}\)</span>)</strong>: <span class="math inline">\(SS_{total}=\sum_{i=1}^m\sum_{j=1}^n(X_{ij}-\bar{X}_{..})^2\)</span></p>
+<ul>
+<li><p>This identity can also be used for the anova analysis while performing the computations by hand.</p></li>
+<li><p>This approach too simplifies the computation process by breaking it into manageable steps and leveraging the sum of squares identity.</p></li>
+</ul>
+</div>
+</div>
 </section>
 <section id="summary-of-one-way-analysis-of-variance" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="summary-of-one-way-analysis-of-variance">Summary of one-way analysis of variance</h3>
-<div class="line-block">Source of Variation | Sum of Squares | Degrees of Freedom |</div>
-<p>|||| | Between samples | <span class="math inline">\(SS_b = n \sum_{i=1}^m (\bar{X}_{i.} - \bar{X}_{..})^2\)</span> | <span class="math inline">\(m - 1\)</span> |<br>
-| Within samples | <span class="math inline">\(SS_W = \sum_{i=1}^m \sum_{j=1}^n (X_{ij} - \bar{X}_{i.})^2\)</span> | <span class="math inline">\(nm - m\)</span> |</p>
+<p><span class="math display">\[
+\begin{array}{|c|c|c|}
+\hline
+\textbf{Source of Variation} &amp; \textbf{Sum of Squares} &amp; \textbf{Degrees of Freedom} \\
+\hline
+\text{Between samples} &amp; SS_b = n \sum_{i=1}^m (\bar{X}_{i.} - \bar{X}_{..})^2 &amp; m - 1 \\
+\hline
+\text{Within samples} &amp; SS_W = \sum_{i=1}^m \sum_{j=1}^n (X_{ij} - \bar{X}_{i.})^2 &amp; nm - m \\
+\hline
+\end{array}
+\]</span></p>
 <p>Value of Test Statistic, <span class="math inline">\(TS = \frac{SS_b/(m-1)}{SS_W/(nm-m)}\)</span></p>
 <p>Significance level <span class="math inline">\(\alpha\)</span> test:<br>
 reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(TS \geq F_{m-1,nm-m,\alpha}\)</span><br>
@@ -637,7 +665,7 @@ do not reject otherwise</p>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Caution
+Problem
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -672,7 +700,7 @@ W = \sqrt{\frac{1}{n}} \cdot C(m, nm - m, \alpha) \cdot \sqrt{\frac{SSW}{(nm - m
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Caution
+Problem
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -680,6 +708,43 @@ Caution
 <p><strong>School 1</strong>: 3.2, 3.4, 3.3, 3.5<br>
 <strong>School 2</strong>: 3.4, 3.0, 3.7, 3.3<br>
 <strong>School 3</strong>: 2.8, 2.6, 3.0, 2.7</p>
+</div>
+</div>
+</section>
+<section id="one-way-analysis-of-variance-with-unequal-sample-sizes" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="one-way-analysis-of-variance-with-unequal-sample-sizes"><span class="header-section-number">4.2.1</span> One-Way Analysis of Variance with Unequal Sample Sizes</h3>
+<p><span class="math display">\[
+\begin{array}{|c|c|c|}
+\hline
+\textbf{Source of Variation} &amp; \textbf{Sum of Squares} &amp; \textbf{Degrees of Freedom} \\
+\hline
+\text{Between samples} &amp; SS_b =  \sum_{i=1}^m n_i (\bar{X}_{i.} - \bar{X}_{..})^2 &amp; m - 1 \\
+\hline
+\text{Within samples} &amp; SS_W = \sum_{i=1}^m \sum_{j=1}^n (X_{ij} - \bar{X}_{i.})^2 &amp; N - m \\
+\hline
+\end{array}
+\]</span></p>
+<p>where, N = <span class="math inline">\(\sum_{i=1}^m n_i\)</span></p>
+<p>Value of Test Statistic, <span class="math inline">\(TS = \frac{SS_b/(m-1)}{SS_W/(N-m)}\)</span></p>
+<p>Significance level <span class="math inline">\(\alpha\)</span> test:<br>
+reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(TS \geq F_{m-1,N-m,\alpha}\)</span><br>
+do not reject otherwise</p>
+<p>If <span class="math inline">\(TS = v\)</span>, then <span class="math inline">\(p\)</span>-value = <span class="math inline">\(P\{F_{m-1,N-m} \geq v\}\)</span></p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Problem
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Test the hypothesis that the following three independent samples are drawn from the same normal probability distribution.</p>
+<p><strong>Sample 1:</strong> <span class="math inline">\(35, 37, 29, 27, 30\)</span><br>
+<strong>Sample 2:</strong> <span class="math inline">\(29, 38, 34, 30, 32\)</span><br>
+<strong>Sample 3:</strong> <span class="math inline">\(44, 52, 56\)</span></p>
+<p>Use a statistical test to determine whether the means of these samples are significantly different.</p>
 </div>
 </div>
 </section>
@@ -737,11 +802,63 @@ X_{m1} &amp; X_{m2} &amp; \dots &amp; X_{mj} &amp; \dots &amp; X_{mn} \\
 </section>
 <section id="summary-of-two-way-analysis-of-variance" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="summary-of-two-way-analysis-of-variance">Summary of Two-way analysis of variance</h3>
-<div class="line-block">Sum of Squares | Degrees of Freedom |</div>
-<p>||| | Row | <span class="math inline">\(SS_r = n \sum_{i=1}^m (\bar{X}_{i.} - \bar{X}_{..})^2\)</span> | <span class="math inline">\(m - 1\)</span> | | Column | <span class="math inline">\(SS_c = m \sum_{j=1}^n (\bar{X}_{.j} - \bar{X}_{..})^2\)</span> | <span class="math inline">\(n - 1\)</span> | | Error | <span class="math inline">\(SS_e = \sum_{i=1}^m \sum_{j=1}^n (X_{ij} - \bar{X}_{i.} - \bar{X}_{.j} + \bar{X}_{..})^2\)</span> | <span class="math inline">\((m - 1)(n - 1)\)</span> |</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 51%">
+<col style="width: 48%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Sum of Squares</th>
+<th>Degrees of Freedom</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Row</td>
+<td><span class="math inline">\(SS_r = n\sum_{i=1}^m (\bar{X}_{i.} - \bar{X}_{..})^2\)</span></td>
+</tr>
+<tr class="even">
+<td>Column</td>
+<td><span class="math inline">\(SS_c = m\sum_{j=1}^n (\bar{X}_{.j} - \bar{X}_{..})^2\)</span></td>
+</tr>
+<tr class="odd">
+<td>Error</td>
+<td><span class="math inline">\(SS_e = \sum_{i=1}^m \sum_{j=1}^n (X_{ij} - \bar{X}_{i.} - \bar{X}_{.j} + \bar{X}_{..})^2\)</span></td>
+</tr>
+</tbody>
+</table>
 <p><strong>Let <span class="math inline">\(N = (m - 1)(n - 1)\)</span></strong></p>
-<div class="line-block">Null Hypothesis | Test Statistic | Significance Level <span class="math inline">\(\alpha\)</span> Test | p-value if TS = v |</div>
-<p>||||| | All <span class="math inline">\(\alpha_i = 0\)</span> | <span class="math inline">\(\frac{SS_r/(m - 1)}{SS_e/N}\)</span> | Reject if <span class="math inline">\(TS \geq F_{m-1,N,\alpha}\)</span> | <span class="math inline">\(P\{F_{m-1,N} \geq v\}\)</span> | | All <span class="math inline">\(\beta_j = 0\)</span> | <span class="math inline">\(\frac{SS_c/(n - 1)}{SS_e/N}\)</span> | Reject if <span class="math inline">\(TS \geq F_{n-1,N,\alpha}\)</span> | <span class="math inline">\(P\{F_{n-1,N} \geq v\}\)</span> |</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 29%">
+<col style="width: 29%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Null Hypothesis</th>
+<th>Test Statistic</th>
+<th>Significance Level <span class="math inline">\(\alpha\)</span> Test</th>
+<th>p-value if TS = <span class="math inline">\(v\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Row factor has no effect</td>
+<td><span class="math inline">\(\frac{SS_r/(m - 1)}{SS_e/N}\)</span></td>
+<td>Reject if <span class="math inline">\(TS \geq F_{m-1,N,\alpha}\)</span></td>
+<td><span class="math inline">\(P\{F_{m-1,N} \geq v\}\)</span></td>
+</tr>
+<tr class="even">
+<td>Column factor has no effect</td>
+<td><span class="math inline">\(\frac{SS_c/(n - 1)}{SS_e/N}\)</span></td>
+<td>Reject if <span class="math inline">\(TS \geq F_{n-1,N,\alpha}\)</span></td>
+<td><span class="math inline">\(P\{F_{n-1,N} \geq v\}\)</span></td>
+</tr>
+</tbody>
+</table>
 <p>where:</p>
 <ul>
 <li><p><strong>Row Mean (<span class="math inline">\(\bar{X}_i.\)</span>)</strong>: <span class="math display">\[
@@ -770,8 +887,62 @@ Problem 1
 <li><strong>Factor B (Irrigation Level)</strong>: Three levels - Low (<span class="math inline">\(L\)</span>), Medium (<span class="math inline">\(M\)</span>), and High (<span class="math inline">\(H\)</span>).</li>
 </ol>
 <p>The researcher measures the <strong>yield (in kg)</strong> for each combination of factors. Due to the high cost of the experiment, only <strong>one observation</strong> is recorded for each combination. The data is as follows:</p>
-<div class="line-block">Fertilizer | Irrigation | Yield (kg) |</div>
-<p>|–|–|| | Type 1 (<span class="math inline">\(T1\)</span>) | Low (<span class="math inline">\(L\)</span>) | 50 | | Type 1 (<span class="math inline">\(T1\)</span>) | Medium (<span class="math inline">\(M\)</span>) | 60 | | Type 1 (<span class="math inline">\(T1\)</span>) | High (<span class="math inline">\(H\)</span>) | 70 | | Type 2 (<span class="math inline">\(T2\)</span>) | Low (<span class="math inline">\(L\)</span>) | 55 | | Type 2 (<span class="math inline">\(T2\)</span>) | Medium (<span class="math inline">\(M\)</span>) | 65 | | Type 2 (<span class="math inline">\(T2\)</span>) | High (<span class="math inline">\(H\)</span>) | 75 |</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Fertilizer</th>
+<th>Irrigation</th>
+<th>Yield (kg)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Type 1 (<span class="math inline">\(T1\)</span>)</td>
+<td>Low (<span class="math inline">\(L\)</span>)</td>
+<td>55</td>
+</tr>
+<tr class="even">
+<td>Type 1 (<span class="math inline">\(T1\)</span>)</td>
+<td>Medium (<span class="math inline">\(M\)</span>)</td>
+<td>60</td>
+</tr>
+<tr class="odd">
+<td>Type 1 (<span class="math inline">\(T1\)</span>)</td>
+<td>High (<span class="math inline">\(H\)</span>)</td>
+<td>70</td>
+</tr>
+<tr class="even">
+<td>Type 2 (<span class="math inline">\(T2\)</span>)</td>
+<td>Low (<span class="math inline">\(L\)</span>)</td>
+<td>55</td>
+</tr>
+<tr class="odd">
+<td>Type 2 (<span class="math inline">\(T2\)</span>)</td>
+<td>Medium (<span class="math inline">\(M\)</span>)</td>
+<td>65</td>
+</tr>
+<tr class="even">
+<td>Type 2 (<span class="math inline">\(T2\)</span>)</td>
+<td>High (<span class="math inline">\(H\)</span>)</td>
+<td>75</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Here also we have an useful identity for the sum of squares</p>
+<p><strong>Error Sum of Squares (<span class="math inline">\(SS_{error}\)</span>)</strong>: <span class="math inline">\(SS_{total}=SS_{error}+SS_r+SS_c\)</span></p>
+<p>where <strong>Total Sum of Squares (<span class="math inline">\(SS_{total}\)</span>)</strong>: <span class="math inline">\(SS_{total}=\sum_{i=1}^m\sum_{j=1}^n(X_{ij}-\bar{X}_{..})^2\)</span></p>
 </div>
 </div>
 </section>

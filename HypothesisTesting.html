@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Abhijith M S">
-<meta name="dcterms.date" content="2025-02-21">
+<meta name="dcterms.date" content="2025-02-26">
 
 <title>3&nbsp; Hypothesis Testing – Statistical Modeling - 24DS636 (2024-25)</title>
 <style>
@@ -262,7 +262,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 21, 2025</p>
+      <p class="date">February 26, 2025</p>
     </div>
   </div>
   
@@ -671,7 +671,7 @@ Problem
 <p>Imagine you’re the quality control manager at a company that prides itself on the precision of its product weights. The company claims that the average weight of their product is exactly 100 grams. But, as a diligent manager, you decide to put this claim to the test. You randomly select a sample of 30 products and measure their weights. To your surprise, the average weight of your sample is 110 grams! Now, you need to determine if this difference is statistically significant or just a fluke. Assume the population standard deviation as 15 grams.</p>
 </div>
 </div>
-<div id="c04bf279" class="cell" data-execution_count="1">
+<div id="b25fa428" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -849,7 +849,7 @@ Problem
 <p>Do the data contradict the official’s claim?</p>
 </div>
 </div>
-<div id="7f3524ef" class="cell" data-execution_count="2">
+<div id="8ba246e1" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1013,7 +1013,7 @@ Problem
 <p>A machine that automatically controls the amount of ribbon on a tape has recently been installed. This machine will be judged to be effective if the standard deviation <span class="math inline">\(\sigma\)</span> of the amount of ribbon on a tape is less than .15 cm. If a sample of 20 tapes yields a sample variance of S<span class="math inline">\(^2\)</span> = .025 cm<span class="math inline">\(^2\)</span>, are we justified in concluding that the machine is ineffective? Assume the level of significance as 0.05.</p>
 </div>
 </div>
-<div id="a7642ac9" class="cell" data-execution_count="3">
+<div id="edea3a61" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chi2</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1031,7 +1031,7 @@ Problem
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>chi2_critical_high <span class="op">=</span> chi2.ppf(<span class="dv">1</span> <span class="op">-</span> alpha <span class="op">/</span> <span class="dv">2</span>, df<span class="op">=</span>sample_size <span class="op">-</span> <span class="dv">1</span>)</span>
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the p-value</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> <span class="bu">min</span>(chi2.cdf(test_statistic, df<span class="op">=</span>sample_size <span class="op">-</span> <span class="dv">1</span>), <span class="dv">1</span> <span class="op">-</span> chi2.cdf(test_statistic, df<span class="op">=</span>sample_size <span class="op">-</span> <span class="dv">1</span>))</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> chi2.cdf(test_statistic, df<span class="op">=</span>sample_size <span class="op">-</span> <span class="dv">1</span>)</span>
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Determine if we reject the null hypothesis</span></span>
 <span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>reject_null <span class="op">=</span> test_statistic <span class="op">&lt;</span> chi2_critical_low <span class="kw">or</span> test_statistic <span class="op">&gt;</span> chi2_critical_high</span>
@@ -1046,7 +1046,7 @@ Problem
 <pre><code>Test Statistic: 21.111111111111114
 Chi-square Critical Low: 8.906516481987971
 Chi-square Critical High: 32.85232686172969
-P-value: 0.6613880683710307
+P-value: 0.33069403418551535
 Reject the null hypothesis: False</code></pre>
 </div>
 </div>
