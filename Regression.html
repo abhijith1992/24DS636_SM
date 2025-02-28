@@ -9,7 +9,7 @@
 <meta name="author" content="Abhijith M S">
 <meta name="dcterms.date" content="2025-02-28">
 
-<title>Statistical Modeling - 24DS636 (2024-25)</title>
+<title>5&nbsp; Regression – Statistical Modeling - 24DS636 (2024-25)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -32,7 +66,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./DescriptiveStatistics.html" rel="next">
+<link href="./references.html" rel="next">
+<link href="./Anova.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -70,6 +105,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -82,7 +146,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Course Introduction</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Regression.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Regression</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -109,7 +173,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Course Introduction</span></a>
   </div>
 </li>
@@ -139,7 +203,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Regression.html" class="sidebar-item-text sidebar-link">
+  <a href="./Regression.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Regression</span></span></a>
   </div>
 </li>
@@ -159,9 +223,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#course-introduction" id="toc-course-introduction" class="nav-link active" data-scroll-target="#course-introduction">Course Introduction</a></li>
-  <li><a href="#syllabus" id="toc-syllabus" class="nav-link" data-scroll-target="#syllabus">Syllabus</a></li>
-  <li><a href="#evaluations-a-tentative-timeline" id="toc-evaluations-a-tentative-timeline" class="nav-link" data-scroll-target="#evaluations-a-tentative-timeline">Evaluations: A Tentative Timeline</a></li>
+  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link active" data-scroll-target="#linear-regression"><span class="header-section-number">5.0.1</span> Linear Regression</a></li>
+  <li><a href="#least-squares-estimators-of-the-regression-parameters" id="toc-least-squares-estimators-of-the-regression-parameters" class="nav-link" data-scroll-target="#least-squares-estimators-of-the-regression-parameters"><span class="header-section-number">5.0.2</span> Least Squares Estimators Of The Regression Parameters</a></li>
   </ul>
 </nav>
     </div>
@@ -170,27 +233,20 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Statistical Modeling - 24DS636 (2024-25)</h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Regression</span></h1>
 </div>
 
 
-<div class="quarto-title-meta-author">
-  <div class="quarto-title-meta-heading">Author</div>
-  <div class="quarto-title-meta-heading">Affiliation</div>
-  
-    <div class="quarto-title-meta-contents">
-    <p class="author">Abhijith M S <a href="mailto:ms_abhijith@cb.amrita.edu" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0003-1735-1918" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
-  </div>
-  <div class="quarto-title-meta-contents">
-        <p class="affiliation">
-            School of Artificial Intelligence, Amrita Vishwa Vidyapeetham
-          </p>
-      </div>
-  </div>
 
 <div class="quarto-title-meta">
 
-      
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Abhijith M S </p>
+          </div>
+  </div>
+    
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
@@ -206,38 +262,262 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="course-introduction" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="course-introduction">Course Introduction</h3>
-<p>The website contains course contents of “Statistical Modeling” offered by <strong>Abhijith M S, PhD</strong> to Masters students pursuing M.Tech in Data Science, during the even semester of the academic year 2024-25.</p>
-</section>
-<section id="syllabus" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="syllabus">Syllabus</h3>
-<p><em>(As given in the curriculum)</em></p>
+<section id="linear-regression" class="level3" data-number="5.0.1">
+<h3 data-number="5.0.1" class="anchored" data-anchor-id="linear-regression"><span class="header-section-number">5.0.1</span> Linear Regression</h3>
 <ul>
-<li>Probability, Random Variables &amp; Probability Distributions.</li>
-<li>Sampling, analysis of sample data-Empirical Distributions, Sampling from a Population Estimation, confidence intervals, point estimation–Maximum Likelihood, Probability mass functions, Modeling distributions, Hypothesis testing- Z, t, Chi-Square.</li>
-<li>ANOVA &amp; Designs of Experiments - Single, Two factor ANOVA, Factorials ANOVA models.</li>
-<li>Linear least squares, Correlation &amp; Regression Models-linear regression methods, Ridge regression, LASSO, univariate and Multivariate Linear Regression, probabilistic interpretation, Regularization, Logistic regression, locally weighted regression.</li>
-<li>Exploratory data analysis, Time series analysis, Analytical methods – ARIMA and SARIMA.</li>
-</ul>
-</section>
-<section id="evaluations-a-tentative-timeline" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="evaluations-a-tentative-timeline">Evaluations: A Tentative Timeline</h3>
+<li><p>Many engineering and scientific problems aim to determine relationships between variables.</p>
 <ul>
-<li><p><strong>Best two marks out of three quizzes (Total = 20 marks)</strong></p></li>
-<li><p>Quiz-1 (10 marks): (January First week)</p></li>
-<li><p>Quiz-2 (10 marks):(March First week)</p></li>
-<li><p>Quiz-3 (10 marks):(April First week)</p></li>
-<li><p><strong>Assignments (Total = 30 marks)</strong></p></li>
-<li><p>Assignment-1 (10 marks):(Submission: End of January)</p></li>
-<li><p>Assignment-2 (10 marks):(Submission: End of March)</p></li>
-<li><p>Project Review - 1 (10 marks):(February second week)</p></li>
-<li><p><strong>Mid Sem (Total = 20 marks)</strong></p></li>
-<li><p>Mid-Semester Exam (20 marks):(Feb first week, as per Academic calender)</p></li>
-<li><p><strong>End Sem (Total = 30 marks)</strong></p></li>
-<li><p>End-Semester Project Presentation (20 marks):(April second week, as per Academic calender) \end{itemize}$</p></li>
+<li>Example: In a chemical process, the relationship between output, temperature, and catalyst amount is of interest.</li>
+<li>Knowing this relationship allows predicting outputs for different temperature and catalyst values.</li>
+</ul></li>
+<li><p>Typically, there is a single <strong>response variable</strong> <span class="math inline">\(Y\)</span> (dependent variable) that depends on a set of <strong>input variables</strong> <span class="math inline">\(x_1, x_2, \dots, x_r\)</span> (independent variables).</p></li>
+<li><p>The simplest relationship between <span class="math inline">\(Y\)</span> and <span class="math inline">\(x_1, x_2, \dots, x_r\)</span> is a <strong>linear relationship</strong>: <span id="eq-reg1"><span class="math display">\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_r x_r
+\tag{5.1}\]</span></span></p>
+<ul>
+<li>Here, <span class="math inline">\(\beta_0, \beta_1, \dots, \beta_r\)</span> are constants.</li>
+</ul></li>
+<li><p>In practice, exact predictions are rarely possible due to <strong>random errors</strong>.</p>
+<ul>
+<li><p>The relationship is better expressed as: <span id="eq-reg2"><span class="math display">\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_r x_r + e
+\tag{5.2}\]</span></span></p>
+<ul>
+<li><span class="math inline">\(e\)</span> represents the random error, assumed to have a mean of <span class="math inline">\(0\)</span>.</li>
+</ul></li>
+</ul></li>
+<li><p>Alternatively, the relationship can be expressed in terms of the <strong>expected value</strong>: <span class="math display">\[
+E[Y \mid \mathbf{x}] = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_r x_r
+\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\mathbf{x} = (x_1, x_2, \dots, x_r)\)</span> is the set of independent variables.</p></li>
+<li><p><span class="math inline">\(E[Y \mid \mathbf{x}]\)</span> is the expected response given the inputs <span class="math inline">\(\mathbf{x}\)</span>.</p></li>
+</ul></li>
+<li><p>The <a href="#eq-reg2" class="quarto-xref">Equation&nbsp;<span>5.2</span></a> is called a <strong>linear regression equation</strong>.</p>
+<ul>
+<li><p>It describes the regression of <span class="math inline">\(Y\)</span> on the independent variables <span class="math inline">\(x_1, x_2, \dots, x_r\)</span>.</p></li>
+<li><p>The quantities <span class="math inline">\(\beta_0, \beta_1, \dots, \beta_r\)</span> are called <strong>regression coefficients</strong>, and must usually be estimated from a set of data.</p></li>
+</ul></li>
+<li><p>A regression equation can be classified based on the number of independent variables:</p>
+<ul>
+<li><strong>Simple regression equation</strong>: Contains a single independent variable (<span class="math inline">\(r = 1\)</span>).</li>
+<li><strong>Multiple regression equation</strong>: Contains many independent variables.</li>
+</ul></li>
+<li><p>A <strong>simple linear regression model</strong> assumes a linear relationship between the mean response and a single independent variable.</p>
+<ul>
+<li><p>It is expressed as: <span class="math display">\[
+Y = \alpha + \beta x + e
+\]</span></p>
+<ul>
+<li><p><span class="math inline">\(x\)</span> is the value of the independent variable (also called the input level).</p></li>
+<li><p><span class="math inline">\(Y\)</span> is the response.</p></li>
+<li><p><span class="math inline">\(e\)</span> represents the random error, assumed to be a random variable with mean <span class="math inline">\(0\)</span>.</p></li>
+<li><p>Regression analysis is used to find the mean value of the dependent variable <span class="math inline">\(Y\)</span> given the independent variables <span class="math inline">\(\mathbf{x}\)</span>.</p>
+<ul>
+<li><p>The mean value of <span class="math inline">\(Y\)</span> given <span class="math inline">\(\mathbf{x}\)</span> is denoted as <span class="math inline">\(E[Y \mid \mathbf{x}]\)</span>.</p></li>
+<li><p>By estimating the regression coefficients <span class="math inline">\(\beta_0, \beta_1, \dots, \beta_r\)</span>, we can predict the mean response for any given set of input variables.</p></li>
+<li><p>This is particularly useful in understanding the central tendency of the response variable and making informed decisions based on the predicted mean.</p></li>
+</ul></li>
+</ul></li>
+</ul></li>
 </ul>
-<p>Contact: ms_abhijith@cb.amrita.edu</p>
+<div id="646d541a" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set random seed for reproducibility</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters for the linear regression model</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">2.0</span>  <span class="co"># Intercept</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> <span class="fl">1.5</span>   <span class="co"># Slope</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>num_samples <span class="op">=</span> <span class="dv">100</span>  <span class="co"># Number of data points</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate synthetic data</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, num_samples)  <span class="co"># Independent variable (input)</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>e <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="dv">1</span>, num_samples)  <span class="co"># Random error with mean 0</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> alpha <span class="op">+</span> beta <span class="op">*</span> x <span class="op">+</span> e  <span class="co"># Dependent variable (response)</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data points</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>plt.scatter(x, Y, color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">'Data Points'</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the true regression line (without error)</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>plt.plot(x, alpha <span class="op">+</span> beta <span class="op">*</span> x, color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'True Regression Line'</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Add labels and title</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Independent Variable (x)'</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dependent/ Response Variable (Y)'</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Simple Linear Regression Demonstration'</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Regression_files/figure-html/cell-2-output-1.png" width="585" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="least-squares-estimators-of-the-regression-parameters" class="level3" data-number="5.0.2">
+<h3 data-number="5.0.2" class="anchored" data-anchor-id="least-squares-estimators-of-the-regression-parameters"><span class="header-section-number">5.0.2</span> Least Squares Estimators Of The Regression Parameters</h3>
+<ul>
+<li><p>As mentioned previouslly, a <strong>simple linear regression model</strong> assumes a linear relationship between the mean response and a single independent variable.</p>
+<ul>
+<li><p>It is expressed as: <span class="math display">\[
+Y = \alpha + \beta x + e
+\]</span></p>
+<ul>
+<li><p><span class="math inline">\(x\)</span> is the value of the independent variable (also called the input level).</p></li>
+<li><p><span class="math inline">\(Y\)</span> is the response.</p></li>
+<li><p><span class="math inline">\(e\)</span> represents the random error, assumed to be a random variable with mean <span class="math inline">\(0\)</span>.</p></li>
+</ul></li>
+</ul></li>
+<li><p>Suppose the responses <span class="math inline">\(Y_i\)</span> corresponding to the input values <span class="math inline">\(x_i\)</span> for <span class="math inline">\(i = 1, \dots, n\)</span> are observed and used to estimate <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> in a simple linear regression model.</p>
+<ul>
+<li>Let <span class="math inline">\(A\)</span> be the estimator of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(B\)</span> be the estimator of <span class="math inline">\(\beta\)</span>.</li>
+<li>The estimated response for the input <span class="math inline">\(x_i\)</span> is <span class="math inline">\(A + Bx_i\)</span>.</li>
+<li>The squared difference between the actual response <span class="math inline">\(Y_i\)</span> and the estimated response is <span class="math inline">\((Y_i - A - Bx_i)^2\)</span>.</li>
+</ul></li>
+<li><p>The <strong>sum of squared differences (SS)</strong> is given by: <span class="math display">\[
+SS = \sum_{i=1}^n (Y_i - A - Bx_i)^2
+\]</span></p></li>
+<li><p>The <strong>method of least squares</strong> chooses <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> to minimize <span class="math inline">\(SS\)</span>.</p>
+<ul>
+<li><p>To find the minimizing values, differentiate <span class="math inline">\(SS\)</span> with respect to <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>: <span class="math display">\[
+\frac{\partial SS}{\partial A} = -2 \sum_{i=1}^n (Y_i - A - Bx_i)
+\]</span> <span class="math display">\[
+\frac{\partial SS}{\partial B} = -2 \sum_{i=1}^n x_i (Y_i - A - Bx_i)
+\]</span></p></li>
+<li><p>Setting the partial derivatives to zero yields the <strong>normal equations</strong>: <span class="math display">\[
+\sum_{i=1}^n Y_i = nA + B \sum_{i=1}^n x_i
+\]</span> <span class="math display">\[
+\sum_{i=1}^n x_i Y_i = A \sum_{i=1}^n x_i + B \sum_{i=1}^n x_i^2
+\]</span></p></li>
+</ul></li>
+<li><p>Let <span class="math inline">\(\overline{Y} = \frac{\sum_{i=1}^n Y_i}{n}\)</span> and <span class="math inline">\(\overline{x} = \frac{\sum_{i=1}^n x_i}{n}\)</span>.</p>
+<ul>
+<li>The first normal equation can be rewritten as: <span id="eq-reg3"><span class="math display">\[
+A = \overline{Y} - B \overline{x}
+\tag{5.3}\]</span></span></li>
+</ul></li>
+<li><p>Substituting <span class="math inline">\(A = \overline{Y} - B \overline{x}\)</span> into the second normal equation: <span class="math display">\[
+\sum_{i=1}^n x_i Y_i = (\overline{Y} - B \overline{x}) n \overline{x} + B \sum_{i=1}^n x_i^2
+\]</span></p>
+<p>Simplifying: <span class="math display">\[
+B \left( \sum_{i=1}^n x_i^2 - n \overline{x}^2 \right) = \sum_{i=1}^n x_i Y_i - n \overline{x} \overline{Y}
+\]</span></p>
+<p>Solving for <span class="math inline">\(B\)</span>:</p>
+<p><span class="math display">\[
+B = \frac{\sum_{i=1}^n x_i Y_i - n \overline{x} \overline{Y}}{\sum_{i=1}^n x_i^2 - n \overline{x}^2}
+\]</span></p></li>
+<li><p>Using <a href="#eq-reg3" class="quarto-xref">Equation&nbsp;<span>5.3</span></a> and the fact that <span class="math inline">\(n \overline{x} = \sum_{i=1}^n x_i\)</span>, we obtain the estimators for <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>.</p></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Least Squares Estimators
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>The <strong>least squares estimators</strong> of <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\alpha\)</span> for the data set <span class="math inline">\((x_i, Y_i)\)</span>, where <span class="math inline">\(i = 1, \dots, n\)</span>, are given by:
+<ul>
+<li><p>The estimator for <span class="math inline">\(\beta\)</span> (<span class="math inline">\(B\)</span>): <span class="math display">\[
+B = \frac{\sum_{i=1}^n x_i Y_i - \overline{x} \sum_{i=1}^n Y_i}{\sum_{i=1}^n x_i^2 - n \overline{x}^2}
+\]</span></p></li>
+<li><p>The estimator for <span class="math inline">\(\alpha\)</span> (<span class="math inline">\(A\)</span>): <span class="math display">\[
+A = \overline{Y} - B \overline{x}
+\]</span></p></li>
+<li><p>Here:</p>
+<ul>
+<li><span class="math inline">\(\overline{x} = \frac{\sum_{i=1}^n x_i}{n}\)</span> is the mean of the independent variable <span class="math inline">\(x\)</span>.</li>
+<li><span class="math inline">\(\overline{Y} = \frac{\sum_{i=1}^n Y_i}{n}\)</span> is the mean of the dependent variable <span class="math inline">\(Y\)</span>.</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Problem
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The raw material used in the production of a certain synthetic fiber is stored in a location without humidity control. Measurements of the relative humidity in the storage location and the moisture content of a sample of the raw material were taken over 15 days, resulting in the following data (in percentages):</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Relative Humidity (%)</strong></th>
+<th>46</th>
+<th>53</th>
+<th>29</th>
+<th>61</th>
+<th>36</th>
+<th>39</th>
+<th>47</th>
+<th>49</th>
+<th>52</th>
+<th>38</th>
+<th>55</th>
+<th>32</th>
+<th>57</th>
+<th>54</th>
+<th>44</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Moisture Content (%)</strong></td>
+<td>12</td>
+<td>15</td>
+<td>7</td>
+<td>17</td>
+<td>10</td>
+<td>11</td>
+<td>11</td>
+<td>12</td>
+<td>14</td>
+<td>9</td>
+<td>16</td>
+<td>8</td>
+<td>18</td>
+<td>14</td>
+<td>12</td>
+</tr>
+</tbody>
+</table>
+<p>Use linear regression to express moisture content as a function of the relative humidity.</p>
+</div>
+</div>
 
 
 </section>
@@ -662,10 +942,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./Anova.html" class="pagination-link" aria-label="Analysis of Variance (ANOVA)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Analysis of Variance (ANOVA)</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./DescriptiveStatistics.html" class="pagination-link" aria-label="Descriptive statistics">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Descriptive statistics</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
