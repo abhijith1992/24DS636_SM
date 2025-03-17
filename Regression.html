@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Abhijith M S">
-<meta name="dcterms.date" content="2025-03-10">
+<meta name="dcterms.date" content="2025-03-17">
 
 <title>5&nbsp; Regression – Statistical Modeling - 24DS636 (2024-25)</title>
 <style>
@@ -226,6 +226,9 @@ window.Quarto = {
   <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link active" data-scroll-target="#linear-regression"><span class="header-section-number">5.0.1</span> Linear Regression</a></li>
   <li><a href="#least-squares-estimators-of-the-regression-parameters" id="toc-least-squares-estimators-of-the-regression-parameters" class="nav-link" data-scroll-target="#least-squares-estimators-of-the-regression-parameters"><span class="header-section-number">5.0.2</span> Least Squares Estimators Of The Regression Parameters</a></li>
   <li><a href="#the-coefficient-of-determination-and-the-sample-correlation-coefficient" id="toc-the-coefficient-of-determination-and-the-sample-correlation-coefficient" class="nav-link" data-scroll-target="#the-coefficient-of-determination-and-the-sample-correlation-coefficient">The Coefficient of Determination and the Sample Correlation Coefficient</a></li>
+  <li><a href="#multiple-linear-regression" id="toc-multiple-linear-regression" class="nav-link" data-scroll-target="#multiple-linear-regression"><span class="header-section-number">5.0.3</span> Multiple Linear Regression</a></li>
+  <li><a href="#residuals-and-sum-of-squared-residuals-ssr" id="toc-residuals-and-sum-of-squared-residuals-ssr" class="nav-link" data-scroll-target="#residuals-and-sum-of-squared-residuals-ssr">Residuals and Sum of Squared Residuals (SSR)</a></li>
+  <li><a href="#coefficient-of-multiple-determination-r2" id="toc-coefficient-of-multiple-determination-r2" class="nav-link" data-scroll-target="#coefficient-of-multiple-determination-r2"><span class="header-section-number">5.0.5</span> Coefficient of Multiple Determination (<span class="math inline">\(R^2\)</span>)</a></li>
   </ul>
 </nav>
     </div>
@@ -251,7 +254,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 10, 2025</p>
+      <p class="date">March 17, 2025</p>
     </div>
   </div>
   
@@ -322,7 +325,7 @@ Y = \alpha + \beta x + e
 </ul></li>
 </ul></li>
 </ul>
-<div id="749c7f7b" class="cell" data-execution_count="1">
+<div id="c340938f" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -381,17 +384,17 @@ Y = \alpha + \beta x + e
 <ul>
 <li>Let <span class="math inline">\(A\)</span> be the estimator of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(B\)</span> be the estimator of <span class="math inline">\(\beta\)</span>.</li>
 <li>The estimated response for the input <span class="math inline">\(x_i\)</span> is <span class="math inline">\(A + Bx_i\)</span>.</li>
-<li>The squared difference between the actual response <span class="math inline">\(Y_i\)</span> and the estimated response is <span class="math inline">\((Y_i - A - Bx_i)^2\)</span>.</li>
+<li>The difference between the actual response <span class="math inline">\(Y_i\)</span> and the estimated response is <span class="math inline">\((Y_i - A - Bx_i)\)</span> is called residual.</li>
 </ul></li>
-<li><p>The <strong>sum of squared differences (SS)</strong> is given by: <span class="math display">\[
-SS = \sum_{i=1}^n (Y_i - A - Bx_i)^2
+<li><p>The <strong>sum of squares of residuals or residual sum of squares (SSR)</strong> is given by: <span class="math display">\[
+SSR = \sum_{i=1}^n (Y_i - A - Bx_i)^2
 \]</span></p></li>
-<li><p>The <strong>method of least squares</strong> chooses <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> to minimize <span class="math inline">\(SS\)</span>.</p>
+<li><p>The <strong>method of least squares</strong> chooses <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> to minimize <span class="math inline">\(SSR\)</span>.</p>
 <ul>
-<li><p>To find the minimizing values, differentiate <span class="math inline">\(SS\)</span> with respect to <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>: <span class="math display">\[
-\frac{\partial SS}{\partial A} = -2 \sum_{i=1}^n (Y_i - A - Bx_i)
+<li><p>To find the minimizing values, differentiate <span class="math inline">\(SSR\)</span> with respect to <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>: <span class="math display">\[
+\frac{\partial SSR}{\partial A} = -2 \sum_{i=1}^n (Y_i - A - Bx_i)
 \]</span> <span class="math display">\[
-\frac{\partial SS}{\partial B} = -2 \sum_{i=1}^n x_i (Y_i - A - Bx_i)
+\frac{\partial SSR}{\partial B} = -2 \sum_{i=1}^n x_i (Y_i - A - Bx_i)
 \]</span></p></li>
 <li><p>Setting the partial derivatives to zero yields the <strong>normal equations</strong>: <span class="math display">\[
 \sum_{i=1}^n Y_i = nA + B \sum_{i=1}^n x_i
@@ -525,13 +528,14 @@ Problem
 <ul>
 <li><p>Suppose we want to measure the amount of variation in the set of response values <span class="math inline">\(Y_1, \dots, Y_n\)</span> corresponding to the input values <span class="math inline">\(x_1, \dots, x_n\)</span>.</p>
 <ul>
-<li><p>A standard measure of variation in statistics is given by: <span class="math display">\[
-S_{YY} = \sum_{i=1}^n (Y_i - \overline{Y})^2
-\]</span></p>
+<li>A standard measure of variation in statistics is given by: <span class="math display">\[
+SST = \sum_{i=1}^n (Y_i - \overline{Y})^2
+\]</span></li>
+</ul>
+<p>(‘SST’ also refers to ‘Total Sum of Squares’)</p>
 <ul>
-<li>Here, <span class="math inline">\(\overline{Y} = \frac{\sum_{i=1}^n Y_i}{n}\)</span> is the mean of the response values.</li>
-</ul></li>
-<li><p>If all <span class="math inline">\(Y_i\)</span> are equal (i.e., <span class="math inline">\(Y_i = \overline{Y}\)</span> for all <span class="math inline">\(i\)</span>), then <span class="math inline">\(S_{YY} = 0\)</span>.</p></li>
+<li><p>Here, <span class="math inline">\(\overline{Y} = \frac{\sum_{i=1}^n Y_i}{n}\)</span> is the mean of the response values.</p></li>
+<li><p>If all <span class="math inline">\(Y_i\)</span> are equal (i.e., <span class="math inline">\(Y_i = \overline{Y}\)</span> for all <span class="math inline">\(i\)</span>), then <span class="math inline">\(SST = 0\)</span>.</p></li>
 </ul></li>
 <li><p>The variation in the response values <span class="math inline">\(Y_i\)</span> arises from two factors:</p>
 <ol type="1">
@@ -541,16 +545,16 @@ S_{YY} = \sum_{i=1}^n (Y_i - \overline{Y})^2
 <li><p>To determine how much variation is due to the different input values and how much is due to inherent variance, consider:</p>
 <ul>
 <li><p>The quantity: <span class="math display">\[
-SS_R = \sum_{i=1}^n (Y_i - A - Bx_i)^2
+SSR = \sum_{i=1}^n (Y_i - A - Bx_i)^2
 \]</span></p>
 <p>measures the remaining variation in the response values after accounting for the input values.</p></li>
 <li><p>The difference: <span class="math display">\[
-S_{YY} - SS_R
+SST - SSR
 \]</span></p>
 <p>represents the variation in the response values explained by the different input values.</p>
 <ul>
 <li><p>The <strong>coefficient of determination</strong> (<span class="math inline">\(R^2\)</span>) is defined as the proportion of the total variation in the response values that is explained by the input values: <span class="math display">\[
-R^2 = \frac{S_{YY} - SS_R}{S_{YY}}
+R^2 = \frac{SST - SSR}{SST}
 \]</span></p>
 <ul>
 <li><span class="math inline">\(R^2\)</span> ranges from 0 to 1.</li>
@@ -583,6 +587,291 @@ Problem
 <p>Find the coefficient of determination and the sample correlation coefficient of the previous regression problem.</p>
 </div>
 </div>
+</section>
+<section id="multiple-linear-regression" class="level3" data-number="5.0.3">
+<h3 data-number="5.0.3" class="anchored" data-anchor-id="multiple-linear-regression"><span class="header-section-number">5.0.3</span> Multiple Linear Regression</h3>
+<ul>
+<li><strong>Overview</strong>:
+<ul>
+<li><p>In most applications, the response <span class="math inline">\(Y\)</span> of an experiment is better predicted using <strong>multiple independent input variables</strong> rather than a single one.</p></li>
+<li><p>A typical scenario involves <span class="math inline">\(k\)</span> input variables, and the response <span class="math inline">\(Y\)</span> is related to them by the equation: <span class="math display">\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_k x_k + e
+\]</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(x_j\)</span> is the level of the <span class="math inline">\(j^{th}\)</span> input variable (<span class="math inline">\(j = 1, \dots, k\)</span>),</li>
+<li><span class="math inline">\(e\)</span> is a random error term, assumed to be <strong>normally distributed</strong> with mean <span class="math inline">\(0\)</span> and constant variance <span class="math inline">\(\sigma^2\)</span>.</li>
+</ul></li>
+</ul></li>
+<li><strong>Parameters</strong>:
+<ul>
+<li>The parameters <span class="math inline">\(\beta_0, \beta_1, \dots, \beta_k\)</span> and <span class="math inline">\(\sigma^2\)</span> are <strong>unknown</strong> and must be estimated from the data.</li>
+<li>The data consists of observed values <span class="math inline">\(Y_1, Y_2, \dots, Y_n\)</span>, where each <span class="math inline">\(Y_i\)</span> corresponds to a set of input levels <span class="math inline">\(x_{i1}, x_{i2}, \dots, x_{ik}\)</span>.</li>
+</ul></li>
+<li><strong>Expected Value</strong>:
+<ul>
+<li>The expected value of <span class="math inline">\(Y_i\)</span> is given by: <span class="math display">\[
+E[Y_i] = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_k x_{ik}
+\]</span></li>
+</ul></li>
+</ul>
+<section id="determining-the-least-squares-estimators" class="level4 unnumbered">
+<h4 class="unnumbered anchored">Determining the Least Squares Estimators</h4>
+<ul>
+<li><strong>Least Squares Estimation</strong>:
+<ul>
+<li><p>Let <span class="math inline">\(B_0, B_1, \dots, B_k\)</span> denote estimators of <span class="math inline">\(\beta_0, \beta_1, \dots, \beta_k\)</span>.</p></li>
+<li><p>The <strong>sum of squared differences</strong> between the observed <span class="math inline">\(Y_i\)</span> and their estimated expected values is: <span class="math display">\[
+\sum_{i=1}^n (Y_i - B_0 - B_1 x_{i1} - B_2 x_{i2} - \cdots - B_k x_{ik})^2
+\]</span></p></li>
+<li><p>The <strong>least squares estimators</strong> are the values of <span class="math inline">\(B_0, B_1, \dots, B_k\)</span> that <strong>minimize</strong> the above sum of squared differences.</p></li>
+</ul></li>
+<li><strong>Method</strong>:
+<ul>
+<li>To determine the least squares estimators <span class="math inline">\(B_0, B_1, \dots, B_k\)</span>, we take <strong>partial derivatives</strong> of the sum of squared differences with respect to each estimator:
+<ul>
+<li>First, with respect to <span class="math inline">\(B_0\)</span>,</li>
+<li>Then, with respect to <span class="math inline">\(B_1\)</span>,</li>
+<li>And so on, up to <span class="math inline">\(B_k\)</span>.</li>
+</ul></li>
+<li>By setting these partial derivatives equal to <span class="math inline">\(0\)</span>, we obtain a system of <span class="math inline">\(k + 1\)</span> equations.</li>
+</ul></li>
+<li><strong>System of Equations</strong>:
+<ul>
+<li>The partial derivatives yield the following equations: <span class="math display">\[
+\sum_{i=1}^n (Y_i - B_0 - B_1 x_{i1} - B_2 x_{i2} - \cdots - B_k x_{ik}) = 0
+\]</span> <span class="math display">\[
+\sum_{i=1}^n x_{i1} (Y_i - B_0 - B_1 x_{i1} - \cdots - B_k x_{ik}) = 0
+\]</span> <span class="math display">\[
+\sum_{i=1}^n x_{i2} (Y_i - B_0 - B_1 x_{i1} - \cdots - B_k x_{ik}) = 0
+\]</span> <span class="math display">\[
+\vdots
+\]</span> <span class="math display">\[
+\sum_{i=1}^n x_{ik} (Y_i - B_0 - B_1 x_{i1} - \cdots - B_k x_{ik}) = 0
+\]</span></li>
+</ul></li>
+<li><strong>Normal Equations</strong>:
+<ul>
+<li>Rewriting the above equations, the least squares estimators <span class="math inline">\(B_0, B_1, \dots, B_k\)</span> satisfy the following <strong>normal equations</strong>: <span class="math display">\[
+\sum_{i=1}^n Y_i = n B_0 + B_1 \sum_{i=1}^n x_{i1} + B_2 \sum_{i=1}^n x_{i2} + \cdots + B_k \sum_{i=1}^n x_{ik}
+\]</span> <span class="math display">\[
+\sum_{i=1}^n x_{i1} Y_i = B_0 \sum_{i=1}^n x_{i1} + B_1 \sum_{i=1}^n x_{i1}^2 + B_2 \sum_{i=1}^n x_{i1} x_{i2} + \cdots + B_k \sum_{i=1}^n x_{i1} x_{ik}
+\]</span> <span class="math display">\[
+\vdots
+\]</span> <span class="math display">\[
+\sum_{i=1}^n x_{ik} Y_i = B_0 \sum_{i=1}^n x_{ik} + B_1 \sum_{i=1}^n x_{ik} x_{i1} + B_2 \sum_{i=1}^n x_{ik} x_{i2} + \cdots + B_k \sum_{i=1}^n x_{ik}^2
+\]</span></li>
+<li>These equations form a <strong>linear system</strong> that can be solved to find the least squares estimators <span class="math inline">\(B_0, B_1, \dots, B_k\)</span>.</li>
+</ul>
+<h3 id="normal-equations-in-matrix-notation" data-number="5.0.4" class="anchored" data-anchor-id="determining-the-least-squares-estimators"><span class="header-section-number">5.0.4</span> Normal Equations in Matrix Notation</h3></li>
+<li><strong>Normal Equations</strong>:
+<ul>
+<li>The normal equations for the least squares estimators <span class="math inline">\(B_0, B_1, \dots, B_k\)</span> are given by: <span class="math display">\[
+\sum_{i=1}^n x_{i1} Y_i = B_0 \sum_{i=1}^n x_{i1} + B_1 \sum_{i=1}^n x_{i1}^2 + B_2 \sum_{i=1}^n x_{i1} x_{i2} + \cdots + B_k \sum_{i=1}^n x_{i1} x_{ik}
+\]</span> <span class="math display">\[
+\vdots
+\]</span> <span class="math display">\[
+\sum_{i=1}^n x_{ik} Y_i = B_0 \sum_{i=1}^n x_{ik} + B_1 \sum_{i=1}^n x_{ik} x_{i1} + B_2 \sum_{i=1}^n x_{ik} x_{i2} + \cdots + B_k \sum_{i=1}^n x_{ik}^2
+\]</span></li>
+</ul></li>
+<li><strong>Matrix Notation</strong>:
+<ul>
+<li>To simplify the solution of the normal equations, we introduce <strong>matrix notation</strong>.</li>
+<li>Let:
+<ul>
+<li><p><span class="math inline">\(Y\)</span> be the <strong>response vector</strong>: <span class="math display">\[
+Y = \begin{bmatrix}
+Y_1 \\
+Y_2 \\
+\vdots \\
+Y_n
+\end{bmatrix}
+\]</span></p></li>
+<li><p><span class="math inline">\(X\)</span> be the <strong>design matrix</strong>: <span class="math display">\[
+X = \begin{bmatrix}
+1 &amp; x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1k} \\
+1 &amp; x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2k} \\
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+1 &amp; x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{nk}
+\end{bmatrix}
+\]</span> ### Matrix Representation of Multiple Regression</p></li>
+<li><p><span class="math inline">\(\beta\)</span> be the <strong>parameter vector</strong>: <span class="math display">\[
+\beta = \begin{bmatrix}
+\beta_0 \\
+\beta_1 \\
+\vdots \\
+\beta_k
+\end{bmatrix}
+\]</span></p></li>
+<li><p><span class="math inline">\(e\)</span> be the <strong>error vector</strong>: <span class="math display">\[
+e = \begin{bmatrix}
+e_1 \\
+e_2 \\
+\vdots \\
+e_n
+\end{bmatrix}
+\]</span></p></li>
+</ul></li>
+</ul></li>
+<li><strong>Dimensions</strong>:
+<ul>
+<li><span class="math inline">\(Y\)</span> is an <span class="math inline">\(n \times 1\)</span> matrix (response vector),</li>
+<li><span class="math inline">\(X\)</span> is an <span class="math inline">\(n \times p\)</span> matrix (design matrix), where <span class="math inline">\(p = k + 1\)</span>,</li>
+<li><span class="math inline">\(\beta\)</span> is a <span class="math inline">\(p \times 1\)</span> matrix (parameter vector),</li>
+<li><span class="math inline">\(e\)</span> is an <span class="math inline">\(n \times 1\)</span> matrix (error vector).</li>
+</ul></li>
+<li><strong>Multiple Regression Model</strong>:
+<ul>
+<li>The multiple regression model can be written in matrix form as: <span class="math display">\[
+Y = X \beta + e
+\]</span></li>
+</ul></li>
+<li><strong>Least Squares Estimators</strong>:
+<ul>
+<li>Let <span class="math inline">\(B\)</span> be the <strong>matrix of least squares estimators</strong>: <span class="math display">\[
+B = \begin{bmatrix}
+B_0 \\
+B_1 \\
+\vdots \\
+B_k
+\end{bmatrix}
+\]</span></li>
+<li>The <strong>normal equations</strong> can be written in matrix form as: <span class="math display">\[
+X^T Y = X^T X B  
+\]</span> where:
+<ul>
+<li><span class="math inline">\(X^T\)</span> is the <strong>transpose</strong> of the design matrix <span class="math inline">\(X\)</span>,</li>
+<li><span class="math inline">\(X^T X\)</span> is a <span class="math inline">\(p \times p\)</span> matrix,</li>
+<li><span class="math inline">\(X^T Y\)</span> is a <span class="math inline">\(p \times 1\)</span> vector.</li>
+</ul></li>
+</ul></li>
+<li><strong>Solution</strong>:
+<ul>
+<li>The least squares estimators <span class="math inline">\(B\)</span> can be obtained by solving the matrix equation: <span class="math display">\[
+B = (X^T X)^{-1} X^T Y
+\]</span> where <span class="math inline">\((X^T X)^{-1}\)</span> is the <strong>inverse</strong> of the matrix <span class="math inline">\(X^T X\)</span>.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="residuals-and-sum-of-squared-residuals-ssr" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="residuals-and-sum-of-squared-residuals-ssr">Residuals and Sum of Squared Residuals (SSR)</h3>
+<ul>
+<li><strong>Residuals</strong>:
+<ul>
+<li><p>Let <span class="math inline">\(r_i\)</span> denote the <strong><span class="math inline">\(i^{th}\)</span> residual</strong>, which is the difference between the observed response <span class="math inline">\(Y_i\)</span> and the predicted value from the regression model: <span class="math display">\[
+r_i = Y_i - B_0 - B_1 x_{i1} - B_2 x_{i2} - \cdots - B_k x_{ik}, \quad i = 1, \dots, n
+\]</span></p></li>
+<li><p>The <strong>residual vector</strong> <span class="math inline">\(r\)</span> is defined as: <span class="math display">\[
+r = \begin{bmatrix}
+r_1 \\
+r_2 \\
+\vdots \\
+r_n
+\end{bmatrix}
+\]</span></p></li>
+<li><p>In matrix notation, the residual vector can be expressed as: <span class="math display">\[
+r = Y - XB
+\]</span> where:</p>
+<ul>
+<li><span class="math inline">\(Y\)</span> is the <strong>response vector</strong>,</li>
+<li><span class="math inline">\(X\)</span> is the <strong>design matrix</strong>,</li>
+<li><span class="math inline">\(B\)</span> is the <strong>matrix of least squares estimators</strong>.</li>
+</ul></li>
+</ul></li>
+<li><strong>Sum of Squared Residuals (SSR)</strong>:
+<ul>
+<li><p>The <strong>sum of squared residuals (SSR)</strong> is given by: <span class="math display">\[
+SSR = \sum_{i=1}^n r_i^2
+\]</span></p></li>
+<li><p>In matrix notation, the SSR can be written as: <span class="math display">\[
+SSR = r^T r
+\]</span> where <span class="math inline">\(r^T\)</span> is the <strong>transpose</strong> of the residual vector <span class="math inline">\(r\)</span>.</p></li>
+<li><p>Substituting <span class="math inline">\(r = Y - XB\)</span>, we get: <span class="math display">\[
+SSR = (Y - XB)^T (Y - XB)
+\]</span></p></li>
+<li><p>Expanding the matrix product: <span class="math display">\[
+SSR = [Y^T - (XB)^T](Y - XB)
+\]</span></p>
+<p><span class="math display">\[
+SSR = Y^T Y - Y^T XB - B^T X^T Y + B^T X^T XB
+\]</span></p></li>
+</ul></li>
+<li><strong>Simplification Using Normal Equations</strong>:
+<ul>
+<li>From the <strong>normal equations</strong>, we know: <span class="math display">\[
+X^T XB = X^T Y
+\]</span></li>
+<li>Substituting this into the expression for SSR: <span class="math display">\[
+SSR = Y^T Y - Y^T XB - B^T X^T Y + B^T X^T XB
+\]</span> <span class="math display">\[
+SSR = Y^T Y - Y^T XB
+\]</span> (since <span class="math inline">\(B^T X^T Y = B^T X^T XB\)</span> from the normal equations).</li>
+</ul></li>
+<li><strong>Transpose Property</strong>:
+<ul>
+<li>Since <span class="math inline">\(Y^T XB\)</span> is a <strong>scalar</strong> (a <span class="math inline">\(1 \times 1\)</span> matrix), it is equal to its transpose: <span class="math display">\[
+Y^T XB = (Y^T XB)^T = B^T X^T Y
+\]</span></li>
+<li>Therefore, the expression for SSR simplifies further to: <span class="math display">\[
+SSR = Y^T Y - B^T X^T Y
+\]</span></li>
+</ul></li>
+<li><strong>Final Computational Formula for SSR</strong>:
+<ul>
+<li>The <strong>sum of squared residuals (SSR)</strong> can be computed using the formula: <span class="math display">\[
+SSR = Y^T Y - B^T X^T Y
+\]</span></li>
+<li>This formula is computationally efficient but requires careful handling to avoid <strong>roundoff errors</strong>.</li>
+</ul></li>
+<li><strong>Interpretation</strong>:
+<ul>
+<li>The term <span class="math inline">\(Y^T Y\)</span> represents the <strong>total variation</strong> in the response variable <span class="math inline">\(Y\)</span>.</li>
+<li>The term <span class="math inline">\(B^T X^T Y\)</span> represents the <strong>explained variation</strong> by the regression model.</li>
+<li>The difference <span class="math inline">\(Y^T Y - B^T X^T Y\)</span> gives the <strong>unexplained variation</strong> (SSR), which is minimized in the least squares method.</li>
+</ul></li>
+</ul>
+</section>
+<section id="coefficient-of-multiple-determination-r2" class="level3" data-number="5.0.5">
+<h3 data-number="5.0.5" class="anchored" data-anchor-id="coefficient-of-multiple-determination-r2"><span class="header-section-number">5.0.5</span> Coefficient of Multiple Determination (<span class="math inline">\(R^2\)</span>)</h3>
+<ul>
+<li><strong>Definition</strong>:
+<ul>
+<li>The <strong>coefficient of multiple determination</strong>, denoted by <span class="math inline">\(R^2\)</span>, measures the proportion of the total variation in the response variable <span class="math inline">\(Y\)</span> that is explained by the regression model.</li>
+<li>It is defined as: <span class="math display">\[
+R^2 = 1 - \frac{SSR}{\sum_{i=1}^n (Y_i - \overline{Y})^2}
+\]</span> where:
+<ul>
+<li><span class="math inline">\(SSR\)</span> is the <strong>sum of squared residuals</strong> (unexplained variation),</li>
+<li><span class="math inline">\(\sum_{i=1}^n (Y_i - \overline{Y})^2\)</span> is the <strong>total sum of squares (SST)</strong> (total variation in <span class="math inline">\(Y\)</span>),</li>
+<li><span class="math inline">\(\overline{Y}\)</span> is the mean of the observed response values <span class="math inline">\(Y_i\)</span>.</li>
+</ul></li>
+</ul></li>
+<li><strong>Range of <span class="math inline">\(R^2\)</span></strong>:
+<ul>
+<li><span class="math inline">\(R^2\)</span> ranges between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>:
+<ul>
+<li><span class="math inline">\(R^2 = 0\)</span>: The regression model explains <strong>none</strong> of the variation in <span class="math inline">\(Y\)</span>.</li>
+<li><span class="math inline">\(R^2 = 1\)</span>: The regression model explains <strong>all</strong> of the variation in <span class="math inline">\(Y\)</span>.</li>
+</ul></li>
+</ul></li>
+<li><strong>Formula in Terms of SST and SSR</strong>:
+<ul>
+<li><p>The formula for <span class="math inline">\(R^2\)</span> can also be written as: <span class="math display">\[
+R^2 = \frac{SST - SSR}{SST}
+\]</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(SST = \sum_{i=1}^n (Y_i - \overline{Y})^2\)</span> is the <strong>total sum of squares</strong>,</li>
+<li><span class="math inline">\(SSR = \sum_{i=1}^n (Y_i - \hat{Y}_i)^2\)</span> is the <strong>sum of squared residuals</strong>.</li>
+</ul></li>
+</ul></li>
+<li><strong>Usefulness</strong>:
+<ul>
+<li><span class="math inline">\(R^2\)</span> is a useful measure of the <strong>goodness of fit</strong> of the regression model.</li>
+<li>A higher <span class="math inline">\(R^2\)</span> indicates that the model explains a larger proportion of the variation in the response variable <span class="math inline">\(Y\)</span>.</li>
+</ul></li>
+</ul>
 
 
 </section>
