@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Abhijith M S">
-<meta name="dcterms.date" content="2025-03-17">
+<meta name="dcterms.date" content="2025-03-19">
 
 <title>5&nbsp; Regression – Statistical Modeling - 24DS636 (2024-25)</title>
 <style>
@@ -223,12 +223,19 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link active" data-scroll-target="#linear-regression"><span class="header-section-number">5.0.1</span> Linear Regression</a></li>
-  <li><a href="#least-squares-estimators-of-the-regression-parameters" id="toc-least-squares-estimators-of-the-regression-parameters" class="nav-link" data-scroll-target="#least-squares-estimators-of-the-regression-parameters"><span class="header-section-number">5.0.2</span> Least Squares Estimators Of The Regression Parameters</a></li>
+  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link active" data-scroll-target="#linear-regression"><span class="header-section-number">5.1</span> Linear Regression</a>
+  <ul class="collapse">
+  <li><a href="#least-squares-estimators-of-the-regression-parameters" id="toc-least-squares-estimators-of-the-regression-parameters" class="nav-link" data-scroll-target="#least-squares-estimators-of-the-regression-parameters"><span class="header-section-number">5.1.1</span> Least Squares Estimators Of The Regression Parameters</a></li>
   <li><a href="#the-coefficient-of-determination-and-the-sample-correlation-coefficient" id="toc-the-coefficient-of-determination-and-the-sample-correlation-coefficient" class="nav-link" data-scroll-target="#the-coefficient-of-determination-and-the-sample-correlation-coefficient">The Coefficient of Determination and the Sample Correlation Coefficient</a></li>
-  <li><a href="#multiple-linear-regression" id="toc-multiple-linear-regression" class="nav-link" data-scroll-target="#multiple-linear-regression"><span class="header-section-number">5.0.3</span> Multiple Linear Regression</a></li>
+  <li><a href="#multiple-linear-regression" id="toc-multiple-linear-regression" class="nav-link" data-scroll-target="#multiple-linear-regression"><span class="header-section-number">5.1.2</span> Multiple Linear Regression</a></li>
   <li><a href="#residuals-and-sum-of-squared-residuals-ssr" id="toc-residuals-and-sum-of-squared-residuals-ssr" class="nav-link" data-scroll-target="#residuals-and-sum-of-squared-residuals-ssr">Residuals and Sum of Squared Residuals (SSR)</a></li>
-  <li><a href="#coefficient-of-multiple-determination-r2" id="toc-coefficient-of-multiple-determination-r2" class="nav-link" data-scroll-target="#coefficient-of-multiple-determination-r2"><span class="header-section-number">5.0.5</span> Coefficient of Multiple Determination (<span class="math inline">\(R^2\)</span>)</a></li>
+  <li><a href="#coefficient-of-multiple-determination-r2" id="toc-coefficient-of-multiple-determination-r2" class="nav-link" data-scroll-target="#coefficient-of-multiple-determination-r2">Coefficient of Multiple Determination (<span class="math inline">\(R^2\)</span>)</a></li>
+  </ul></li>
+  <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression"><span class="header-section-number">5.2</span> Logistic Regression</a>
+  <ul class="collapse">
+  <li><a href="#checking-the-goodness-of-fit" id="toc-checking-the-goodness-of-fit" class="nav-link" data-scroll-target="#checking-the-goodness-of-fit">Checking the goodness of fit</a></li>
+  <li><a href="#confusion-matrix-accuracy-and-roc-curve" id="toc-confusion-matrix-accuracy-and-roc-curve" class="nav-link" data-scroll-target="#confusion-matrix-accuracy-and-roc-curve"><span class="header-section-number">5.2.1</span> Confusion Matrix, Accuracy, and ROC Curve</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -254,7 +261,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 17, 2025</p>
+      <p class="date">March 19, 2025</p>
     </div>
   </div>
   
@@ -266,8 +273,8 @@ window.Quarto = {
 </header>
 
 
-<section id="linear-regression" class="level3" data-number="5.0.1">
-<h3 data-number="5.0.1" class="anchored" data-anchor-id="linear-regression"><span class="header-section-number">5.0.1</span> Linear Regression</h3>
+<section id="linear-regression" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="linear-regression"><span class="header-section-number">5.1</span> Linear Regression</h2>
 <ul>
 <li><p>Many engineering and scientific problems aim to determine relationships between variables.</p>
 <ul>
@@ -325,7 +332,7 @@ Y = \alpha + \beta x + e
 </ul></li>
 </ul></li>
 </ul>
-<div id="c340938f" class="cell" data-execution_count="1">
+<div id="988ae5ef" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -365,9 +372,8 @@ Y = \alpha + \beta x + e
 </div>
 </div>
 </div>
-</section>
-<section id="least-squares-estimators-of-the-regression-parameters" class="level3" data-number="5.0.2">
-<h3 data-number="5.0.2" class="anchored" data-anchor-id="least-squares-estimators-of-the-regression-parameters"><span class="header-section-number">5.0.2</span> Least Squares Estimators Of The Regression Parameters</h3>
+<section id="least-squares-estimators-of-the-regression-parameters" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="least-squares-estimators-of-the-regression-parameters"><span class="header-section-number">5.1.1</span> Least Squares Estimators Of The Regression Parameters</h3>
 <ul>
 <li><p>As mentioned previouslly, a <strong>simple linear regression model</strong> assumes a linear relationship between the mean response and a single independent variable.</p>
 <ul>
@@ -587,9 +593,66 @@ Problem
 <p>Find the coefficient of determination and the sample correlation coefficient of the previous regression problem.</p>
 </div>
 </div>
+<div id="4fbfbb55" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> sklearn.metrics <span class="im">import</span> r2_score</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Data for relative humidity and moisture content</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    humidity <span class="op">=</span> np.array([<span class="dv">46</span>, <span class="dv">53</span>, <span class="dv">29</span>, <span class="dv">61</span>, <span class="dv">36</span>, <span class="dv">39</span>, <span class="dv">47</span>, <span class="dv">49</span>, <span class="dv">52</span>, <span class="dv">38</span>, <span class="dv">55</span>, <span class="dv">32</span>, <span class="dv">57</span>, <span class="dv">54</span>, <span class="dv">44</span>]).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    moisture <span class="op">=</span> np.array([<span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">7</span>, <span class="dv">17</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">14</span>, <span class="dv">9</span>, <span class="dv">16</span>, <span class="dv">8</span>, <span class="dv">18</span>, <span class="dv">14</span>, <span class="dv">12</span>])</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fit the linear regression model</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> LinearRegression().fit(humidity, moisture)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Print the coefficients</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Intercept: </span><span class="sc">{</span>model<span class="sc">.</span>intercept_<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Coefficient: </span><span class="sc">{</span>model<span class="sc">.</span>coef_[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Predict the moisture content</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    moisture_pred <span class="op">=</span> model.predict(humidity)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the coefficient of determination (R^2)</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    R_squared <span class="op">=</span> r2_score(moisture, moisture_pred)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Coefficient of Determination (R^2): </span><span class="sc">{</span>R_squared<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the sample correlation coefficient (r)</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    correlation_coefficient <span class="op">=</span> np.sqrt(R_squared)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Sample Correlation Coefficient (r): </span><span class="sc">{</span>correlation_coefficient<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot the data points</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    plt.scatter(humidity, moisture, color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">'Data Points'</span>)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot the regression line</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    plt.plot(humidity, moisture_pred, color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'Regression Line'</span>)</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add labels and title</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'Relative Humidity (%)'</span>)</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'Moisture Content (%)'</span>)</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">'Linear Regression: Moisture Content vs. Relative Humidity'</span>)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    plt.legend()</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Show the plot</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    plt.grid(<span class="va">True</span>)</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Intercept: -2.5104576516877177
+Coefficient: 0.32320356181404014
+Coefficient of Determination (R^2): 0.9113639730826797
+Sample Correlation Coefficient (r): 0.9546538498757965</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Regression_files/figure-html/cell-3-output-2.png" width="585" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="multiple-linear-regression" class="level3" data-number="5.0.3">
-<h3 data-number="5.0.3" class="anchored" data-anchor-id="multiple-linear-regression"><span class="header-section-number">5.0.3</span> Multiple Linear Regression</h3>
+<section id="multiple-linear-regression" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="multiple-linear-regression"><span class="header-section-number">5.1.2</span> Multiple Linear Regression</h3>
 <ul>
 <li><strong>Overview</strong>:
 <ul>
@@ -663,7 +726,7 @@ E[Y_i] = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_k x_{ik}
 \]</span></li>
 <li>These equations form a <strong>linear system</strong> that can be solved to find the least squares estimators <span class="math inline">\(B_0, B_1, \dots, B_k\)</span>.</li>
 </ul>
-<h3 id="normal-equations-in-matrix-notation" data-number="5.0.4" class="anchored" data-anchor-id="determining-the-least-squares-estimators"><span class="header-section-number">5.0.4</span> Normal Equations in Matrix Notation</h3></li>
+<h3 id="normal-equations-in-matrix-notation" data-number="5.1.3" class="anchored" data-anchor-id="determining-the-least-squares-estimators"><span class="header-section-number">5.1.3</span> Normal Equations in Matrix Notation</h3></li>
 <li><strong>Normal Equations</strong>:
 <ul>
 <li>The normal equations for the least squares estimators <span class="math inline">\(B_0, B_1, \dots, B_k\)</span> are given by: <span class="math display">\[
@@ -679,22 +742,25 @@ E[Y_i] = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_k x_{ik}
 <li>To simplify the solution of the normal equations, we introduce <strong>matrix notation</strong>.</li>
 <li>Let:
 <ul>
-<li><p><span class="math inline">\(Y\)</span> be the <strong>response vector</strong>: <span class="math display">\[
+<li><span class="math inline">\(Y\)</span> be the <strong>response vector</strong>: <span class="math display">\[
 Y = \begin{bmatrix}
 Y_1 \\
 Y_2 \\
 \vdots \\
 Y_n
 \end{bmatrix}
-\]</span></p></li>
-<li><p><span class="math inline">\(X\)</span> be the <strong>design matrix</strong>: <span class="math display">\[
+\]</span></li>
+<li><span class="math inline">\(X\)</span> be the <strong>design matrix</strong>: <span class="math display">\[
 X = \begin{bmatrix}
 1 &amp; x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1k} \\
 1 &amp; x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2k} \\
 \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
 1 &amp; x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{nk}
 \end{bmatrix}
-\]</span> ### Matrix Representation of Multiple Regression</p></li>
+\]</span></li>
+</ul>
+<h3 id="matrix-representation-of-multiple-regression" data-number="5.1.4" class="anchored"><span class="header-section-number">5.1.4</span> Matrix Representation of Multiple Regression</h3>
+<ul>
 <li><p><span class="math inline">\(\beta\)</span> be the <strong>parameter vector</strong>: <span class="math display">\[
 \beta = \begin{bmatrix}
 \beta_0 \\
@@ -832,8 +898,8 @@ SSR = Y^T Y - B^T X^T Y
 </ul></li>
 </ul>
 </section>
-<section id="coefficient-of-multiple-determination-r2" class="level3" data-number="5.0.5">
-<h3 data-number="5.0.5" class="anchored" data-anchor-id="coefficient-of-multiple-determination-r2"><span class="header-section-number">5.0.5</span> Coefficient of Multiple Determination (<span class="math inline">\(R^2\)</span>)</h3>
+<section id="coefficient-of-multiple-determination-r2" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="coefficient-of-multiple-determination-r2">Coefficient of Multiple Determination (<span class="math inline">\(R^2\)</span>)</h3>
 <ul>
 <li><strong>Definition</strong>:
 <ul>
@@ -872,8 +938,249 @@ R^2 = \frac{SST - SSR}{SST}
 <li>A higher <span class="math inline">\(R^2\)</span> indicates that the model explains a larger proportion of the variation in the response variable <span class="math inline">\(Y\)</span>.</li>
 </ul></li>
 </ul>
+<p>### Probabilistic Perspective of Linear Regression</p>
+<ul>
+<li><strong>Overview</strong>:
+<ul>
+<li>Linear regression can also be viewed from a probabilistic perspective.</li>
+<li>In this view, the response variable <span class="math inline">\(Y\)</span> is considered a random variable with a probability distribution that depends on the input variables <span class="math inline">\(x_1, x_2, \dots, x_r\)</span>.</li>
+</ul></li>
+<li><strong>Assumptions</strong>:
+<ul>
+<li>The response variable <span class="math inline">\(Y\)</span> is normally distributed with mean <span class="math inline">\(\mu_Y\)</span> and variance <span class="math inline">\(\sigma^2\)</span>.</li>
+<li>The mean <span class="math inline">\(\mu_Y\)</span> is a linear function of the input variables: <span class="math display">\[
+\mu_Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_r x_r
+\]</span></li>
+<li>The variance <span class="math inline">\(\sigma^2\)</span> is constant and does not depend on the input variables.</li>
+</ul></li>
+<li><strong>Model</strong>:
+<ul>
+<li>The linear regression model can be written as: <span class="math display">\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_r x_r + \epsilon
+\]</span> where <span class="math inline">\(\epsilon\)</span> is a random error term that follows a normal distribution with mean <span class="math inline">\(0\)</span> and variance <span class="math inline">\(\sigma^2\)</span>: <span class="math display">\[
+\epsilon \sim N(0, \sigma^2)
+\]</span></li>
+</ul></li>
+<li><strong>Likelihood Function</strong>:
+<ul>
+<li>Given a set of observed data points <span class="math inline">\((x_i, Y_i)\)</span> for <span class="math inline">\(i = 1, \dots, n\)</span>, the likelihood function represents the probability of observing the data given the parameters <span class="math inline">\(\beta_0, \beta_1, \dots, \beta_r\)</span> and <span class="math inline">\(\sigma^2\)</span>.</li>
+<li>The likelihood function is given by: <span class="math display">\[
+L(\beta_0, \beta_1, \dots, \beta_r, \sigma^2) = \prod_{i=1}^n \frac{1}{\sqrt{2 \pi \sigma^2}} \exp \left( -\frac{(Y_i - \beta_0 - \beta_1 x_{i1} - \dots - \beta_r x_{ir})^2}{2 \sigma^2} \right)
+\]</span></li>
+</ul></li>
+<li><strong>Log-Likelihood Function</strong>:
+<ul>
+<li>The log-likelihood function is the natural logarithm of the likelihood function: <span class="math display">\[
+\log L(\beta_0, \beta_1, \dots, \beta_r, \sigma^2) = -\frac{n}{2} \log (2 \pi \sigma^2) - \frac{1}{2 \sigma^2} \sum_{i=1}^n (Y_i - \beta_0 - \beta_1 x_{i1} - \dots - \beta_r x_{ir})^2
+\]</span></li>
+</ul></li>
+<li><strong>Maximum Likelihood Estimation (MLE)</strong>:
+<ul>
+<li>The parameters <span class="math inline">\(\beta_0, \beta_1, \dots, \beta_r\)</span> and <span class="math inline">\(\sigma^2\)</span> can be estimated by maximizing the log-likelihood function.</li>
+<li>The maximum likelihood estimators (MLEs) of <span class="math inline">\(\beta_0, \beta_1, \dots, \beta_r\)</span> are the same as the least squares estimators.</li>
+<li>The MLE of <span class="math inline">\(\sigma^2\)</span> is given by: <span class="math display">\[
+\hat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n (Y_i - \hat{Y}_i)^2
+\]</span> where <span class="math inline">\(\hat{Y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_{i1} + \dots + \hat{\beta}_r x_{ir}\)</span> are the predicted values from the regression model.</li>
+</ul></li>
+<li><strong>Inference</strong>:
+<ul>
+<li>The probabilistic perspective allows for statistical inference about the regression parameters.</li>
+<li>Confidence intervals and hypothesis tests can be constructed for the parameters <span class="math inline">\(\beta_0, \beta_1, \dots, \beta_r\)</span> and <span class="math inline">\(\sigma^2\)</span>.</li>
+</ul></li>
+</ul>
+<div id="ca4e33c4" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generate synthetic data</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, n)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    beta_0 <span class="op">=</span> <span class="fl">2.0</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    beta_1 <span class="op">=</span> <span class="fl">1.5</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    sigma <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    epsilon <span class="op">=</span> np.random.normal(<span class="dv">0</span>, sigma, n)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    Y <span class="op">=</span> beta_0 <span class="op">+</span> beta_1 <span class="op">*</span> x <span class="op">+</span> epsilon</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Maximum Likelihood Estimation (MLE) for beta_0, beta_1, and sigma^2</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> np.vstack([np.ones(n), x]).T</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    beta_hat <span class="op">=</span> np.linalg.inv(X.T <span class="op">@</span> X) <span class="op">@</span> X.T <span class="op">@</span> Y</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    Y_hat <span class="op">=</span> X <span class="op">@</span> beta_hat</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    sigma_hat <span class="op">=</span> np.sqrt(np.<span class="bu">sum</span>((Y <span class="op">-</span> Y_hat) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> n)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Estimated beta_0: </span><span class="sc">{</span>beta_hat[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Estimated beta_1: </span><span class="sc">{</span>beta_hat[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Estimated sigma^2: </span><span class="sc">{</span>sigma_hat <span class="op">**</span> <span class="dv">2</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot the data and the fitted line</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    plt.scatter(x, Y, color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">'Data Points'</span>)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    plt.plot(x, Y_hat, color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'Fitted Line'</span>)</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'Independent Variable (x)'</span>)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'Dependent Variable (Y)'</span>)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">'Probabilistic Linear Regression'</span>)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    plt.legend()</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    plt.grid(<span class="va">True</span>)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Estimated beta_0: 1.8271871459226277
+Estimated beta_1: 1.5137932673366563
+Estimated sigma^2: 0.8149047134980785</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Regression_files/figure-html/cell-4-output-2.png" width="585" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="logistic-regression" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="logistic-regression"><span class="header-section-number">5.2</span> Logistic Regression</h2>
+<ul>
+<li><strong>Overview</strong>:
+<ul>
+<li>Logistic regression is used when the response variable is categorical, typically binary (0 or 1).</li>
+<li>It models the probability that a given input point belongs to a particular category.</li>
+</ul></li>
+<li><strong>Logistic Function</strong>:
+<ul>
+<li>The logistic function (also called the sigmoid function) is used to model the probability: <span class="math display">\[
+P(Y = 1 \mid \mathbf{x}) = \frac{1}{1 + \exp(-(\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_r x_r))}
+\]</span></li>
+</ul></li>
+<li><strong>Logistic Regression Model</strong>:
+<ul>
+<li>The logistic regression model can be written as: <span class="math display">\[
+\log \left( \frac{P(Y = 1 \mid \mathbf{x})}{1 - P(Y = 1 \mid \mathbf{x})} \right) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_r x_r
+\]</span></li>
+<li>Here, the left-hand side is the log-odds (logit) of the probability of the response being 1.</li>
+</ul></li>
+<li><strong>Estimation of Parameters</strong>:
+<ul>
+<li>The parameters <span class="math inline">\(\beta_0, \beta_1, \dots, \beta_r\)</span> are estimated using the method of maximum likelihood.</li>
+<li>The likelihood function for logistic regression is given by: <span class="math display">\[
+L(\beta_0, \beta_1, \dots, \beta_r) = \prod_{i=1}^n P(Y_i \mid \mathbf{x}_i)^{Y_i} (1 - P(Y_i \mid \mathbf{x}_i))^{1 - Y_i}
+\]</span></li>
+</ul></li>
+<li><strong>Log-Likelihood Function</strong>:
+<ul>
+<li>The log-likelihood function is: <span class="math display">\[
+\log L(\beta_0, \beta_1, \dots, \beta_r) = \sum_{i=1}^n \left[ Y_i \log P(Y_i \mid \mathbf{x}_i) + (1 - Y_i) \log (1 - P(Y_i \mid \mathbf{x}_i)) \right]
+\]</span></li>
+</ul></li>
+<li><strong>Fitting the Model</strong>:
+<ul>
+<li>The parameters are estimated by maximizing the log-likelihood function using numerical optimization techniques.</li>
+</ul></li>
+</ul>
+<section id="checking-the-goodness-of-fit" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="checking-the-goodness-of-fit">Checking the goodness of fit</h3>
+</section>
+<section id="confusion-matrix-accuracy-and-roc-curve" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="confusion-matrix-accuracy-and-roc-curve"><span class="header-section-number">5.2.1</span> Confusion Matrix, Accuracy, and ROC Curve</h3>
+<ul>
+<li><p><strong>Confusion Matrix</strong>:</p>
+<ul>
+<li>A confusion matrix is a table used to evaluate the performance of a classification model.</li>
+<li>It summarizes the counts of true positive (TP), true negative (TN), false positive (FP), and false negative (FN) predictions.</li>
+<li>The matrix helps in understanding the types of errors the model is making.</li>
+</ul></li>
+<li><p><strong>Accuracy</strong>:</p>
+<ul>
+<li>Accuracy is a metric that measures the proportion of correct predictions made by the model.</li>
+<li>It is calculated as the sum of true positives and true negatives divided by the total number of predictions: <span class="math display">\[
+\text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}
+\]</span></li>
+<li>While accuracy is a useful metric, it may not be sufficient for imbalanced datasets where one class is more frequent than the other.</li>
+</ul>
+<h1 id="calculate-sensitivity-recall-and-specificity" data-number="6"><span class="header-section-number">6</span> Calculate sensitivity (recall) and specificity</h1>
+<p>sensitivity = TP / (TP + FN) specificity = TN / (TN + FP)</p>
+<p>print(f”Sensitivity (Recall): {sensitivity}“) print(f”Specificity: {specificity}“)</p></li>
+<li><p><strong>ROC Curve</strong>:</p>
+<ul>
+<li>The Receiver Operating Characteristic (ROC) curve is a graphical representation of a classification model’s performance.</li>
+<li>It plots the true positive rate (TPR) against the false positive rate (FPR) at various threshold settings.</li>
+<li>The area under the ROC curve (AUC) is a single scalar value that summarizes the model’s ability to discriminate between positive and negative classes.</li>
+<li>An AUC value of 1 indicates perfect classification, while an AUC value of 0.5 indicates no discriminative power (equivalent to random guessing).</li>
+</ul></li>
+</ul>
+<div id="2c03f4b8" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix, accuracy_score, roc_curve, auc</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate synthetic data for logistic regression</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  n <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, n)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  beta_0 <span class="op">=</span> <span class="op">-</span><span class="fl">5.0</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  beta_1 <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  prob <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>(beta_0 <span class="op">+</span> beta_1 <span class="op">*</span> x)))</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  Y <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, prob, n)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Reshape x for sklearn</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> x.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Fit the logistic regression model</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  model <span class="op">=</span> LogisticRegression().fit(x, Y)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Predict probabilities</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  Y_prob <span class="op">=</span> model.predict_proba(x)[:, <span class="dv">1</span>]</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Predict class labels</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  Y_pred <span class="op">=</span> model.predict(x)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate confusion matrix</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  conf_matrix <span class="op">=</span> confusion_matrix(Y, Y_pred)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"Confusion Matrix:"</span>)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(conf_matrix)</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate accuracy</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>  accuracy <span class="op">=</span> accuracy_score(Y, Y_pred)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f"Accuracy: </span><span class="sc">{</span>accuracy<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate ROC curve and AUC</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>  fpr, tpr, _ <span class="op">=</span> roc_curve(Y, Y_prob)</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>  roc_auc <span class="op">=</span> auc(fpr, tpr)</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f"AUC: </span><span class="sc">{</span>roc_auc<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot ROC curve</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>  plt.figure()</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>  plt.plot(fpr, tpr, color<span class="op">=</span><span class="st">'darkorange'</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f'ROC curve (area = </span><span class="sc">{</span>roc_auc<span class="sc">:.2f}</span><span class="ss">)'</span>)</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>  plt.plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'navy'</span>, lw<span class="op">=</span><span class="dv">2</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>  plt.xlim([<span class="fl">0.0</span>, <span class="fl">1.0</span>])</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>  plt.ylim([<span class="fl">0.0</span>, <span class="fl">1.05</span>])</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>  plt.xlabel(<span class="st">'False Positive Rate'</span>)</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>  plt.ylabel(<span class="st">'True Positive Rate'</span>)</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>  plt.title(<span class="st">'Receiver Operating Characteristic (ROC) Curve'</span>)</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>  plt.legend(loc<span class="op">=</span><span class="st">"lower right"</span>)</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>  plt.grid(<span class="va">True</span>)</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>  plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix:
+[[47  5]
+ [ 5 43]]
+Accuracy: 0.9
+AUC: 0.9647435897435896</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Regression_files/figure-html/cell-5-output-2.png" width="600" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
