@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Abhijith M S">
+<meta name="dcterms.date" content="2025-03-29">
+
+<title>6&nbsp; Time series Analysis – Statistical Modeling - 24DS636 (2024-25)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./Regression.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./TimeSeriesAnalysis.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Time series Analysis</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistical Modeling - 24DS636 (2024-25)</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./DescriptiveStatistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Descriptive statistics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ParameterEstimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./HypothesisTesting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Analysis of Variance (ANOVA)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./TimeSeriesAnalysis.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Time series Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">6.1</span> Introduction</a></li>
+  <li><a href="#stationary-processes" id="toc-stationary-processes" class="nav-link" data-scroll-target="#stationary-processes"><span class="header-section-number">6.2</span> Stationary processes</a></li>
+  <li><a href="#differencing-to-make-time-series-stationary" id="toc-differencing-to-make-time-series-stationary" class="nav-link" data-scroll-target="#differencing-to-make-time-series-stationary"><span class="header-section-number">6.3</span> Differencing to Make Time Series Stationary</a>
+  <ul class="collapse">
+  <li><a href="#first-order-differencing" id="toc-first-order-differencing" class="nav-link" data-scroll-target="#first-order-differencing"><span class="header-section-number">6.3.1</span> First Order Differencing</a></li>
+  <li><a href="#higher-order-differencing" id="toc-higher-order-differencing" class="nav-link" data-scroll-target="#higher-order-differencing"><span class="header-section-number">6.3.2</span> Higher Order Differencing</a></li>
+  <li><a href="#seasonal-differencing" id="toc-seasonal-differencing" class="nav-link" data-scroll-target="#seasonal-differencing"><span class="header-section-number">6.3.3</span> Seasonal Differencing</a></li>
+  </ul></li>
+  <li><a href="#autoregressive-models-ar1-arp-and-model-selection-with-pacf" id="toc-autoregressive-models-ar1-arp-and-model-selection-with-pacf" class="nav-link" data-scroll-target="#autoregressive-models-ar1-arp-and-model-selection-with-pacf"><span class="header-section-number">6.4</span> Autoregressive Models: AR(1), AR(p), and Model Selection with PACF</a>
+  <ul class="collapse">
+  <li><a href="#ar1-model" id="toc-ar1-model" class="nav-link" data-scroll-target="#ar1-model"><span class="header-section-number">6.4.1</span> AR(1) Model</a></li>
+  <li><a href="#autoregressive-model-of-order-p-arp" id="toc-autoregressive-model-of-order-p-arp" class="nav-link" data-scroll-target="#autoregressive-model-of-order-p-arp"><span class="header-section-number">6.4.2</span> Autoregressive Model of Order p: AR(p)</a></li>
+  <li><a href="#identify-order-p-using-pacf" id="toc-identify-order-p-using-pacf" class="nav-link" data-scroll-target="#identify-order-p-using-pacf"><span class="header-section-number">6.4.3</span> Identify Order <span class="math inline">\(p\)</span> Using PACF</a></li>
+  </ul></li>
+  <li><a href="#moving-average-models-ma1-maq-models-and-the-choice-of-q." id="toc-moving-average-models-ma1-maq-models-and-the-choice-of-q." class="nav-link" data-scroll-target="#moving-average-models-ma1-maq-models-and-the-choice-of-q."><span class="header-section-number">6.5</span> Moving Average Models: MA(1), MA(q) models and the choice of q.</a>
+  <ul class="collapse">
+  <li><a href="#ma1-model" id="toc-ma1-model" class="nav-link" data-scroll-target="#ma1-model"><span class="header-section-number">6.5.1</span> MA(1) Model</a></li>
+  <li><a href="#moving-average-model-of-order-q-maq" id="toc-moving-average-model-of-order-q-maq" class="nav-link" data-scroll-target="#moving-average-model-of-order-q-maq"><span class="header-section-number">6.5.2</span> Moving Average Model of Order q: MA(q)</a></li>
+  </ul></li>
+  <li><a href="#armap-q-model" id="toc-armap-q-model" class="nav-link" data-scroll-target="#armap-q-model"><span class="header-section-number">6.6</span> ARMA(p, q) Model</a>
+  <ul class="collapse">
+  <li><a href="#definition-4" id="toc-definition-4" class="nav-link" data-scroll-target="#definition-4"><span class="header-section-number">6.6.1</span> Definition</a></li>
+  <li><a href="#key-properties-3" id="toc-key-properties-3" class="nav-link" data-scroll-target="#key-properties-3"><span class="header-section-number">6.6.2</span> Key Properties</a></li>
+  </ul></li>
+  <li><a href="#arimap-d-q-model" id="toc-arimap-d-q-model" class="nav-link" data-scroll-target="#arimap-d-q-model"><span class="header-section-number">6.7</span> ARIMA(p, d, q) Model</a>
+  <ul class="collapse">
+  <li><a href="#definition-5" id="toc-definition-5" class="nav-link" data-scroll-target="#definition-5"><span class="header-section-number">6.7.1</span> Definition</a></li>
+  <li><a href="#key-components" id="toc-key-components" class="nav-link" data-scroll-target="#key-components"><span class="header-section-number">6.7.2</span> Key Components</a></li>
+  <li><a href="#steps-to-build-an-arima-model" id="toc-steps-to-build-an-arima-model" class="nav-link" data-scroll-target="#steps-to-build-an-arima-model"><span class="header-section-number">6.7.3</span> Steps to Build an ARIMA Model</a></li>
+  </ul></li>
+  <li><a href="#sarima-model-equation" id="toc-sarima-model-equation" class="nav-link" data-scroll-target="#sarima-model-equation"><span class="header-section-number">6.8</span> SARIMA Model Equation</a>
+  <ul class="collapse">
+  <li><a href="#full-sarima-equation" id="toc-full-sarima-equation" class="nav-link" data-scroll-target="#full-sarima-equation"><span class="header-section-number">6.8.1</span> <strong>Full SARIMA Equation</strong></a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Time series Analysis</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Abhijith M S </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 29, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">6.1</span> Introduction</h2>
+<ul>
+<li><p><strong>Time Series Data</strong>:</p>
+<ul>
+<li><p>A sequence of observations in chronological order (e.g., daily log returns on a stock, monthly Consumer Price Index (CPI) values).</p></li>
+<li><p>Often assumes <strong>equally spaced</strong> data with a discrete-time index, though real-world data may deviate:</p>
+<ul>
+<li>Daily stock returns exclude weekends/holidays.</li>
+<li>Monthly CPI values are spaced by months (unequal days), but treated as equally spaced for simplicity.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>Time Series Models</strong>:</p>
+<ul>
+<li><p>Studied for applications in econometrics, business forecasting, and scientific fields.</p></li>
+<li><p>Aim to capture patterns, dependencies, or trends in sequential data.</p></li>
+</ul></li>
+<li><p><strong>Stochastic Process</strong>:</p>
+<ul>
+<li><p>A sequence of random variables, representing the theoretical/population analog of a time series.</p></li>
+<li><p>A time series is a <strong>sample</strong> from a stochastic process.</p></li>
+<li><p>“Stochastic” = random.</p></li>
+</ul></li>
+<li><p><strong>Stationarity</strong>:</p>
+<ul>
+<li><p>A key property for achieving <strong>parsimony</strong> (simplicity) in time series models.</p></li>
+<li><p>Assumes distributional invariance over time (e.g., constant mean, variance, and autocorrelation structure).</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="stationary-processes" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="stationary-processes"><span class="header-section-number">6.2</span> Stationary processes</h2>
+<ul>
+<li><p><strong>Stationary Processes</strong>:</p>
+<ul>
+<li><strong>Definition</strong>: Probability models for time series with <strong>time-invariant behavior</strong>.</li>
+<li><strong>Examples</strong>:
+<ul>
+<li>Financial time series (e.g., log returns) where changes may be stationary even if the series itself is not.</li>
+<li>Seasonal demand (e.g., sunscreen, winter coats) with recurring patterns over shorter periods.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>Strict Stationarity</strong>:</p>
+<ul>
+<li><p>All aspects of the process’s distribution remain <strong>unchanged under time shifts</strong>.</p></li>
+<li><p>Mathematically: For any <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span>, <span class="math inline">\((Y_1, \dots, Y_n)\)</span> and <span class="math inline">\((Y_{1+m}, \dots, Y_{n+m})\)</span> have identical distributions.</p></li>
+<li><p>A strong assumption requiring <strong>all statistical properties</strong> (mean, variance, quantiles, etc.) to be time-invariant.</p></li>
+</ul></li>
+<li><p><strong>Weak Stationarity (Covariance Stationarity)</strong>:</p>
+<ul>
+<li>Requires:
+<ol type="1">
+<li>Constant mean: <span class="math inline">\(E(Y_t) = \mu\)</span> for all <span class="math inline">\(t\)</span>.</li>
+<li>Constant variance: <span class="math inline">\(\text{Var}(Y_t) = \sigma^2\)</span> for all <span class="math inline">\(t\)</span>.</li>
+<li>Covariance depends only on lag: <span class="math inline">\(\text{Cov}(Y_t, Y_s) = \gamma(|t - s|)\)</span> for some function <span class="math inline">\(\gamma(h)\)</span>.</li>
+</ol></li>
+<li>Example: <span class="math inline">\(\text{Cov}(Y_2, Y_5) = \text{Cov}(Y_7, Y_{10})\)</span> if <span class="math inline">\(|2-5| = |7-10| = 3\)</span>.</li>
+</ul></li>
+<li><p><strong>Autocovariance and Autocorrelation</strong>:</p>
+<ul>
+<li><strong>Autocovariance function</strong>: <span class="math inline">\(\gamma(h) = \text{Cov}(Y_t, Y_{t+h})\)</span>, with <span class="math inline">\(\gamma(h) = \gamma(-h)\)</span>.</li>
+<li><strong>Autocorrelation function</strong>: <span class="math inline">\(\rho(h) = \frac{\gamma(h)}{\gamma(0)} = \frac{\gamma(h)}{\sigma^2}\)</span>.</li>
+<li><span class="math inline">\(\gamma(0) = \sigma^2\)</span> (variance at lag 0).</li>
+</ul></li>
+<li><p><strong>Applications and Benefits</strong>:</p>
+<ul>
+<li>Enables <strong>parsimonious modeling</strong> (fewer parameters) for time series data.
+<ul>
+<li>Example: All <span class="math inline">\(Y_t\)</span> share a common mean <span class="math inline">\(\mu\)</span>, estimated accurately by <span class="math inline">\(\overline{Y}\)</span>.</li>
+</ul></li>
+<li>Non-stationary series (e.g., stock prices) may have <strong>stationary changes</strong> (e.g., log returns), allowing modeling.</li>
+</ul></li>
+<li><p><strong>Assessing Stationarity</strong>:</p>
+<ul>
+<li><p><strong>Visual inspection</strong>:</p>
+<ul>
+<li>Time series plot should show <strong>mean-reversion</strong> (oscillation around a fixed level).</li>
+<li>Non-stationary series “wander” without returning to a fixed level.</li>
+</ul></li>
+<li><p><strong>Statistical tests</strong>: Formal tests (e.g., ADF test) to evaluate stationarity.</p></li>
+<li><p><strong>Sample autocorrelation function (ACF)</strong>: Supplementary tool for analysis.</p></li>
+</ul></li>
+<li><p><strong>Challenges</strong>:</p>
+<ul>
+<li><p>Stationarity is an <strong>assumption</strong>, not guaranteed.</p></li>
+<li><p>Even with stationarity, uncertainty remains (e.g., limited data for estimating <span class="math inline">\(\mu\)</span> in non-stationary series).</p></li>
+</ul></li>
+</ul>
+<hr>
+<p>-<strong>Dealing with non-stationary data</strong></p>
+<ul>
+<li><p><strong>Example-1</strong>:</p>
+<ul>
+<li><p>One-month annualized inflation rate (%) is shown in the code below.</p></li>
+<li><p>Appears to <strong>wander</strong> without clear mean reversion.</p></li>
+<li><p>Ambiguity in stationarity requires further investigation.</p></li>
+<li><p><strong>First Differences</strong>:</p>
+<ul>
+<li><p>Changes between consecutive months (first differences) <strong>oscillate around 0%</strong>.</p></li>
+<li><p>Differenced series exhibits <strong>stationary behavior</strong> (stable mean/variance).</p></li>
+</ul></li>
+</ul></li>
+<li><p><strong>Key Observations</strong>:</p>
+<ul>
+<li><p>Non-stationary original series may require differencing for modeling.</p></li>
+<li><p>Differenced series (<span class="math inline">\(\Delta Y_t = Y_t - Y_{t-1}\)</span>) simplifies analysis by removing trends.</p></li>
+</ul></li>
+</ul>
+<div id="e6a381cb" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate inflation rate data (non-stationary) with a trend and noise</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">200</span>  <span class="co"># Number of months</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(n)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>trend <span class="op">=</span> <span class="fl">0.02</span> <span class="op">*</span> time  <span class="co"># Simulated upward trend</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>noise <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.5</span>, n)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>inflation_rate <span class="op">=</span> <span class="dv">4</span> <span class="op">+</span> <span class="fl">0.05</span> <span class="op">*</span> time <span class="op">+</span> trend <span class="op">+</span> noise  <span class="co"># Non-stationary series</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute first differences (stationary)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>diff_inflation <span class="op">=</span> np.diff(inflation_rate)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Original series (non-stationary)</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>ax1.plot(time, inflation_rate, color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">'Inflation Rate (%)'</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>ax1.axhline(y<span class="op">=</span><span class="dv">4</span>, color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'Hypothetical Mean (4%)'</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'(a) Simulated Inflation Rate (Non-Stationary)'</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'Rate (%)'</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>ax1.legend()</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>ax1.grid(<span class="va">True</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Differenced series (stationary)</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>ax2.plot(time[<span class="dv">1</span>:], diff_inflation, color<span class="op">=</span><span class="st">'green'</span>, label<span class="op">=</span><span class="st">'First Differences'</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>ax2.axhline(y<span class="op">=</span><span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'Zero Mean'</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'(b) First Differences (Stationary)'</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">'Time (Months)'</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Change (%)'</span>)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>ax2.legend()</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>ax2.grid(<span class="va">True</span>)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TimeSeriesAnalysis_files/figure-html/cell-2-output-1.png" width="949" height="756" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+<ul>
+<li><strong>Example-2</strong>:
+<ul>
+<li><strong>Key Features</strong>:
+<ol type="1">
+<li><p><strong>Upward Trend</strong>: Persistent increase in passenger numbers over time.</p></li>
+<li><p><strong>Seasonal Variation</strong>:</p></li>
+</ol>
+<ul>
+<li><strong>Peaks</strong> in summer months (e.g., July, August).</li>
+<li><strong>Troughs</strong> in winter months (e.g., December, January).</li>
+</ul>
+<ol start="3" type="1">
+<li><strong>Increasing Seasonal Amplitude</strong>: Seasonal fluctuations grow larger over time.</li>
+</ol></li>
+<li><strong>Nonstationarity</strong>: The combination of trend, seasonality, and increasing variability violates stationarity assumptions.</li>
+</ul></li>
+</ul>
+<div id="3356ab26" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.dates <span class="im">as</span> mdates</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate synthetic monthly data (1949–1960)</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>dates <span class="op">=</span> pd.date_range(start<span class="op">=</span><span class="st">"1949-01-01"</span>, end<span class="op">=</span><span class="st">"1960-12-01"</span>, freq<span class="op">=</span><span class="st">"MS"</span>)  <span class="co"># Ensure full date format</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Define n_months correctly</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>n_months <span class="op">=</span> <span class="bu">len</span>(dates)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Upward trend component (linear increase)</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>trend_slope <span class="op">=</span> <span class="fl">2.5</span>  <span class="co"># Passengers increase by ~2.5 per month</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>trend <span class="op">=</span> <span class="dv">100</span> <span class="op">+</span> trend_slope <span class="op">*</span> np.arange(n_months)  <span class="co"># Baseline trend</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Seasonal component (peaks in summer, troughs in winter)</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Amplitude increases over time (non-stationary seasonality)</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>seasonal_amplitude <span class="op">=</span> <span class="fl">0.5</span> <span class="op">*</span> np.arange(n_months)  <span class="co"># Growing amplitude</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>month_indices <span class="op">=</span> dates.month.values <span class="op">-</span> <span class="dv">1</span>  <span class="co"># 0-based months (0=Jan, 11=Dec)</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>seasonal <span class="op">=</span> <span class="dv">20</span> <span class="op">*</span> np.sin(<span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> (month_indices <span class="op">-</span> <span class="dv">6</span>) <span class="op">/</span> <span class="dv">12</span>)  <span class="co"># Peaks in July (month 7)</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>seasonal <span class="op">*=</span> (<span class="dv">1</span> <span class="op">+</span> <span class="fl">0.05</span> <span class="op">*</span> np.arange(n_months))  <span class="co"># Amplify seasonality over time</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Random noise</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>noise <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="dv">10</span>, n_months)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine components</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>passengers <span class="op">=</span> trend <span class="op">+</span> seasonal <span class="op">+</span> noise</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Create DataFrame</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({<span class="st">"Passengers"</span>: passengers}, index<span class="op">=</span>dates)</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>plt.plot(df.index, df[<span class="st">"Passengers"</span>], color<span class="op">=</span><span class="st">"blue"</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Synthetic Monthly Airline Passengers (1949–1960)"</span>)</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Year"</span>)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Passengers"</span>)</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert annotation dates to full datetime format</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>annotate_dates <span class="op">=</span> pd.to_datetime([<span class="st">"1955-07-01"</span>, <span class="st">"1950-07-01"</span>, <span class="st">"1958-07-01"</span>])</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Annotate features</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>plt.annotate(</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Upward Trend"</span>,</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    xy<span class="op">=</span>(annotate_dates[<span class="dv">0</span>], df.loc[annotate_dates[<span class="dv">0</span>], <span class="st">"Passengers"</span>]),</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    xytext<span class="op">=</span>(pd.Timestamp(<span class="st">"1953-01-01"</span>), <span class="dv">300</span>),</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    arrowprops<span class="op">=</span><span class="bu">dict</span>(facecolor<span class="op">=</span><span class="st">"red"</span>, shrink<span class="op">=</span><span class="fl">0.05</span>),</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>plt.annotate(</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Seasonal Peaks (Summer)"</span>,</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>    xy<span class="op">=</span>(annotate_dates[<span class="dv">1</span>], df.loc[annotate_dates[<span class="dv">1</span>], <span class="st">"Passengers"</span>]),</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    xytext<span class="op">=</span>(pd.Timestamp(<span class="st">"1949-06-01"</span>), <span class="dv">200</span>),</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    arrowprops<span class="op">=</span><span class="bu">dict</span>(facecolor<span class="op">=</span><span class="st">"green"</span>, shrink<span class="op">=</span><span class="fl">0.05</span>),</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>plt.annotate(</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Increasing Seasonal Amplitude"</span>,</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>    xy<span class="op">=</span>(annotate_dates[<span class="dv">2</span>], df.loc[annotate_dates[<span class="dv">2</span>], <span class="st">"Passengers"</span>]),</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    xytext<span class="op">=</span>(pd.Timestamp(<span class="st">"1956-01-01"</span>), <span class="dv">600</span>),</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    arrowprops<span class="op">=</span><span class="bu">dict</span>(facecolor<span class="op">=</span><span class="st">"purple"</span>, shrink<span class="op">=</span><span class="fl">0.05</span>),</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Format x-axis dates</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>plt.gca().xaxis.set_major_formatter(mdates.DateFormatter(<span class="st">'%Y'</span>))</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="co"># Differencing to remove seasonality (lag 12)</span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>seasonal_diff <span class="op">=</span> df[<span class="st">"Passengers"</span>].diff(<span class="dv">12</span>).dropna()</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the differenced series</span></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>plt.plot(seasonal_diff, color<span class="op">=</span><span class="st">"orange"</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Seasonally Differenced Monthly Airline Passengers (Lag 12)"</span>)</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Year"</span>)</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Differenced Passengers"</span>)</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a><span class="co"># Format x-axis dates</span></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>plt.gca().xaxis.set_major_formatter(mdates.DateFormatter(<span class="st">'%Y'</span>))</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TimeSeriesAnalysis_files/figure-html/cell-3-output-1.png" width="965" height="544" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TimeSeriesAnalysis_files/figure-html/cell-3-output-2.png" width="957" height="544" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="differencing-to-make-time-series-stationary" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="differencing-to-make-time-series-stationary"><span class="header-section-number">6.3</span> Differencing to Make Time Series Stationary</h2>
+<p>Differencing is a technique used to transform a non-stationary time series into a stationary one. A stationary time series has a constant mean, variance, and autocorrelation over time, which is crucial for many time series forecasting methods.</p>
+<section id="first-order-differencing" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="first-order-differencing"><span class="header-section-number">6.3.1</span> First Order Differencing</h3>
+<p>First order differencing involves subtracting the previous observation from the current observation. This helps to remove trends and stabilize the mean of the time series (Example-1 involving the inflation rates has the same scenario).</p>
+<p>For a time series <span class="math inline">\(Y_t\)</span>, the first order differenced series <span class="math inline">\(Y'_t\)</span> is calculated as: <span class="math display">\[
+Y'_t = Y_t - Y_{t-1}
+\]</span></p>
+</section>
+<section id="higher-order-differencing" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="higher-order-differencing"><span class="header-section-number">6.3.2</span> Higher Order Differencing</h3>
+<p>If the first order differencing is not sufficient to make the series stationary, higher order differencing can be applied. This involves differencing the differenced series.</p>
+<p>For example, the second order differenced series <span class="math inline">\(Y''_t\)</span> is calculated as: <span class="math display">\[
+Y''_t = Y'_t - Y'_{t-1}
+\]</span> <span class="math display">\[
+Y''_t = (Y_t - Y_{t-1}) - (Y_{t-1} - Y_{t-2})
+\]</span> <span class="math display">\[
+Y''_t = Y_t - 2Y_{t-1} + Y_{t-2}
+\]</span></p>
+</section>
+<section id="seasonal-differencing" class="level3" data-number="6.3.3">
+<h3 data-number="6.3.3" class="anchored" data-anchor-id="seasonal-differencing"><span class="header-section-number">6.3.3</span> Seasonal Differencing</h3>
+<p>Seasonal differencing is used to remove seasonal patterns. This involves subtracting the observation from the same season in the previous cycle.</p>
+<p>For a time series with a seasonal period <span class="math inline">\(s\)</span>, the seasonally differenced series <span class="math inline">\(Y'_t\)</span> is calculated as: <span class="math inline">\(Y'_t = Y_t - Y_{t-s}\)</span></p>
+<p>By applying these differencing techniques, we can transform a non-stationary time series into a stationary one, making it suitable for further analysis and forecasting.</p>
+</section>
+</section>
+<section id="autoregressive-models-ar1-arp-and-model-selection-with-pacf" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="autoregressive-models-ar1-arp-and-model-selection-with-pacf"><span class="header-section-number">6.4</span> Autoregressive Models: AR(1), AR(p), and Model Selection with PACF</h2>
+<ul>
+<li><p>A series displays autoregressive (AR) behavior if it apparently feels a “restoring forcerestoring force” that tends to pull it back toward its mean.</p></li>
+<li><p><strong>Applications</strong>:</p>
+<ul>
+<li><strong>Economics</strong>: Modeling GDP, inflation rates, and stock prices.</li>
+<li><strong>Weather Forecasting</strong>: Predicting temperature and precipitation.</li>
+<li><strong>Engineering</strong>: Signal processing and control systems.</li>
+<li><strong>Healthcare</strong>: Analyzing patient vital signs and disease progression.</li>
+</ul></li>
+</ul>
+<section id="ar1-model" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="ar1-model"><span class="header-section-number">6.4.1</span> AR(1) Model</h3>
+<p><strong>Definition</strong>:<br>
+A first-order autoregressive model where the current value depends linearly on its immediate past value and a stochastic term.</p>
+<p><strong>Formula</strong>:<br>
+<span class="math display">\[
+\left( Y_t - \mu \right) = \phi_1 \left( Y_{t-1} -\mu \right) + \epsilon_t, \quad \epsilon_t \sim \text{WN}(0, \sigma^2)
+\]</span></p>
+<p>Also written as;</p>
+<p><span class="math display">\[
+Y_t = c + \phi_1 Y_{t-1}+ \epsilon_t, \quad \epsilon_t \sim \text{WN}(0, \sigma_{\epsilon}^2)
+\]</span></p>
+<p>where c is the intercept.</p>
+<p><strong>Key Properties</strong>:</p>
+<ul>
+<li><p><strong>Stationarity</strong>: Requires <span class="math inline">\(|\phi_1| &lt; 1\)</span>.</p></li>
+<li><p><strong>ACF</strong>: Exponentially decays.</p></li>
+<li><p><strong>PACF</strong>: Cuts off abruptly after lag 1.</p></li>
+</ul>
+<p><strong>Python Example</strong>:</p>
+<div id="e79d63ed" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.tsa.ar_model <span class="im">import</span> AutoReg</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.graphics.tsaplots <span class="im">import</span> plot_acf, plot_pacf</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate dummy time series data</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.random.randn(n)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit AR(1) model</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> AutoReg(data, lags<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>model_fit <span class="op">=</span> model.fit()</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> model_fit.predict(start<span class="op">=</span><span class="dv">1</span>, end<span class="op">=</span>n<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the actual and predicted time series</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>plt.plot(data, label<span class="op">=</span><span class="st">'Actual'</span>, color<span class="op">=</span><span class="st">'blue'</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>plt.plot(np.arange(<span class="dv">1</span>, n), predictions, label<span class="op">=</span><span class="st">'Predicted'</span>, color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'AR(1) Model: Actual vs Predicted'</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Time'</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Value'</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TimeSeriesAnalysis_files/figure-html/cell-4-output-1.png" width="1141" height="564" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="autoregressive-model-of-order-p-arp" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="autoregressive-model-of-order-p-arp"><span class="header-section-number">6.4.2</span> Autoregressive Model of Order p: AR(p)</h3>
+<section id="definition" class="level4" data-number="6.4.2.1">
+<h4 data-number="6.4.2.1" class="anchored" data-anchor-id="definition"><span class="header-section-number">6.4.2.1</span> Definition</h4>
+<p>The <strong>AR(p)</strong> model is a linear regression of the current value of a time series against its own past <span class="math inline">\(p\)</span> values.</p>
+<p><strong>Formula</strong>:<br>
+<span class="math display">\[
+\left( Y_t - \mu \right) = \phi_1 \left( Y_{t-1} - \mu \right) + \phi_2 \left( Y_{t-2} - \mu \right) + \dots + \phi_p \left( Y_{t-p} - \mu \right) + \epsilon_t
+\]</span><br>
+where: - <span class="math inline">\(\phi_1, \dots, \phi_p\)</span>: Autoregressive coefficients - <span class="math inline">\(\epsilon_t\)</span>: White noise error term <span class="math inline">\(\sim \text{WN}(0, \sigma^2)\)</span></p>
+</section>
+<section id="key-properties" class="level4" data-number="6.4.2.2">
+<h4 data-number="6.4.2.2" class="anchored" data-anchor-id="key-properties"><span class="header-section-number">6.4.2.2</span> Key Properties</h4>
+<ol type="1">
+<li><strong>Stationarity</strong>:
+<ul>
+<li>Requires roots of the characteristic equation<br>
+<span class="math display">\[
+1 - \phi_1 z - \phi_2 z^2 - \dots - \phi_p z^p = 0
+\]</span></li>
+</ul></li>
+</ol>
+<p>to lie <strong>outside</strong> the unit circle.</p>
+<ol start="2" type="1">
+<li><p><strong>ACF</strong>: Decays gradually (exponentially or oscillating).</p></li>
+<li><p><strong>PACF</strong>: Cuts off abruptly after lag <span class="math inline">\(p\)</span>.</p></li>
+</ol>
+</section>
+<section id="python-implementation" class="level4" data-number="6.4.2.3">
+<h4 data-number="6.4.2.3" class="anchored" data-anchor-id="python-implementation"><span class="header-section-number">6.4.2.3</span> Python Implementation</h4>
+<div id="d0fd579f" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.tsa.ar_model <span class="im">import</span> AutoReg</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.graphics.tsaplots <span class="im">import</span> plot_pacf</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate dummy time series data for AR(p) process</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="dv">3</span>  <span class="co"># Order of the AR process</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>phi <span class="op">=</span> [<span class="fl">0.5</span>, <span class="op">-</span><span class="fl">0.3</span>, <span class="fl">0.2</span>]  <span class="co"># AR coefficients</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.random.randn(n)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate AR(p) process</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(p, n):</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  data[t] <span class="op">=</span> phi[<span class="dv">0</span>] <span class="op">*</span> data[t<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span> phi[<span class="dv">1</span>] <span class="op">*</span> data[t<span class="op">-</span><span class="dv">2</span>] <span class="op">+</span> phi[<span class="dv">2</span>] <span class="op">*</span> data[t<span class="op">-</span><span class="dv">3</span>] <span class="op">+</span> np.random.randn()</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit AR(p) model</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> AutoReg(data, lags<span class="op">=</span>p)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>model_fit <span class="op">=</span> model.fit()</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> model_fit.predict(start<span class="op">=</span>p, end<span class="op">=</span>n<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the actual and predicted time series</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>plt.plot(data, label<span class="op">=</span><span class="st">'Actual'</span>, color<span class="op">=</span><span class="st">'blue'</span>)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>plt.plot(np.arange(p, n), predictions, label<span class="op">=</span><span class="st">'Predicted'</span>, color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'AR(</span><span class="sc">{</span>p<span class="sc">}</span><span class="ss">) Model: Actual vs Predicted'</span>)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Time'</span>)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Value'</span>)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TimeSeriesAnalysis_files/figure-html/cell-5-output-1.png" width="1141" height="564" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="identify-order-p-using-pacf" class="level3" data-number="6.4.3">
+<h3 data-number="6.4.3" class="anchored" data-anchor-id="identify-order-p-using-pacf"><span class="header-section-number">6.4.3</span> Identify Order <span class="math inline">\(p\)</span> Using PACF</h3>
+<hr>
+<section id="what-is-pacf" class="level4" data-number="6.4.3.1">
+<h4 data-number="6.4.3.1" class="anchored" data-anchor-id="what-is-pacf"><span class="header-section-number">6.4.3.1</span> What is PACF?</h4>
+<ul>
+<li><p>The <strong>Partial Autocorrelation Function (PACF)</strong> measures the correlation between <span class="math inline">\(Y_t\)</span> and <span class="math inline">\(Y_{t-h}\)</span> after removing the effects of the intermediate lags <span class="math inline">\(Y_{t-1}, Y_{t-2}, \dots, Y_{t-h+1}\)</span>.</p></li>
+<li><p>For <strong>AR(<span class="math inline">\(p\)</span>)</strong> models, the PACF helps identify the order <span class="math inline">\(p\)</span>.</p></li>
+</ul>
+</section>
+<section id="method-to-determine-p" class="level4" data-number="6.4.3.2">
+<h4 data-number="6.4.3.2" class="anchored" data-anchor-id="method-to-determine-p"><span class="header-section-number">6.4.3.2</span> Method to Determine <span class="math inline">\(p\)</span></h4>
+<ol type="1">
+<li><p><strong>Plot the PACF</strong> of the time series.</p></li>
+<li><p><strong>Identify Significant Spikes</strong>:</p>
+<ul>
+<li>Significant spikes (outside the confidence band) at lags <span class="math inline">\(1, 2, \dots, p\)</span>.</li>
+<li>PACF cuts off (becomes insignificant) after lag <span class="math inline">\(p\)</span>.</li>
+</ul></li>
+<li><p><strong>Interpretation</strong>:</p>
+<ul>
+<li>If PACF drops to near zero after lag <span class="math inline">\(p\)</span>, the process is likely AR(<span class="math inline">\(p\)</span>).</li>
+</ul></li>
+</ol>
+<hr>
+</section>
+<section id="acf-and-pacf" class="level4" data-number="6.4.3.3">
+<h4 data-number="6.4.3.3" class="anchored" data-anchor-id="acf-and-pacf"><span class="header-section-number">6.4.3.3</span> ACF and PACF</h4>
+<p><strong>Autocorrelation Function (ACF)</strong>:</p>
+<p>The ACF measures the correlation between observations of a time series separated by <span class="math inline">\(h\)</span> time units (lags).</p>
+<p><span class="math display">\[
+ACF = \rho(h) = \frac{\gamma(h)}{\gamma(0)}
+\]</span></p>
+<p>where: - <span class="math inline">\(\rho(h)\)</span> is the autocorrelation at lag <span class="math inline">\(h\)</span>. - <span class="math inline">\(\gamma(h) = \text{Cov}(Y_t, Y_{t+h})\)</span> is the autocovariance at lag <span class="math inline">\(h\)</span>. - <span class="math inline">\(\gamma(0) = \text{Var}(Y_t)\)</span> is the variance of the series.</p>
+<p><strong>Partial Autocorrelation Function (PACF)</strong>: The PACF measures the correlation between <span class="math inline">\(Y_t\)</span> and <span class="math inline">\(Y_{t-h}\)</span> after removing the effects of the intermediate lags <span class="math inline">\(Y_{t-1}, Y_{t-2}, \dots, Y_{t-h+1}\)</span>.</p>
+<p><strong>Relation to Correlation Factor in Regression</strong>:</p>
+<ul>
+<li><p>In regression analysis, the correlation factor (or coefficient) measures the strength and direction of the linear relationship between two variables. Similarly, the ACF and PACF measure the linear relationship between lagged values of a time series.</p></li>
+<li><p><strong>ACF</strong>: Analogous to the correlation coefficient in regression, it measures the linear relationship between <span class="math inline">\(Y_t\)</span> and <span class="math inline">\(Y_{t-h}\)</span>.</p></li>
+<li><p><strong>PACF</strong>: Analogous to the partial correlation coefficient in multiple regression, it measures the linear relationship between <span class="math inline">\(Y_t\)</span> and <span class="math inline">\(Y_{t-h}\)</span> after accounting for the linear relationships with intermediate lags.</p></li>
+<li><p>By examining the ACF and PACF plots, we can identify the appropriate lag structure for autoregressive models, similar to how we use correlation and partial correlation in regression to identify relevant predictors.</p></li>
+</ul>
+</section>
+<section id="example-identifying-p" class="level4" data-number="6.4.3.4">
+<h4 data-number="6.4.3.4" class="anchored" data-anchor-id="example-identifying-p"><span class="header-section-number">6.4.3.4</span> Example: Identifying <span class="math inline">\(p\)</span></h4>
+<div id="6f3bb4e3" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.graphics.tsaplots <span class="im">import</span> plot_acf, plot_pacf</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate AR(2) time series data</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>phi1 <span class="op">=</span> <span class="fl">0.6</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>phi2 <span class="op">=</span> <span class="fl">0.3</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.zeros(n)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>data[<span class="dv">0</span>] <span class="op">=</span> np.random.randn()</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, n):</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    data[t] <span class="op">=</span> phi1 <span class="op">*</span> data[t<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span> phi2 <span class="op">*</span> data[t<span class="op">-</span><span class="dv">2</span>] <span class="op">+</span> np.random.randn()</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot ACF and PACF</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co"># ACF plot</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>plot_acf(data, ax<span class="op">=</span>ax1, lags<span class="op">=</span><span class="dv">40</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'Autocorrelation Function (ACF)'</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># PACF plot</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>plot_pacf(data, ax<span class="op">=</span>ax2, lags<span class="op">=</span><span class="dv">40</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'Partial Autocorrelation Function (PACF)'</span>)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TimeSeriesAnalysis_files/figure-html/cell-6-output-1.png" width="1142" height="757" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="output-interpretation" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="output-interpretation">Output Interpretation</h4>
+</section>
+<section id="key-observations" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="key-observations">Key Observations:</h4>
+<ol type="1">
+<li><strong>Significant PACF Spikes</strong>:
+<ul>
+<li><strong>Lag 1</strong>: Partial autocorrelation coefficient exceeds the confidence band (statistically significant).</li>
+<li><strong>Lag 2</strong>: Another significant spike outside the confidence band.</li>
+<li>These spikes indicate autoregressive terms at lags 1 and 2.</li>
+</ul></li>
+<li><strong>Cutoff After Lag 2</strong>:
+<ul>
+<li>For lags <span class="math inline">\(h &gt; 2\)</span>, PACF values fall <strong>within the confidence band</strong> (gray dashed lines at <span class="math inline">\(\pm \frac{1.96}{\sqrt{n}}\)</span>).</li>
+<li>No significant partial autocorrelation beyond lag 2.</li>
+</ul></li>
+</ol>
+</section>
+<section id="conclusion" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="conclusion">Conclusion:</h4>
+<ul>
+<li>The PACF plot suggests an <strong>AR(2)</strong> model is appropriate (<span class="math inline">\(p = 2\)</span>).</li>
+<li>Further lags (<span class="math inline">\(p &gt; 2\)</span>) do not contribute meaningfully to the model.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>AR (Autoregressive) Models</strong> <strong>Definition</strong>:<br>
+Models where the current value depends on its own past values.<br>
+<strong>Formula</strong>:<br>
+<span class="math display">\[
+Y_t = c + \phi_1 Y_{t-1} + \phi_2 Y_{t-2} + \dots + \phi_p Y_{t-p} + \epsilon_t
+\]</span></p>
+<p><strong>Strengths</strong>:<br>
+- Captures <strong>persistence/momentum</strong> (e.g., temperature trends, stock price inertia).<br>
+- Simple to interpret (linear dependence on past values).</p>
+<p><strong>Limitations</strong>:<br>
+- Struggles with <strong>short-lived shocks</strong> (e.g., sudden market crashes).<br>
+- Requires high order <span class="math inline">\(p\)</span> to model complex dependencies → risk of overfitting.</p>
+<hr>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ljung-Box Test
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <strong>Ljung-Box test</strong> is a statistical test used to determine whether a time series exhibits significant autocorrelation at multiple lags. It is particularly useful for diagnosing the adequacy of time series models by checking if the residuals are uncorrelated (i.e., white noise).</p>
+<section id="hypotheses" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="hypotheses">Hypotheses</h4>
+<ul>
+<li><strong>Null Hypothesis (<span class="math inline">\(H_0\)</span>)</strong>: The data are independently distributed (no autocorrelation).</li>
+<li><strong>Alternative Hypothesis (<span class="math inline">\(H_a\)</span>)</strong>: The data exhibit significant autocorrelation.</li>
+</ul>
+</section>
+<section id="test-statistic" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="test-statistic">Test Statistic</h4>
+<p>The Ljung-Box test statistic is given by:</p>
+<p><span class="math display">\[
+Q = n(n+2) \sum_{k=1}^m \frac{\hat{\rho}_k^2}{n-k}
+\]</span></p>
+<p>where: - <span class="math inline">\(n\)</span>: Number of observations. - <span class="math inline">\(m\)</span>: Number of lags being tested. - <span class="math inline">\(\hat{\rho}_k\)</span>: Sample autocorrelation at lag <span class="math inline">\(k\)</span>.</p>
+<p>Under the null hypothesis, <span class="math inline">\(Q\)</span> follows a <span class="math inline">\(\chi^2\)</span> distribution with <span class="math inline">\(m\)</span> degrees of freedom.</p>
+</section>
+<section id="interpretation" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="interpretation">Interpretation</h4>
+<ol type="1">
+<li><strong>If <span class="math inline">\(p\)</span>-value &gt; significance level (<span class="math inline">\(\alpha\)</span>)</strong>:</li>
+</ol>
+<ul>
+<li>Fail to reject <span class="math inline">\(H_0\)</span>.</li>
+<li>Residuals are uncorrelated (white noise).</li>
+</ul>
+<ol start="2" type="1">
+<li><strong>If <span class="math inline">\(p\)</span>-value ≤ significance level (<span class="math inline">\(\alpha\)</span>)</strong>:</li>
+</ol>
+<ul>
+<li>Reject <span class="math inline">\(H_0\)</span>.</li>
+<li>Residuals exhibit significant autocorrelation.</li>
+</ul>
+</section>
+<section id="applications" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="applications">Applications</h4>
+<ul>
+<li><strong>Model Diagnostics</strong>: Used to check if the residuals of a fitted time series model are white noise.</li>
+<li><strong>Goodness-of-Fit</strong>: Helps assess whether the chosen model adequately captures the structure of the data.</li>
+</ul>
+</section>
+<section id="limitations" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="limitations">Limitations</h4>
+<ul>
+<li>Sensitive to the choice of <span class="math inline">\(m\)</span> (number of lags).</li>
+<li>Assumes the model parameters are known (may lead to biased results if parameters are estimated).</li>
+</ul>
+<p>The Ljung-Box test is a critical tool for validating time series models, ensuring that the residuals are free of autocorrelation and suitable for forecasting.</p>
+</section>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="moving-average-models-ma1-maq-models-and-the-choice-of-q." class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="moving-average-models-ma1-maq-models-and-the-choice-of-q."><span class="header-section-number">6.5</span> Moving Average Models: MA(1), MA(q) models and the choice of q.</h2>
+<p>A series displays moving-average (MA) model behavior if it apparently undergoes random “shocks” whose effects are felt in two or more consecutive periods.</p>
+<section id="ma1-model" class="level3" data-number="6.5.1">
+<h3 data-number="6.5.1" class="anchored" data-anchor-id="ma1-model"><span class="header-section-number">6.5.1</span> MA(1) Model</h3>
+<section id="definition-1" class="level4" data-number="6.5.1.1">
+<h4 data-number="6.5.1.1" class="anchored" data-anchor-id="definition-1"><span class="header-section-number">6.5.1.1</span> Definition</h4>
+<p>The <strong>MA(1)</strong> (Moving Average of Order 1) model is a time series model where the current value depends linearly on the <strong>current random shock</strong> and the <strong>previous random shock</strong>.</p>
+<p><strong>Formula</strong>:<br>
+<span class="math display">\[
+Y_t = \mu + \epsilon_t + \theta \epsilon_{t-1}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\mu\)</span>: Mean of the series.<br>
+</li>
+<li><span class="math inline">\(\epsilon_t\)</span>: White noise error term at time <span class="math inline">\(t\)</span> (<span class="math inline">\(\epsilon_t \sim \text{WN}(0, \sigma^2)\)</span>).<br>
+</li>
+<li><span class="math inline">\(\theta\)</span>: Coefficient of the lagged error term.</li>
+</ul>
+</section>
+<section id="key-properties-1" class="level4" data-number="6.5.1.2">
+<h4 data-number="6.5.1.2" class="anchored" data-anchor-id="key-properties-1"><span class="header-section-number">6.5.1.2</span> Key Properties</h4>
+<ol type="1">
+<li><strong>Stationarity</strong>:
+<ul>
+<li>MA(1) is <strong>always stationary</strong> (no restrictions on <span class="math inline">\(\theta\)</span>).</li>
+</ul></li>
+<li><strong>Autocorrelation Function (ACF)</strong>:
+<ul>
+<li>Spikes at lag 1: <span class="math inline">\(\rho(1) = \frac{\theta}{1 + \theta^2}\)</span>.<br>
+</li>
+<li><span class="math inline">\(\rho(h) = 0\)</span> for <span class="math inline">\(h \geq 2\)</span>.</li>
+</ul></li>
+<li><strong>Partial Autocorrelation Function (PACF)</strong>:
+<ul>
+<li>Decays <strong>exponentially</strong> (does not cut off abruptly).</li>
+</ul></li>
+</ol>
+</section>
+<section id="example-use-cases" class="level4" data-number="6.5.1.3">
+<h4 data-number="6.5.1.3" class="anchored" data-anchor-id="example-use-cases"><span class="header-section-number">6.5.1.3</span> Example Use Cases</h4>
+<ul>
+<li><strong>Stock Returns</strong>: Unexpected news (shocks) affecting returns for two days.<br>
+</li>
+<li><strong>Inventory Management</strong>: A supply disruption (shock) impacting current and next month’s inventory levels.<br>
+</li>
+<li><strong>Weather Data</strong>: A temperature anomaly affecting consecutive days.</li>
+</ul>
+</section>
+</section>
+<section id="moving-average-model-of-order-q-maq" class="level3" data-number="6.5.2">
+<h3 data-number="6.5.2" class="anchored" data-anchor-id="moving-average-model-of-order-q-maq"><span class="header-section-number">6.5.2</span> Moving Average Model of Order q: MA(q)</h3>
+<section id="definition-2" class="level4" data-number="6.5.2.1">
+<h4 data-number="6.5.2.1" class="anchored" data-anchor-id="definition-2"><span class="header-section-number">6.5.2.1</span> Definition</h4>
+<p>The <strong>MA(q)</strong> model is a linear regression of the current value of a time series against the past <span class="math inline">\(q\)</span> error terms (shocks).<br>
+<strong>Formula</strong>:<br>
+<span class="math display">\[
+Y_t = \mu + \epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + \dots + \theta_q \epsilon_{t-q}
+\]</span><br>
+where: - <span class="math inline">\(\mu\)</span>: Mean of the series. - <span class="math inline">\(\epsilon_t\)</span>: White noise error term at time <span class="math inline">\(t\)</span> (<span class="math inline">\(\epsilon_t \sim \text{WN}(0, \sigma^2)\)</span>). - <span class="math inline">\(\theta_1, \dots, \theta_q\)</span>: Moving average coefficients.</p>
+</section>
+<section id="key-properties-2" class="level4" data-number="6.5.2.2">
+<h4 data-number="6.5.2.2" class="anchored" data-anchor-id="key-properties-2"><span class="header-section-number">6.5.2.2</span> Key Properties</h4>
+<ol type="1">
+<li><strong>Stationarity</strong>:<br>
+</li>
+</ol>
+<ul>
+<li>MA(q) is <strong>always stationary</strong> (no restrictions on <span class="math inline">\(\theta\)</span> coefficients).</li>
+</ul>
+<ol start="2" type="1">
+<li><strong>ACF</strong>:<br>
+</li>
+</ol>
+<ul>
+<li>Spikes at lags <span class="math inline">\(1, 2, \dots, q\)</span>.</li>
+<li>ACF cuts off abruptly after lag <span class="math inline">\(q\)</span>.</li>
+</ul>
+<ol start="3" type="1">
+<li><strong>PACF</strong>:<br>
+</li>
+</ol>
+<ul>
+<li>Decays gradually (exponentially or oscillating).</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Invertibility Property of MA Models
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<section id="definition-3" class="level4" data-number="6.5.2.3">
+<h4 data-number="6.5.2.3" class="anchored" data-anchor-id="definition-3"><span class="header-section-number">6.5.2.3</span> Definition</h4>
+<p>The <strong>invertibility</strong> property of a Moving Average (MA) model ensures that the model can be expressed equivalently as an infinite-order Autoregressive (AR) model. This property is crucial for the uniqueness of the model parameters and for meaningful interpretation.</p>
+</section>
+<section id="mathematical-condition" class="level4" data-number="6.5.2.4">
+<h4 data-number="6.5.2.4" class="anchored" data-anchor-id="mathematical-condition"><span class="header-section-number">6.5.2.4</span> Mathematical Condition</h4>
+<p>For an MA(q) model: <span class="math display">\[
+  Y_t = \mu + \epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + \dots + \theta_q \epsilon_{t-q}
+  \]</span></p>
+<p>The invertibility condition requires that the roots of the characteristic equation: <span class="math display">\[
+  1 + \theta_1 z + \theta_2 z^2 + \dots + \theta_q z^q = 0
+  \]</span></p>
+<p>lie <strong>outside the unit circle</strong> (i.e., <span class="math inline">\(|z| &gt; 1\)</span>).</p>
+</section>
+<section id="additional-points" class="level4" data-number="6.5.2.5">
+<h4 data-number="6.5.2.5" class="anchored" data-anchor-id="additional-points"><span class="header-section-number">6.5.2.5</span> Additional Points</h4>
+<ul>
+<li><p>AR(1) can always be rewritten as MA(<span class="math inline">\(\infty\)</span>) if it is stationary.</p></li>
+<li><p>AR(p) has an MA(<span class="math inline">\(\infty\)</span>) representation under stationarity conditions.</p></li>
+<li><p>Invertibility ensures that an MA(q) process has an equivalent AR(<span class="math inline">\(\infty\)</span>) representation.</p></li>
+<li><p>Both properties are crucial in time series modeling to ensure proper interpretation and forecasting.</p></li>
+</ul>
+</section>
+<section id="example" class="level4" data-number="6.5.2.6">
+<h4 data-number="6.5.2.6" class="anchored" data-anchor-id="example"><span class="header-section-number">6.5.2.6</span> Example</h4>
+<p>For an MA(1) model: <span class="math display">\[
+  Y_t = \mu + \epsilon_t + \theta \epsilon_{t-1}
+  \]</span> The invertibility condition is <span class="math inline">\(|\theta| &lt; 1\)</span>. If this condition is violated, the model may not have a meaningful AR representation.</p>
+</section>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="armap-q-model" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="armap-q-model"><span class="header-section-number">6.6</span> ARMA(p, q) Model</h2>
+<section id="definition-4" class="level3" data-number="6.6.1">
+<h3 data-number="6.6.1" class="anchored" data-anchor-id="definition-4"><span class="header-section-number">6.6.1</span> Definition</h3>
+<p>The <strong>ARMA(p, q)</strong> (Autoregressive Moving Average) model combines the <strong>AR(p)</strong> and <strong>MA(q)</strong> models to describe a time series using both autoregressive and moving average components.</p>
+<p><strong>Formula</strong>:</p>
+<p><span class="math display">\[
+\left(Y_t - \mu \right) = \phi_1 \left(Y_{t-1} - \mu \right) + \phi_2 \left(Y_{t-2} - \mu \right) + \dots + \phi_p \left(Y_{t-p} - \mu \right) + \epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + \dots + \theta_q \epsilon_{t-q}
+\]</span></p>
+<p>or,</p>
+<p><span class="math display">\[
+  Y_t = c + \phi_1 Y_{t-1} + \phi_2 Y_{t-2} + \dots + \phi_p Y_{t-p} + \epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + \dots + \theta_q \epsilon_{t-q}
+\]</span></p>
+<p>where: - <span class="math inline">\(c\)</span>: Constant term (intercept). - <span class="math inline">\(\phi_1, \dots, \phi_p\)</span>: Autoregressive coefficients. - <span class="math inline">\(\theta_1, \dots, \theta_q\)</span>: Moving average coefficients. - <span class="math inline">\(\epsilon_t\)</span>: White noise error term <span class="math inline">\(\sim \text{WN}(0, \sigma^2)\)</span>.</p>
+</section>
+<section id="key-properties-3" class="level3" data-number="6.6.2">
+<h3 data-number="6.6.2" class="anchored" data-anchor-id="key-properties-3"><span class="header-section-number">6.6.2</span> Key Properties</h3>
+<ol type="1">
+<li><strong>Stationarity</strong>:<br>
+</li>
+</ol>
+<ul>
+<li>Requires the AR component to satisfy stationarity conditions (roots of the AR characteristic equation must lie outside the unit circle).</li>
+</ul>
+<ol start="2" type="1">
+<li><strong>Invertibility</strong>:<br>
+</li>
+</ol>
+<ul>
+<li>Requires the MA component to satisfy invertibility conditions (roots of the MA characteristic equation must lie outside the unit circle).</li>
+</ul>
+<ol start="3" type="1">
+<li><strong>ACF and PACF</strong>:</li>
+</ol>
+<ul>
+<li><p>ACF and PACF exhibit a combination of behaviors from AR(p) and MA(q) models:</p></li>
+<li><p>ACF may decay gradually or cut off after lag <span class="math inline">\(q\)</span>.</p></li>
+<li><p>PACF may decay gradually or cut off after lag <span class="math inline">\(p\)</span>.</p></li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Backwards Operator
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>The <strong>backshift operator</strong> <span class="math inline">\(B\)</span>, also known as the <strong>lag operator</strong>, is a concise notation useful for describing ARMA and ARIMA models. It is defined as:</li>
+</ul>
+<p><span class="math display">\[
+B Y_t = Y_{t-1}
+\]</span></p>
+<ul>
+<li>More generally, for any integer <span class="math inline">\(h\)</span>:</li>
+</ul>
+<p><span class="math display">\[
+B^h Y_t = Y_{t-h}
+\]</span></p>
+<ul>
+<li>This means that <span class="math inline">\(B\)</span> shifts the time series back by one unit, while <span class="math inline">\(B^h\)</span> shifts it back by <span class="math inline">\(h\)</span> units. Additionally, for any constant <span class="math inline">\(c\)</span>, the operator satisfies:</li>
+</ul>
+<p><span class="math display">\[
+B c = c
+\]</span></p>
+<p>since a constant does not vary with time.</p>
+<ul>
+<li>The ARMA model can be represented more compactly using the backward operator as:</li>
+</ul>
+<p><span class="math display">\[
+\left( 1 - \phi_1 B - \phi_2 B^2 - \dots - \phi_p B^p \right) \left( Y_t - \mu \right) = \left( 1 + \theta_1 B + \theta_2 B^2 + \dots + \theta_q B^q \right) \epsilon_t
+\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Differencing Operator
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>The <strong>differencing operator</strong> is a mathematical tool used to transform a time series by removing trends. It is defined as:</li>
+</ul>
+<p><span class="math display">\[
+\Delta = 1 - B
+\]</span></p>
+<p>where <span class="math inline">\(B\)</span> is the <strong>backshift operator</strong>.</p>
+<ul>
+<li><p>Applying the differencing operator to a time series <span class="math inline">\(Y_t\)</span> gives:<br>
+<span class="math display">\[
+\Delta Y_t = Y_t - B Y_t = Y_t - Y_{t-1}
+\]</span></p></li>
+<li><p>This operation computes the difference between consecutive observations, effectively removing linear trends and stabilizing the mean of the series.</p></li>
+<li><p>Differencing can be applied iteratively. For instance, the second-order differencing operator is defined as:</p></li>
+</ul>
+<p><span class="math display">\[
+\Delta^2 Y_t = \Delta (\Delta Y_t) = \Delta (Y_t - Y_{t-1}) = (Y_t - Y_{t-1}) - (Y_{t-1} - Y_{t-2}) = Y_t - 2Y_{t-1} + Y_{t-2}.
+\]</span></p>
+<p>In general, the <span class="math inline">\(k\)</span>th-order differencing operator, <span class="math inline">\(\Delta^k\)</span>, can be expressed using the binomial expansion:</p>
+<p><span class="math display">\[
+\Delta^k Y_t = (1 - B)^k Y_t = \sum_{i=0}^k \binom{k}{i} (-1)^i Y_{t-i},
+\]</span></p>
+<p>where <span class="math inline">\(B\)</span> is the backshift operator, and <span class="math inline">\(\binom{k}{i}\)</span> represents the binomial coefficient.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="arimap-d-q-model" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="arimap-d-q-model"><span class="header-section-number">6.7</span> ARIMA(p, d, q) Model</h2>
+<section id="definition-5" class="level3" data-number="6.7.1">
+<h3 data-number="6.7.1" class="anchored" data-anchor-id="definition-5"><span class="header-section-number">6.7.1</span> Definition</h3>
+<ul>
+<li><p>The <strong>ARIMA(p, d, q)</strong> (Autoregressive Integrated Moving Average) model is an extension of the ARMA(p, q) model that incorporates differencing to handle non-stationary time series.</p></li>
+<li><p>We can also say, a time series <span class="math inline">\(Y_t\)</span> is considered an ARIMA(<span class="math inline">\(p, d, q\)</span>) process if the <span class="math inline">\(d\)</span>-th differenced series, <span class="math inline">\(\Delta^d Y_t\)</span>, follows an ARMA(<span class="math inline">\(p, q\)</span>) model.</p></li>
+</ul>
+<p><strong>Formula</strong>:<br>
+The ARIMA model can be expressed as:</p>
+<p><span class="math display">\[
+\Delta^d Y_t = c + \phi_1 \Delta^d Y_{t-1} + \dots + \phi_p \Delta^d Y_{t-p} + \epsilon_t + \theta_1 \epsilon_{t-1} + \dots + \theta_q \epsilon_{t-q}
+\]</span></p>
+<p>where: - <span class="math inline">\(c\)</span>: Intercept - <span class="math inline">\(p\)</span>: Order of the autoregressive (AR) component. - <span class="math inline">\(d\)</span>: Degree of differencing (number of times the series is differenced to achieve stationarity). - <span class="math inline">\(q\)</span>: Order of the moving average (MA) component. - <span class="math inline">\(\Delta^d\)</span>: Differencing operator applied <span class="math inline">\(d\)</span> times.</p>
+</section>
+<section id="key-components" class="level3" data-number="6.7.2">
+<h3 data-number="6.7.2" class="anchored" data-anchor-id="key-components"><span class="header-section-number">6.7.2</span> Key Components</h3>
+<ol type="1">
+<li><p><strong>Autoregressive (AR) Component</strong>:<br>
+Captures the relationship between an observation and its lagged values.</p></li>
+<li><p><strong>Differencing (I)</strong>:<br>
+Removes trends and makes the series stationary.</p></li>
+<li><p><strong>Moving Average (MA) Component</strong>:<br>
+Models the relationship between an observation and past error terms.</p></li>
+</ol>
+</section>
+<section id="steps-to-build-an-arima-model" class="level3" data-number="6.7.3">
+<h3 data-number="6.7.3" class="anchored" data-anchor-id="steps-to-build-an-arima-model"><span class="header-section-number">6.7.3</span> Steps to Build an ARIMA Model</h3>
+<ol type="1">
+<li><strong>Check Stationarity</strong>:<br>
+</li>
+</ol>
+<ul>
+<li><p>Use visual inspection, or statistical tests (e.g., KPSS test, Augmented Dickey-Fuller test (also known as ADF test is based on unit root test)).</p></li>
+<li><p>If non-stationary, apply differencing until stationarity is achieved.</p></li>
+<li><p><span class="math inline">\(d\)</span> is determined by the number of differencing steps required for stationarity.</p></li>
+</ul>
+<ol start="2" type="1">
+<li><strong>Determine Parameters (p, d, q)</strong>:<br>
+</li>
+</ol>
+<ul>
+<li>Usually AIC or BIC are employed to identify <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span>.</li>
+</ul>
+<ol start="3" type="1">
+<li><strong>Fit the Model</strong>:<br>
+</li>
+</ol>
+<ul>
+<li>Estimate the parameters using Maximum likelihood estimation.</li>
+</ul>
+<ol start="4" type="1">
+<li><strong>Validate the Model</strong>:<br>
+</li>
+</ol>
+<ul>
+<li>Check residuals for randomness (white noise).</li>
+<li>Use metrics like AIC, BIC, or cross-validation for model selection.</li>
+</ul>
+<ol start="4" type="1">
+<li><strong>Validate the Model</strong>:<br>
+</li>
+</ol>
+<ul>
+<li>Check residuals for randomness (white noise) using diagnostic plots (e.g., ACF/PACF of residuals) and statistical tests (e.g., Ljung-Box test).<br>
+</li>
+<li>Use metrics like AIC, BIC, or cross-validation for model selection.</li>
+</ul>
+<ol start="5" type="1">
+<li><strong>Forecast</strong>:<br>
+</li>
+</ol>
+<ul>
+<li>Use the fitted model to make predictions.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Unit Roots Test
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Determining whether a time series is stationary or non-stationary can be challenging. Hypothesis testing provides a systematic approach to address this question.</li>
+</ul>
+<section id="what-is-a-unit-root" class="level3" data-number="6.7.4">
+<h3 data-number="6.7.4" class="anchored" data-anchor-id="what-is-a-unit-root"><span class="header-section-number">6.7.4</span> What is a Unit Root?</h3>
+<ul>
+<li>A <strong>unit root</strong> refers to a characteristic of a time series where the value of an autoregressive coefficient equals 1, leading to non-stationarity. Specifically, in an ARMA(p, q) process, the model can be expressed as:</li>
+</ul>
+<p><span class="math display">\[
+(Y_t - \mu) = \phi_1 (Y_{t-1} - \mu) + \dots + \phi_p (Y_{t-p} - \mu) + \epsilon_t + \theta_1 \epsilon_{t-1} + \dots + \theta_q \epsilon_{t-q}
+\]</span></p>
+<ul>
+<li><p>If any of the roots of the characteristic equation for the AR component lie on the unit circle (e.g., <span class="math inline">\(\phi_1 = 1\)</span>), the series exhibits a unit root and is non-stationary.</p></li>
+<li><p>The stationarity condition for the time series <span class="math inline">\(\{Y_t\}\)</span> requires that all roots of the characteristic polynomial:</p></li>
+</ul>
+<p><span class="math display">\[
+1 - \phi_1 x - \phi_2 x^2 - \dots - \phi_p x^p
+\]</span></p>
+<p>must have absolute values greater than one (i.e., lie outside the unit circle).</p>
+</section>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>AR(0), MA(0), ARMA(0,0), and ARIMA(0,0,0) refers to white noise WN(0, <span class="math inline">\(\sigma^2\)</span>)</p></li>
+<li><p>AR(1), ARMA(1,0) and ARIMA(1,0,0) refers to the first order autoregression process.</p></li>
+<li><p>Similarly MA(1), ARMA(0,1) and ARIMA (0,0,1) refers to the first order moving average process.</p></li>
+<li><p>ARIMA(p, 0, q) model is the same as an ARMA(p, q) model.</p></li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="sarima-model-equation" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="sarima-model-equation"><span class="header-section-number">6.8</span> SARIMA Model Equation</h2>
+<p>The <strong>Seasonal AutoRegressive Integrated Moving Average (SARIMA)</strong> model extends ARIMA by incorporating seasonal components. It is represented as:</p>
+<p><span class="math display">\[
+SARIMA(p, d, q) \times (P, D, Q, m)
+\]</span></p>
+<p>where: - <span class="math inline">\((p, d, q)\)</span> are the non-seasonal parameters: - <span class="math inline">\(p\)</span>: Order of the autoregressive (AR) component. - <span class="math inline">\(d\)</span>: Number of non-seasonal differences. - <span class="math inline">\(q\)</span>: Order of the moving average (MA) component. - <span class="math inline">\((P, D, Q, m)\)</span> are the seasonal parameters: - <span class="math inline">\(P\)</span>: Order of the seasonal AR component. - <span class="math inline">\(D\)</span>: Number of seasonal differences. - <span class="math inline">\(Q\)</span>: Order of the seasonal MA component. - <span class="math inline">\(m\)</span>: Length of the seasonal cycle.</p>
+<section id="full-sarima-equation" class="level3" data-number="6.8.1">
+<h3 data-number="6.8.1" class="anchored" data-anchor-id="full-sarima-equation"><span class="header-section-number">6.8.1</span> <strong>Full SARIMA Equation</strong></h3>
+<p><span class="math display">\[
+y_t = \mu + \sum_{i=1}^{p} \phi_i y_{t-i} + \sum_{j=1}^{q} \theta_j \epsilon_{t-j} + \sum_{k=1}^{P} \Phi_k y_{t-mk} + \sum_{l=1}^{Q} \Theta_l \epsilon_{t-ml} + \epsilon_t
+\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(m\)</span> is the length of the seasonality (e.g., <span class="math inline">\(m=12\)</span> for monthly data with annual seasonality).</li>
+<li><span class="math inline">\(P\)</span> is the seasonal autoregressive order.</li>
+<li><span class="math inline">\(\Phi_k\)</span> are the seasonal autoregressive coefficients.</li>
+<li><span class="math inline">\(Q\)</span> is the seasonal moving average order.</li>
+<li><span class="math inline">\(\Theta_l\)</span> are the seasonal moving average coefficients.</li>
+</ul>
+<p><span class="math display">\[
+(1 - \sum_{i=1}^{p} \phi_i B^i)(1 - \sum_{k=1}^{P} \Phi_k B^{mk}) (1 - B)^d (1 - B^m)^D y_t =
+(1 + \sum_{j=1}^{q} \theta_j B^j + \sum_{l=1}^{Q} \Theta_l B^{ml}) \epsilon_t
+\]</span></p>
+<p>where: - <span class="math inline">\(B\)</span> is the backshift operator, <span class="math inline">\(B^k y_t = y_{t-k}\)</span>. - <span class="math inline">\(\phi_i\)</span> and <span class="math inline">\(\Phi_k\)</span> are the non-seasonal and seasonal AR coefficients, respectively. - <span class="math inline">\(\theta_j\)</span> and <span class="math inline">\(\Theta_l\)</span> are the non-seasonal and seasonal MA coefficients, respectively. - <span class="math inline">\(d\)</span> and <span class="math inline">\(D\)</span> represent non-seasonal and seasonal differencing orders. - <span class="math inline">\(\epsilon_t\)</span> is the error term.</p>
+<p>The SARIMA model effectively captures both trend and seasonality in time series forecasting.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Regression.html" class="pagination-link" aria-label="Regression">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Regression</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
